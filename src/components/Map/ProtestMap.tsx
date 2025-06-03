@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Map, { Source, Layer, NavigationControl, Popup, MapRef } from 'react-map-gl';
 import type { MapLayerMouseEvent } from 'mapbox-gl';
 import { useAppContext } from '../../context/AppContext';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import MapPopup from './MapPopup';
 import { csvToGeoJSON, getBoundingBox, GeoJSONFeatureCollection } from '../../utils/geoJsonUtils';
 
