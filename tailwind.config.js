@@ -50,6 +50,6 @@ export default {
   		}
   	}
   },
-  plugins: [import("tailwindcss-animate")],
+  plugins: [import("tailwindcss-animate"), import("@tailwindcss/line-clamp")],
 }
 

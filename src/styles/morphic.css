@@ -1,0 +1,603 @@
+/* Glassmorphism and Modern Morphic Styles */
+
+/* Base morphic container */
+.morphic-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Morphic card variant */
+.morphic-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.morphic-card:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 20px 64px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Video grid morphic */
+.morphic-video-grid {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Video item morphic */
+.morphic-video-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.morphic-video-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.morphic-video-item:hover::before {
+  opacity: 1;
+}
+
+.morphic-video-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 85, 140, 0.3);
+  box-shadow: 
+    0 12px 32px rgba(0, 85, 140, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Protest list morphic */
+.morphic-protest-list {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(248, 250, 252, 0.1));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Protest item morphic styling */
+.morphic-protest-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(248, 250, 252, 0.05)) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.morphic-protest-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.morphic-protest-item:hover::before {
+  opacity: 1;
+}
+
+.morphic-protest-item:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 12px 32px rgba(0, 85, 140, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Highlighted protest item */
+.morphic-protest-item.highlighted {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15));
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 
+    0 12px 32px rgba(255, 215, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Header morphic */
+.morphic-header {
+  background: linear-gradient(135deg, rgba(0, 85, 140, 0.9), rgba(0, 71, 120, 0.95));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Header info morphic */
+.morphic-header-info {
+  background: rgba(0, 85, 140, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Button morphic styles */
+.morphic-button {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.morphic-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.morphic-button:hover::before {
+  left: 100%;
+}
+
+.morphic-button:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Primary button variant */
+.morphic-button-primary {
+  background: linear-gradient(135deg, rgba(0, 85, 140, 0.8), rgba(0, 71, 120, 0.9));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.morphic-button-primary:hover {
+  background: linear-gradient(135deg, rgba(0, 85, 140, 0.9), rgba(0, 71, 120, 1));
+  box-shadow: 
+    0 12px 32px rgba(0, 85, 140, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Secondary button morphic */
+.morphic-button-secondary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(248, 250, 252, 0.1));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.morphic-button-secondary:hover {
+  background: linear-gradient(135deg, rgba(248, 157, 68, 0.8), rgba(245, 101, 101, 0.7));
+  transform: translateY(-1px);
+  box-shadow: 
+    0 6px 20px rgba(248, 157, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Audio control morphic */
+.morphic-audio-control {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.morphic-audio-control:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Popup morphic */
+.morphic-popup {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Stats card morphic */
+.morphic-stats-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(248, 250, 252, 0.1));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 48px rgba(0, 85, 140, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.morphic-stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 24px 56px rgba(0, 85, 140, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Footer morphic */
+.morphic-footer {
+  background: linear-gradient(135deg, rgba(0, 85, 140, 0.2), rgba(0, 71, 120, 0.15));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Floating elements - disabled for performance */
+.morphic-floating {
+  transform: translateY(0px);
+}
+
+@keyframes morphicFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Gradient overlays */
+.morphic-gradient-overlay {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    transparent 50%,
+    rgba(0, 85, 140, 0.05) 75%,
+    rgba(0, 85, 140, 0.1) 100%
+  );
+}
+
+/* Scrollbar morphic */
+.morphic-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 85, 140, 0.3) transparent;
+}
+
+.morphic-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.morphic-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.morphic-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.morphic-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+}
+
+/* Loading placeholder morphic - simplified for performance */
+.morphic-loading {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(248, 250, 252, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  background-size: 200% 200%;
+  animation: morphicShimmer 3s ease-in-out infinite;
+}
+
+@keyframes morphicShimmer {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
+}
+
+/* Map overlay morphic */
+.morphic-map-overlay {
+  background: rgba(0, 85, 140, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Chart toggle morphic */
+.morphic-chart-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.morphic-chart-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.morphic-chart-toggle:hover::before {
+  left: 100%;
+}
+
+.morphic-chart-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Main Title Glass Box */
+.morphic-main-title-box {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(34, 211, 238, 0.15) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.2),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(34, 211, 238, 0.25),
+    inset 0 -1px 0 rgba(34, 211, 238, 0.3);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: floatMainTitle 6s ease-in-out infinite;
+}
+
+.morphic-main-title-box:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.3) 25%,
+    rgba(34, 211, 238, 0.25) 50%,
+    rgba(255, 255, 255, 0.3) 75%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    0 0 50px rgba(34, 211, 238, 0.4),
+    inset 0 -1px 0 rgba(34, 211, 238, 0.4);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(34, 211, 238, 0.6);
+}
+
+/* Enhanced shimmer animation for main title */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Floating animation for main title */
+@keyframes floatMainTitle {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg); 
+  }
+  25% { 
+    transform: translateY(-5px) rotateX(1deg); 
+  }
+  50% { 
+    transform: translateY(-3px) rotateX(0deg); 
+  }
+  75% { 
+    transform: translateY(-7px) rotateX(-1deg); 
+  }
+}
+
+/* Glow effect for main title text */
+.morphic-main-title-box h1 span {
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(34, 211, 238, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.morphic-main-title-box:hover h1 span {
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(34, 211, 238, 0.5),
+    0 0 30px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(34, 211, 238, 0.2);
+}
+
+/* Pulse glow animation for border */
+@keyframes pulseGlowMain {
+  0%, 100% {
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.2),
+      inset 0 2px 0 rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(34, 211, 238, 0.25),
+      inset 0 -1px 0 rgba(34, 211, 238, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.25),
+      inset 0 2px 0 rgba(255, 255, 255, 0.6),
+      0 0 60px rgba(34, 211, 238, 0.4),
+      inset 0 -1px 0 rgba(34, 211, 238, 0.4);
+  }
+}
+
+.morphic-main-title-box::before {
+  display: none;
+}
+
+.morphic-main-title-box:hover::before {
+  display: none;
+}
+
+/* Responsive adjustments for main title box */
+@media (max-width: 640px) {
+  .morphic-main-title-box {
+    border-radius: 16px;
+    margin: 0 16px;
+    box-shadow: 
+      0 15px 35px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 0 25px rgba(34, 211, 238, 0.2);
+  }
+  
+  .morphic-main-title-box h1 span {
+    font-size: 28px !important;
+    line-height: 1.2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .morphic-main-title-box {
+    border-radius: 28px;
+  }
+}
+
+/* Enhanced divider line in main title */
+.morphic-main-title-box .bg-gradient-to-r {
+  position: relative;
+}
+
+.morphic-main-title-box .bg-gradient-to-r::after {
+  display: none;
+}
+
+/* Disabled slideGlow animation */
+/*
+@keyframes slideGlow {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -100%;
+  }
+}
+*/
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .morphic-container {
+    margin: 16px;
+    padding: 20px;
+  }
+  
+  .morphic-video-item {
+    padding: 12px;
+  }
+  
+  .morphic-protest-item {
+    padding: 16px;
+  }
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .morphic-container,
+  .morphic-video-item,
+  .morphic-protest-item,
+  .morphic-float {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.morphic-container:focus-within,
+.morphic-video-item:focus,
+.morphic-protest-item:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}

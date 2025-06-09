@@ -1,11 +1,44 @@
+/* Import morphic glassmorphism styles */
+@import './styles/morphic.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom blinking animation for highlighted protests */
+@keyframes blink {
+  0%, 50% { 
+    background-color: #fbbf24; /* yellow-400 */
+    opacity: 1;
+  }
+  25%, 75% { 
+    background-color: #f59e0b; /* yellow-500 */
+    opacity: 0.8;
+  }
+}
+
+/* Fade in scale animation for video hover popup */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.animate-blink {
+  animation: blink 1s ease-in-out infinite;
+}
 
 /* Global styles */
 body {
   margin-top: 152px;
   font-family: 'Lato', sans-serif;
+  background: linear-gradient(135deg, #0a1a2e 0%, #16213e 25%, #1a2847 50%, #0f3460 75%, #0d2946 100%);
+  min-height: 100vh;
 }
 
 /* Custom component styles */
@@ -94,6 +127,30 @@ body {
 
   .protest-list-scroll::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  /* Custom scrollbar styles */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #00558c #f1f5f9;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00558c, #004778);
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #004778, #003961);
   }
 
   /* Responsive utilities */

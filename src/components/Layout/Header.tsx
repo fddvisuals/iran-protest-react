@@ -2,38 +2,83 @@ import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<string>('');
+  const [showTitle, setShowTitle] = useState<boolean>(false);
   
   useEffect(() => {
     setLastUpdated('Jan 3, 2023');
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show title when scrolled past the main title section (approximately 400px)
+      const scrollPosition = window.scrollY;
+      setShowTitle(scrollPosition > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-main border-b-2 border-[#f1e8b8] flex justify-between items-center h-[75px]">
-      <a href="https://www.fdd.org/category/analysis/visuals/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-[300px] h-full">
-        <img src="/images/Visuals_Logo_Temporary_v01.svg" alt="FDD Logo" className="max-w-[70%] ml-[30px]" />
-      </a>
-      
-      <div className="absolute w-full h-[9px] mt-[81.5px] bg-[#68686880]"></div>
-      
-      <div className="flex items-center justify-center w-[800px] h-full -translate-y-[70px]">
-        <div className="text-black opacity-80 text-center capitalize w-[80%] text-[1.2em] font-bold leading-[25px]">
-          What steps must Iran take to construct nuclear weapons?
-        </div>
-      </div>
-      
-      <div className="absolute right-[4.5%] flex gap-[11px]">
-        <a href="documents/fdd-infographic-what-steps-must-iran-take-to-construct-nuclear-weapons.pdf" className="flex items-center justify-center border border-black hover:bg-[#c2c2c2] transition-all duration-200">
-          <span className="uppercase text-[12px] font-bold px-[25px] py-[5px]">Download</span>
+    <header className="fixed top-0 left-0 right-0 z-50 morphic-header border-b border-white/20 h-[75px]">
+      <div className="flex justify-between items-center h-full px-4">
+        {/* Logo Section */}
+        <a 
+          href="https://www.fdd.org/category/analysis/visuals/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center justify-center w-[300px] h-full"
+        >
+          <svg 
+            width="120" 
+            height="40" 
+            viewBox="0 0 120 40" 
+            className="text-white/90 hover:text-white transition-colors duration-300"
+          >
+            <text 
+              x="60" 
+              y="25" 
+              textAnchor="middle" 
+              fontSize="16" 
+              fontWeight="bold" 
+              fill="currentColor"
+            >
+              FDD VISUALS
+            </text>
+          </svg>
         </a>
+        
+        {/* Center Title - Shows when scrolled */}
+        <div className={`absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${
+          showTitle 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 -translate-y-4 pointer-events-none'
+        }`}>
+          <h2 className="text-white font-bold text-lg whitespace-nowrap">
+            Mapping Protests in Iran
+          </h2>
+        </div>
+        
+        {/* Last Updated Section */}
+        <div className="flex items-center morphic-header-info rounded-xl px-4 py-2.5 border border-white/20 backdrop-blur-sm bg-white/5">
+          <div className="flex items-center space-x-2">
+            {/* Animated indicator */}
+            <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse shadow-sm"></div>
+            
+            <div className="flex flex-col items-end">
+              <span className="text-white/70 text-xs font-medium uppercase tracking-wide">
+                Last Updated
+              </span>
+              <span className="text-cyan-300 text-sm font-bold">
+                {lastUpdated}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       
-      <div className="flex items-center justify-center bg-main border border-[#949494] rounded-lg w-[290px] mr-[11px] p-[9px] text-white italic">
-        <div className="mr-[10px] pt-[3px]">
-          {/* Animation placeholder */}
-        </div>
-        <div className="uppercase font-sans text-[1.5vh] font-normal leading-[1.5vh]">Last updated </div>
-        <div className="text-[#80eaf7] text-left uppercase rounded-[5px] font-sans text-[1.5vh] font-bold leading-[1.5vh]">{lastUpdated}</div>
-      </div>
+      {/* Bottom gradient line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
     </header>
   );
 };

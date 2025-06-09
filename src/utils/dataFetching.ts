@@ -46,10 +46,20 @@ export const fetchGoogleSheetsData = (): Promise<ProtestData[]> => {
 export const fetchVideoData = async (): Promise<ProtestData[]> => {
   try {
     const data = await fetchGoogleSheetsData();
-    return data
-      .filter(row => row.MediaURL)
-      .sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime())
-      .slice(0, 14);
+    console.log('Raw data from Google Sheets:', data.length, 'rows');
+    const withMedia = data.filter(row => row.MediaURL);
+    console.log('Data with MediaURL:', withMedia.length, 'rows');
+    const sorted = withMedia.sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime());
+    // Temporarily increase to see more videos
+    const sliced = sorted.slice(0, 50);
+    console.log('After slice(0, 50):', sliced.length, 'rows');
+    console.log('Size values in fetched video data:', [...new Set(sliced.map(v => v.Estimated_Size))]);
+    console.log('First few videos with sizes:', sliced.slice(0, 10).map(v => ({ 
+      date: v.Date, 
+      size: v.Estimated_Size, 
+      city: v.City_Village 
+    })));
+    return sliced;
   } catch (error) {
     console.error("Error fetching video data:", error);
     return [];
