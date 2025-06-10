@@ -155,3 +155,32 @@ export const filterProtestsByTimeRange = (protests: ProtestData[], timeFilter: T
 export const getProtestCountByTimeFilter = (protests: ProtestData[], timeFilter: TimeFilter): number => {
   return filterProtestsByTimeRange(protests, timeFilter).length;
 };
+
+// Utility function to get monthly protest count
+export const getProtestsThisMonth = (protests: ProtestData[]): number => {
+  if (!protests || protests.length === 0) return 0;
+  
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+  
+  console.log('Counting monthly protests from', startOfMonth.toDateString(), 'to', endOfMonth.toDateString());
+  
+  const filteredProtests = protests.filter(protest => {
+    if (!protest.Date || protest.Date.trim() === '') return false;
+    
+    try {
+      const protestDate = new Date(protest.Date);
+      if (isNaN(protestDate.getTime())) return false;
+      
+      return protestDate >= startOfMonth && protestDate <= endOfMonth;
+    } catch (error) {
+      console.warn('Invalid date format:', protest.Date, error);
+      return false;
+    }
+  });
+  
+  console.log('Found', filteredProtests.length, 'protests this month');
+  
+  return filteredProtests.length;
+};

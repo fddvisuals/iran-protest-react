@@ -216,16 +216,8 @@ const ProtestMap: React.FC = () => {
 
   return (
     <div className="w-full h-[600px] morphic-container overflow-hidden relative">
-      {/* Map Title Overlay */}
-      <div className="absolute top-4 left-4 z-10 morphic-map-overlay px-4 py-2">
-        <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-gradient-to-r from-[#00558c] to-[#004778] rounded-full animate-pulse shadow-lg"></div>
-          <h3 className="text-sm font-bold text-white">Interactive Map</h3>
-        </div>
-      </div>
-      
-      {/* Reset Map Button */}
-      <div className="absolute top-4 right-16 z-10">
+      {/* Reset View Button Overlay */}
+      <div className="absolute top-4 left-4 z-10">
         <button
           onClick={resetMapView}
           className="morphic-map-overlay px-3 py-2 text-xs font-medium text-white hover:bg-white/10 transition-colors duration-200 rounded flex items-center space-x-1"

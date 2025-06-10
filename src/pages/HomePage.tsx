@@ -12,8 +12,14 @@ import ProtestCharts from '../components/Charts/ProtestCharts';
 const HomePage: React.FC = () => {
   const { mapData, loading } = useAppContext();
   
-  // Always show weekly protest count in the top section (not affected by filter selection)
+  // Calculate both weekly and last 30 days protest counts
   const weeklyProtestCount = loading ? 0 : getProtestCountByTimeFilter(mapData, 'last-week');
+  const last30DaysCount = loading ? 0 : getProtestCountByTimeFilter(mapData, 'last-month');
+  
+  // Show last 30 days count if weekly count is less than 35, otherwise show weekly
+  const shouldShowLast30Days = weeklyProtestCount < 35;
+  const displayCount = shouldShowLast30Days ? last30DaysCount : weeklyProtestCount;
+  const displayPeriod = shouldShowLast30Days ? 'in the last 30 days' : 'this week';
 
   return (
     <>
@@ -62,9 +68,9 @@ const HomePage: React.FC = () => {
               <div className="w-3 h-3 bg-gradient-to-r from-[#00558c] to-[#004778] rounded-full animate-pulse shadow-lg"></div>
               <h1 className="font-sans text-[28px] leading-[32px] font-bold text-white">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-200 font-black text-[32px]">
-                  {weeklyProtestCount}
+                  {displayCount}
                 </span>
-                {' '}protest{weeklyProtestCount !== 1 ? 's' : ''} this week
+                {' '}protest{displayCount !== 1 ? 's' : ''} {displayPeriod}
               </h1>
             </div>
             
@@ -80,13 +86,13 @@ const HomePage: React.FC = () => {
           
           {/* Map and List Side by Side */}
           <div className="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-6">
-            {/* Map Section */}
-            <div className="w-full lg:w-1/2">
+            {/* Map Section - 60% width */}
+            <div className="w-full lg:w-[60%]">
               <ProtestMap />
             </div>
             
-            {/* Protest List Section */}
-            <div className="w-full lg:w-1/2">
+            {/* Protest List Section - 40% width */}
+            <div className="w-full lg:w-[40%]">
               <ProtestList />
             </div>
           </div>

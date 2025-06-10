@@ -65,6 +65,8 @@ const ProtestCharts: React.FC = () => {
   const [dailyData, setDailyData] = useState<ChartData[]>([]);
   const [monthlyData, setMonthlyData] = useState<ChartData[]>([]);
   const [provinceData, setProvinceData] = useState<ProvinceData[]>([]);
+  const [dailyTimeRange, setDailyTimeRange] = useState<'last30' | 'lastMonth' | 'allTime'>('last30');
+  const [monthlyTimeRange, setMonthlyTimeRange] = useState<'last12' | 'lastYear' | 'allTime'>('last12');
 
   // Process data for charts
   useEffect(() => {
@@ -100,23 +102,72 @@ const ProtestCharts: React.FC = () => {
     });
 
     // Convert to arrays and sort
-    const dailyArray = Object.entries(dailyCounts)
+    const allDailyData = Object.entries(dailyCounts)
       .map(([date, count]) => ({ 
         date, 
         count,
         formattedDate: new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
       }))
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .slice(-30); // Last 30 days
+      .sort((a, b) => a.date.localeCompare(b.date));
 
-    const monthlyArray = Object.entries(monthlyCounts)
-      .map(([month, count]) => ({ 
-        date: month,
-        count,
-        formattedDate: new Date(month + '-01').toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-      }))
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .slice(-12); // Last 12 months
+    const allMonthlyData = Object.entries(monthlyCounts)
+      .map(([month, count]) => {
+        // month is in format "YYYY-MM"
+        const [year, monthNum] = month.split('-');
+        const monthIndex = parseInt(monthNum) - 1; // Convert to 0-based index
+        const date = new Date(parseInt(year), monthIndex, 1);
+        return {
+          date: month,
+          count,
+          formattedDate: date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+        };
+      })
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    // Filter daily data based on selected time range
+    let dailyArray: ChartData[] = [];
+    const today = new Date();
+    
+    switch (dailyTimeRange) {
+      case 'last30':
+        dailyArray = allDailyData.slice(-30);
+        break;
+      case 'lastMonth':
+        const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        dailyArray = allDailyData.filter(item => {
+          const itemDate = new Date(item.date);
+          return itemDate >= lastMonth && itemDate < currentMonth;
+        });
+        break;
+      case 'allTime':
+        dailyArray = allDailyData;
+        break;
+      default:
+        dailyArray = allDailyData.slice(-30);
+    }
+
+    // Filter monthly data based on selected time range
+    let monthlyArray: ChartData[] = [];
+    
+    switch (monthlyTimeRange) {
+      case 'last12':
+        // Show the last 12 months chronologically (most recent 12 months of data)
+        monthlyArray = allMonthlyData.slice(-12);
+        break;
+      case 'lastYear':
+        // Show the complete previous calendar year (2024)
+        monthlyArray = allMonthlyData.filter(item => {
+          const itemYear = parseInt(item.date.split('-')[0]);
+          return itemYear === 2024;
+        });
+        break;
+      case 'allTime':
+        monthlyArray = allMonthlyData;
+        break;
+      default:
+        monthlyArray = allMonthlyData.slice(-12);
+    }
 
     // Convert province data
     const totalProvinceCount = Object.values(provinceCounts).reduce((sum, count) => sum + count, 0);
@@ -132,7 +183,7 @@ const ProtestCharts: React.FC = () => {
     setDailyData(dailyArray);
     setMonthlyData(monthlyArray);
     setProvinceData(provinceArray);
-  }, [mapData]);
+  }, [mapData, dailyTimeRange, monthlyTimeRange]);
 
   if (loading || dailyData.length === 0) {
     return (
@@ -160,9 +211,22 @@ const ProtestCharts: React.FC = () => {
 
       {/* Daily Protests Chart - Line Chart */}
       <div className="mb-16">
-        <h3 className="text-2xl font-semibold text-white mb-6 text-center">
-          Daily Protest Count (Last 30 Days)
-        </h3>
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-semibold text-white">
+            Daily Protest Count
+          </h3>
+          <div className="w-48">
+            <select
+              value={dailyTimeRange}
+              onChange={(e) => setDailyTimeRange(e.target.value as 'last30' | 'lastMonth' | 'allTime')}
+              className="morphic-button-primary px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-white w-full"
+            >
+              <option value="last30">Last 30 Days</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="allTime">All Time</option>
+            </select>
+          </div>
+        </div>
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-lg">
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={dailyData}>
@@ -189,7 +253,10 @@ const ProtestCharts: React.FC = () => {
           </ResponsiveContainer>
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              Total protests in last 30 days: <span className="font-semibold text-[#00558c]">{dailyData.reduce((sum, item) => sum + item.count, 0)}</span>
+              Total protests in {
+                dailyTimeRange === 'last30' ? 'last 30 days' :
+                dailyTimeRange === 'lastMonth' ? 'last month' : 'all time'
+              }: <span className="font-semibold text-[#00558c]">{dailyData.reduce((sum, item) => sum + item.count, 0)}</span>
             </p>
           </div>
         </div>
@@ -197,9 +264,22 @@ const ProtestCharts: React.FC = () => {
 
       {/* Monthly Protests Chart - Bar Chart */}
       <div className="mb-16">
-        <h3 className="text-2xl font-semibold text-white mb-6 text-center">
-          Monthly Protest Count (Last 12 Months)
-        </h3>
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-semibold text-white">
+            Monthly Protest Count
+          </h3>
+          <div className="w-48">
+            <select
+              value={monthlyTimeRange}
+              onChange={(e) => setMonthlyTimeRange(e.target.value as 'last12' | 'lastYear' | 'allTime')}
+              className="morphic-button-primary px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-white w-full"
+            >
+              <option value="last12">Last 12 Months</option>
+              <option value="lastYear">Last Year</option>
+              <option value="allTime">All Time</option>
+            </select>
+          </div>
+        </div>
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-lg">
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={monthlyData}>
@@ -219,7 +299,10 @@ const ProtestCharts: React.FC = () => {
           </ResponsiveContainer>
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              Total protests in last 12 months: <span className="font-semibold text-[#00558c]">{monthlyData.reduce((sum, item) => sum + item.count, 0)}</span>
+              Total protests in {
+                monthlyTimeRange === 'last12' ? 'last 12 months' :
+                monthlyTimeRange === 'lastYear' ? 'last year' : 'all time'
+              }: <span className="font-semibold text-[#00558c]">{monthlyData.reduce((sum, item) => sum + item.count, 0)}</span>
             </p>
           </div>
         </div>

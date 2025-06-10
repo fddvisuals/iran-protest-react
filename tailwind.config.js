@@ -2,6 +2,7 @@
 export default {
     darkMode: ["class"],
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+    plugins: [require("tailwindcss-animate"), require("@tailwindcss/line-clamp")],
   theme: {
   	extend: {
   		borderRadius: {
@@ -50,6 +51,6 @@ export default {
   		}
   	}
   },
-  plugins: [import("tailwindcss-animate"), import("@tailwindcss/line-clamp")],
+  plugins: [require("tailwindcss-animate")],
 }
 
