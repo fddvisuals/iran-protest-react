@@ -277,21 +277,21 @@ const ProtestCharts: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto mt-16 px-4">
+    <div className="w-full sm:max-w-[1200px] sm:mx-auto sm:mt-16 sm:px-4">
       <div className="morphic-container">
-        <div className="p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
+        <div className="p-3 sm:p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
-            <h2 className="text-xl font-bold text-white">PROTEST ANALYTICS</h2>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-1.5 sm:w-2 h-6 sm:h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
+            <h2 className="text-lg sm:text-xl font-bold text-white">PROTEST ANALYTICS</h2>
           </div>
-          <div className="invisible px-6 py-3 rounded-xl text-sm font-medium">
+          <div className="invisible px-3 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium">
             See All Videos
           </div>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-3 sm:p-6">
         {/* Daily Protests Chart - Line Chart */}
         <div className="mb-16">
         <div className="flex justify-between items-center mb-6">
@@ -301,7 +301,7 @@ const ProtestCharts: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={() => downloadSVG(dailyChartRef, `daily-protests-${dailyTimeRange}.svg`)}
-              className="flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
+              className="hidden flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
             >
               <Download className="w-4 h-4" />
               <span>SVG</span>
@@ -373,7 +373,7 @@ const ProtestCharts: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={() => downloadSVG(monthlyChartRef, `monthly-protests-${monthlyTimeRange}.svg`)}
-              className="flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
+              className="hidden flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
             >
               <Download className="w-4 h-4" />
               <span>SVG</span>

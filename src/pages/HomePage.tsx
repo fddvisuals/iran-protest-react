@@ -149,9 +149,9 @@ const HomePage: React.FC = () => {
     <>
       <Header />
       
-      <div className="pt-[152px]">
+      <div className="pt-[60px] sm:pt-[75px] lg:pt-[152px]">
         {/* Full width image with fade effect - starts right after header */}
-        <div className="w-full relative mb-8 -mt-[152px]">
+        <div className="w-full relative mb-4 sm:mb-8 -mt-[60px] sm:-mt-[75px] lg:-mt-[152px]">
           <img 
             src={`${import.meta.env.BASE_URL}images/Visual_IranMap2.0_FeatureImage_v02.jpg`}
             alt="Iran Map Visual" 
@@ -163,35 +163,35 @@ const HomePage: React.FC = () => {
           />
         </div>
         
-        <div className="flex flex-col items-center justify-center max-w-[800px] mx-auto gap-8">
+        <div className="flex flex-col items-center justify-center max-w-[800px] mx-auto gap-4 sm:gap-8">
           {/* Title and byline outside the box */}
-          <div className="text-center">
-            <h1 className="font-heading font-black leading-[40px] lg:leading-[50px] m-0 mb-8">
-              <span className="text-[#00558c] text-[42px] lg:text-[56px] block mb-1">
+          <div className="text-center px-2 sm:px-4">
+            <h1 className="font-heading font-black leading-[28px] sm:leading-[40px] lg:leading-[50px] m-0 mb-4 sm:mb-8">
+              <span className="text-[#00558c] text-[28px] sm:text-[42px] lg:text-[56px] block mb-1">
                 MAPPING PROTESTS
               </span>
-              <span className="text-[#00558c] text-[42px] lg:text-[56px] block">
+              <span className="text-[#00558c] text-[28px] sm:text-[42px] lg:text-[56px] block">
                 IN IRAN
               </span>
             </h1>
             
             {/* Yellow accent divider */}
-            <div className="w-16 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 mx-auto mb-6 rounded-full"></div>
+            <div className="w-12 sm:w-16 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 mx-auto mb-4 sm:mb-6 rounded-full"></div>
             
-            <p className="font-sans font-bold leading-[30px]">
-              <span className="text-[#00558c] text-[20px] lg:text-[25px]">
+            <p className="font-sans font-bold leading-[24px] sm:leading-[30px]">
+              <span className="text-[#00558c] text-[16px] sm:text-[20px] lg:text-[25px]">
                 Mark Dubowitz
               </span>
             </p>
           </div>
         </div>
         
-        <div className="flex flex-col items-center justify-center max-w-[1200px] mx-auto mt-8 px-4 gap-8">
-          <div className="text-center space-y-4">
-            <div className="inline-flex items-center space-x-3 px-8 py-4 bg-white rounded-2xl shadow-lg">
-              <div className="w-3 h-3 bg-[#00558c] rounded-full live-counter-dot"></div>
-              <h1 className="font-sans text-[28px] leading-[32px] font-bold text-text-primary">
-                <span className="text-[#00558c] font-black text-[32px]">
+        <div className="flex flex-col items-center justify-center max-w-[1200px] mx-auto mt-4 sm:mt-8 px-2 sm:px-4 gap-4 sm:gap-8">
+          <div className="text-center space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center space-x-2 sm:space-x-3 px-4 sm:px-8 py-3 sm:py-4 bg-white rounded-xl sm:rounded-2xl shadow-lg">
+              <div className="w-2 sm:w-3 h-2 sm:h-3 bg-[#00558c] rounded-full live-counter-dot"></div>
+              <h1 className="font-sans text-[20px] sm:text-[28px] leading-[24px] sm:leading-[32px] font-bold text-text-primary">
+                <span className="text-[#00558c] font-black text-[24px] sm:text-[32px]">
                   {displayCount}
                 </span>
                 {' '}protest{displayCount !== 1 ? 's' : ''} {displayTimeframe}
@@ -199,93 +199,97 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           
-          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[16px] leading-[24px] text-text-primary/90 px-4">
+          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-2 sm:px-4">
             The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests, with video evidence where available.
           </p>
           
           {/* Statistics Cards */}
-          <div className="w-full max-w-4xl mx-auto px-4 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+          <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 mb-4 sm:mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 justify-items-center">
               {/* Minors Killed */}
-              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+              <div className="relative flex flex-col items-center space-y-2 sm:space-y-3 px-4 sm:px-6 py-4 sm:py-6 w-full"
                    style={{
-                     borderRadius: '16px',
+                     borderRadius: '12px',
                      background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
-                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
-                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                     boxShadow: '0 8px 20px rgba(220, 38, 38, 0.4), 0 3px 10px rgba(0, 0, 0, 0.15)',
+                     border: '1.5px solid rgba(239, 68, 68, 0.6)'
                    }}>
                 {/* Warning indicator */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
-                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
+                <h4 className="font-sans text-[14px] sm:text-[18px] font-bold text-white text-center drop-shadow-lg">
                   Minors Killed
                 </h4>
-                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.minorsKilled.toLocaleString()}
                 </p>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl pointer-events-none"></div>
               </div>
 
               {/* Total Killed */}
-              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+              <div className="relative flex flex-col items-center space-y-2 sm:space-y-3 px-4 sm:px-6 py-4 sm:py-6 w-full"
                    style={{
-                     borderRadius: '16px',
+                     borderRadius: '12px',
                      background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
-                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
-                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                     boxShadow: '0 8px 20px rgba(220, 38, 38, 0.4), 0 3px 10px rgba(0, 0, 0, 0.15)',
+                     border: '1.5px solid rgba(239, 68, 68, 0.6)'
                    }}>
                 {/* Warning indicator */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
-                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
-                  Total Killed
+                <h4 className="font-sans text-[14px] sm:text-[18px] font-bold text-white text-center drop-shadow-lg">
+                  Protestors Killed
                 </h4>
-                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.totalKilled.toLocaleString()}
                 </p>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
               </div>
 
               {/* Total Arrested */}
-              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+              <div className="relative flex flex-col items-center space-y-2 sm:space-y-3 px-4 sm:px-6 py-4 sm:py-6 w-full"
                    style={{
-                     borderRadius: '16px',
+                     borderRadius: '12px',
                      background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
-                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
-                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                     boxShadow: '0 8px 20px rgba(220, 38, 38, 0.4), 0 3px 10px rgba(0, 0, 0, 0.15)',
+                     border: '1.5px solid rgba(239, 68, 68, 0.6)'
                    }}>
                 {/* Warning indicator */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
-                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
-                  Total Arrested
+                <h4 className="font-sans text-[14px] sm:text-[18px] font-bold text-white text-center drop-shadow-lg">
+                  Protestors Arrested
                 </h4>
-                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.totalArrested.toLocaleString()}
                 </p>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl pointer-events-none"></div>
               </div>
             </div>
           </div>
           
-          <HorizontalVideoGrid />
         </div>
+      </div>
+      
+      {/* Video Grid - Full Width Container */}
+      <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-4 mb-4 sm:mb-8">
+        <HorizontalVideoGrid />
       </div>
       
       <TimeFilter />
       
-      <div className="w-full max-w-[1200px] mx-auto px-4">
+      <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-4">
         {/* Map and List Side by Side */}
-        <div className="w-full flex flex-col lg:flex-row gap-6">
+        <div className="w-full flex flex-col lg:flex-row gap-3 sm:gap-6">
             {/* Protest List Section - 40% */}
             <div className="w-full lg:w-2/5 relative z-10">
               <ProtestList onVideoClick={handleVideoClick} onProtestDetailsClick={handleProtestDetailsClick} />

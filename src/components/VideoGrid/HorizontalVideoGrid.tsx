@@ -190,16 +190,16 @@ const HorizontalVideoGrid: React.FC = () => {
   }
 
   return (
-    <div className="w-full morphic-container mb-8 relative">
-      <div className="p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
+    <div className="w-full morphic-container mb-0 relative">
+      <div className="p-3 sm:p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
-            <h2 className="text-xl font-bold text-white">RECENT PROTEST VIDEOS</h2>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-1.5 sm:w-2 h-6 sm:h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
+            <h2 className="text-lg sm:text-xl font-bold text-white">RECENT PROTEST VIDEOS</h2>
           </div>
           <Link 
             to="/all-videos"
-            className="morphic-button-primary px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-white"
+            className="morphic-button-primary px-3 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 text-white"
           >
             See All Videos
           </Link>
@@ -229,8 +229,8 @@ const HorizontalVideoGrid: React.FC = () => {
           </button>
         )}
         
-        <div className="px-6 py-6" ref={scrollRef}>
-          <div className="flex gap-6 overflow-x-auto overflow-y-hidden pb-4 morphic-scrollbar scroll-smooth">
+        <div className="px-3 sm:px-6 py-3 sm:py-6" ref={scrollRef}>
+          <div className="flex gap-3 sm:gap-6 overflow-x-auto overflow-y-hidden pb-2 sm:pb-4 morphic-scrollbar scroll-smooth">
             {visibleVideos.map((video, index) => {
               const videoId = getVideoId(video);
               const isPlaying = currentlyPlaying === videoId;
@@ -239,7 +239,7 @@ const HorizontalVideoGrid: React.FC = () => {
               return (
                 <div
                   key={`${videoId}-${index}`}
-                  className="flex-none w-64 h-96 morphic-video-item cursor-pointer group relative transition-all duration-300 transform-gpu"
+                  className="flex-none w-48 sm:w-64 h-72 sm:h-96 morphic-video-item cursor-pointer group relative transition-all duration-300 transform-gpu"
                   style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}
                 >
                   <video

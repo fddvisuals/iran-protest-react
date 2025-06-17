@@ -597,12 +597,49 @@
     padding: 20px;
   }
   
+  /* Remove horizontal margins for full-width containers on mobile */
+  .w-full.morphic-container {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  
   .morphic-video-item {
     padding: 12px;
   }
   
   .morphic-protest-item {
-    padding: 16px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+  }
+  
+  /* Ensure text doesn't overflow on mobile */
+  .morphic-protest-item h3 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .morphic-protest-item p {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  /* Ensure proper spacing for stacked elements */
+  .morphic-protest-item .flex-col {
+    align-items: flex-end;
+  }
+  
+  /* Fix line-clamp on mobile for better text overflow handling */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 }
 

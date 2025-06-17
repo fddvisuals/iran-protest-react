@@ -6,7 +6,7 @@ import AllVideosPage from './pages/AllVideosPage';
 function App() {
   return (
     <AppProvider>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         <div className="App">
           <Routes>
             <Route path="/" element={<HomePage />} />
