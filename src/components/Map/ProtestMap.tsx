@@ -175,7 +175,11 @@ const ProtestMap: React.FC = () => {
     // Debounce the update to improve performance
     updateTimeoutRef.current = setTimeout(() => {
       const bounds = mapRef.current?.getBounds();
-      if (!bounds) return;
+      if (!bounds) {
+        // If bounds are not available yet, show all data
+        setViewportFilteredData(filteredMapData);
+        return;
+      }
 
       const filteredData = filteredMapData.filter(protest => {
         const lng = parseFloat(protest.Longitude);
@@ -200,6 +204,18 @@ const ProtestMap: React.FC = () => {
       }
     };
   }, [updateViewportFilter]);
+
+  // Initial viewport filter on map load
+  useEffect(() => {
+    if (mapRef.current && filteredMapData.length > 0) {
+      // Small delay to ensure map is fully loaded
+      const timer = setTimeout(() => {
+        updateViewportFilter();
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [filteredMapData, updateViewportFilter]);
 
   const onClick = useCallback((event: MapLayerMouseEvent) => {
     const feature = event.features?.[0];

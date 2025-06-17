@@ -86,6 +86,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     return filterProtestsByTimeRange(videoData, timeFilter);
   }, [videoData, timeFilter]);
 
+  // Initialize viewportFilteredData with filteredMapData when filteredMapData changes
+  // This ensures the protest list shows data immediately on initial load
+  useEffect(() => {
+    // Set viewportFilteredData to all filtered data initially
+    // The map will then update this based on viewport when it loads
+    setViewportFilteredData(filteredMapData);
+  }, [filteredMapData]);
+
   const value: AppContextType = {
     mapData,
     videoData,

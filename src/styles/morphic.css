@@ -1,5 +1,25 @@
 /* Glassmorphism and Modern Morphic Styles */
 
+/* Blinking animation for live counter dot */
+@keyframes blink-live {
+  0%, 50% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(0, 85, 140, 0.7);
+  }
+  75% {
+    opacity: 0.3;
+    box-shadow: 0 0 0 4px rgba(0, 85, 140, 0);
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(0, 85, 140, 0);
+  }
+}
+
+.live-counter-dot {
+  animation: blink-live 2s infinite;
+}
+
 /* Base morphic container */
 .morphic-container {
   background: rgba(255, 255, 255, 0.15);

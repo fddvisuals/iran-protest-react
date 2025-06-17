@@ -167,7 +167,7 @@ const HomePage: React.FC = () => {
         <div className="flex flex-col items-center justify-center max-w-[1200px] mx-auto mt-8 px-4 gap-8">
           <div className="text-center space-y-4">
             <div className="inline-flex items-center space-x-3 px-8 py-4 bg-white rounded-2xl shadow-lg">
-              <div className="w-3 h-3 bg-[#00558c] rounded-full"></div>
+              <div className="w-3 h-3 bg-[#00558c] rounded-full live-counter-dot"></div>
               <h1 className="font-sans text-[28px] leading-[32px] font-bold text-text-primary">
                 <span className="text-[#00558c] font-black text-[32px]">
                   {displayCount}
