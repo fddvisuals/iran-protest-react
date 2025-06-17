@@ -1,20 +1,21 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
-import HomePage from './pages/HomePage.tsx';
-import AllVideosPage from './pages/AllVideosPage.tsx';
+import HomePage from './pages/HomePage';
+import AllVideosPage from './pages/AllVideosPage';
 
-const App: React.FC = () => {
+function App() {
   return (
     <AppProvider>
-      <Router basename="/iran-protest-react">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/all-videos" element={<AllVideosPage />} />
-        </Routes>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/all-videos" element={<AllVideosPage />} />
+          </Routes>
+        </div>
       </Router>
     </AppProvider>
   );
-};
+}
 
 export default App;

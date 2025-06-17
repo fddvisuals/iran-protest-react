@@ -2,9 +2,13 @@
 export default {
     darkMode: ["class"],
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
-    plugins: [require("tailwindcss-animate"), require("@tailwindcss/line-clamp")],
   theme: {
   	extend: {
+  		fontFamily: {
+  			'sans': ['lato', 'system-ui', 'sans-serif'],
+  			'body': ['lato', 'system-ui', 'sans-serif'],
+  			'heading': ['urw-din', 'system-ui', 'sans-serif'],
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -16,6 +20,7 @@ export default {
         fav: '#467aa9',
         tw: '#80eaf7',
         sas: '#bdbdbd',
+        'text-primary': '#6B7280',
   			sidebar: {
   				DEFAULT: 'hsl(var(--sidebar-background))',
   				foreground: 'hsl(var(--sidebar-foreground))',
@@ -51,6 +56,6 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [import("tailwindcss-animate"), import("@tailwindcss/line-clamp")],
 }
 

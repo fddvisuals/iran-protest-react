@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { fetchStatisticsData } from '../../utils/dataFetching';
 
 const Header: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [showTitle, setShowTitle] = useState<boolean>(false);
   
   useEffect(() => {
-    setLastUpdated('Jan 3, 2023');
+    const loadLastUpdated = async () => {
+      try {
+        const data = await fetchStatisticsData();
+        setLastUpdated(data.lastUpdated || 'Jan 3, 2023');
+      } catch (error) {
+        console.error('Error loading last updated date:', error);
+        setLastUpdated('Jan 3, 2023');
+      }
+    };
+    
+    loadLastUpdated();
   }, []);
 
   useEffect(() => {
@@ -29,23 +40,11 @@ const Header: React.FC = () => {
           rel="noopener noreferrer" 
           className="flex items-center justify-center w-[300px] h-full"
         >
-          <svg 
-            width="120" 
-            height="40" 
-            viewBox="0 0 120 40" 
-            className="text-white/90 hover:text-white transition-colors duration-300"
-          >
-            <text 
-              x="60" 
-              y="25" 
-              textAnchor="middle" 
-              fontSize="16" 
-              fontWeight="bold" 
-              fill="currentColor"
-            >
-              FDD VISUALS
-            </text>
-          </svg>
+          <img 
+            src={`${import.meta.env.BASE_URL}images/Visuals_Logo_Temporary_v01.svg`}
+            alt="FDD Visuals Logo" 
+            className="h-16 w-auto text-white/90 hover:opacity-80 transition-opacity duration-300"
+          />
         </a>
         
         {/* Center Title - Shows when scrolled */}
@@ -65,7 +64,7 @@ const Header: React.FC = () => {
             {/* Animated indicator */}
             <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse shadow-sm"></div>
             
-            <div className="flex flex-col items-end">
+            <div className="flex items-center space-x-2">
               <span className="text-white/70 text-xs font-medium uppercase tracking-wide">
                 Last Updated
               </span>

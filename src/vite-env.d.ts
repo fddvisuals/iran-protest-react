@@ -1,11 +1,11 @@
 /// <reference types="vite/client" />
 
-declare module "*.css" {
-  const content: string;
-  export default content;
+interface ImportMetaEnv {
+  readonly BASE_URL: string;
+  readonly VITE_APP_TITLE: string;
+  // more env variables...
 }
 
-declare module "*.css?inline" {
-  const content: string;
-  export default content;
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
 }

@@ -114,11 +114,11 @@ const HorizontalVideoGrid: React.FC = () => {
   if (loading) {
     return (
       <div className="w-full morphic-container mb-8">
-        <div className="p-6 border-b border-white/10 bg-gradient-to-r from-white/5 to-white/10">
+        <div className="p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-2 h-8 bg-gradient-to-b from-[#00558c] to-[#004778] rounded-full shadow-lg"></div>
-              <h2 className="text-xl font-bold text-white">Recent Protest Videos</h2>
+              <div className="w-2 h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
+              <h2 className="text-xl font-bold text-white">RECENT PROTEST VIDEOS</h2>
             </div>
             <Link 
               to="/all-videos"
@@ -131,7 +131,7 @@ const HorizontalVideoGrid: React.FC = () => {
         <div className="p-6">
           <div className="flex gap-6 overflow-x-auto pb-4">
             {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="flex-none w-64 h-80 morphic-loading rounded-2xl" style={{ animationDelay: `${index * 0.1}s` }}></div>
+              <div key={index} className="flex-none w-64 h-96 morphic-loading rounded-2xl" style={{ animationDelay: `${index * 0.1}s` }}></div>
             ))}
           </div>
         </div>
@@ -140,13 +140,12 @@ const HorizontalVideoGrid: React.FC = () => {
   }
 
   return (
-    <div className="w-full morphic-container mb-8 relative">
-      <div className="p-6 border-b border-white/10 bg-gradient-to-r from-white/5 to-white/10">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-2 h-8 bg-gradient-to-b from-[#00558c] to-[#004778] rounded-full shadow-lg"></div>
-            <h2 className="text-xl font-bold text-white">Recent Protest Videos</h2>
-          </div>
+    <div className="w-full morphic-container mb-8 relative">        <div className="p-6 border-b border-white/10 bg-[#00558c] rounded-t-2xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-8 bg-gradient-to-b from-[#E9ECEF] to-[#CED4DA] rounded-full shadow-lg"></div>
+              <h2 className="text-xl font-bold text-white">RECENT PROTEST VIDEOS</h2>
+            </div>
           <Link 
             to="/all-videos"
             className="morphic-button-primary px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-white"
@@ -166,7 +165,7 @@ const HorizontalVideoGrid: React.FC = () => {
             return (
               <div
                 key={`${videoId}-${index}`}
-                className="flex-none w-64 h-80 morphic-video-item cursor-pointer group relative transition-all duration-300 transform-gpu"
+                className="flex-none w-64 h-96 morphic-video-item cursor-pointer group relative transition-all duration-300 transform-gpu"
                 style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}
               >
                 <video

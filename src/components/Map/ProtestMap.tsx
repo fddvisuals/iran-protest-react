@@ -69,6 +69,37 @@ const unclusteredPointLayer = {
   }
 };
 
+// Highlighted point layer for selected protests
+const highlightedPointLayer = {
+  id: 'highlighted-point',
+  type: 'circle',
+  source: 'protests',
+  filter: ['!', ['has', 'point_count']],
+  paint: {
+    'circle-color': '#00558c',
+    'circle-opacity': 0.8,
+    'circle-radius': [
+      'case',
+      ['==', ['get', 'isHighlighted'], 'true'],
+      16, // Larger radius for highlighted
+      0   // No radius for non-highlighted
+    ],
+    'circle-stroke-width': [
+      'case',
+      ['==', ['get', 'isHighlighted'], 'true'],
+      4,  // Thicker stroke for highlighted
+      0
+    ],
+    'circle-stroke-color': '#E7AC51', // Yellow ring like eye icon
+    'circle-stroke-opacity': [
+      'case',
+      ['==', ['get', 'isHighlighted'], 'true'],
+      1,  // Full opacity for highlighted
+      0
+    ],
+  }
+};
+
 const ProtestMap: React.FC = () => {
   const { filteredMapData, selectedFeature, setHighlightedProtest, setViewportFilteredData } = useAppContext();
   const [viewState, setViewState] = useState({
@@ -84,10 +115,25 @@ const ProtestMap: React.FC = () => {
   // Memoize geojson conversion to avoid unnecessary recalculations
   const memoizedGeojsonData = useMemo(() => {
     if (filteredMapData.length > 0) {
-      return csvToGeoJSON(filteredMapData);
+      // Add highlight information to geojson data
+      const geojson = csvToGeoJSON(filteredMapData);
+      if (selectedFeature && geojson) {
+        geojson.features.forEach(feature => {
+          const props = feature.properties;
+          if (props && 
+              Math.abs(parseFloat(props.Longitude) - parseFloat(selectedFeature.Longitude)) < 0.0001 &&
+              Math.abs(parseFloat(props.Latitude) - parseFloat(selectedFeature.Latitude)) < 0.0001 &&
+              props.Date === selectedFeature.Date) {
+            props.isHighlighted = 'true';
+          } else {
+            props.isHighlighted = 'false';
+          }
+        });
+      }
+      return geojson;
     }
     return null;
-  }, [filteredMapData]);
+  }, [filteredMapData, selectedFeature]);
 
   useEffect(() => {
     setGeojsonData(memoizedGeojsonData);
@@ -105,12 +151,15 @@ const ProtestMap: React.FC = () => {
 
   useEffect(() => {
     if (selectedFeature) {
-      setViewState(prev => ({
-        ...prev,
-        longitude: parseFloat(selectedFeature.Longitude),
-        latitude: parseFloat(selectedFeature.Latitude),
-        zoom: 16
-      }));
+      // Smooth animation to selected feature
+      if (mapRef.current) {
+        mapRef.current.flyTo({
+          center: [parseFloat(selectedFeature.Longitude), parseFloat(selectedFeature.Latitude)],
+          zoom: 16,
+          duration: 1500, // 1.5 second smooth animation
+          essential: true
+        });
+      }
     }
   }, [selectedFeature]);
 
@@ -216,11 +265,19 @@ const ProtestMap: React.FC = () => {
 
   return (
     <div className="w-full h-[600px] morphic-container overflow-hidden relative">
-      {/* Reset View Button Overlay */}
-      <div className="absolute top-4 left-4 z-10">
+      {/* Map Title Overlay */}
+      {/* Reset Map Button */}
+      <div className="absolute top-4 right-4 z-10">
         <button
           onClick={resetMapView}
-          className="morphic-map-overlay px-3 py-2 text-xs font-medium text-white hover:bg-white/10 transition-colors duration-200 rounded flex items-center space-x-1"
+          className="px-3 py-2 text-xs font-heading font-bold text-white transition-colors duration-200 flex items-center space-x-1"
+          style={{
+            borderRadius: '4px',
+            border: '1px solid rgba(255, 255, 255, 0.20)',
+            background: '#00558C',
+            boxShadow: '0px 8px 24px 0px rgba(0, 0, 0, 0.10), 0px 1px 0px 1px rgba(255, 255, 255, 0.25) inset',
+            backdropFilter: 'blur(6px)'
+          }}
           title="Reset map view to show all protests"
         >
           <svg 
@@ -236,17 +293,19 @@ const ProtestMap: React.FC = () => {
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
             />
           </svg>
-          <span>Reset View</span>
+          <span className="uppercase">Reset View</span>
         </button>
       </div>
       
       <Map
         ref={mapRef}
         mapboxAccessToken={MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/mapbox/light-v11"
+        mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
         longitude={viewState.longitude}
         latitude={viewState.latitude}
         zoom={viewState.zoom}
+        minZoom={3.5} // Prevent zooming out beyond reset view level
+        maxZoom={20}  // Allow reasonable maximum zoom
         onMove={(evt: any) => {
           setViewState(prev => ({
             ...prev,
@@ -291,6 +350,7 @@ const ProtestMap: React.FC = () => {
             <Layer {...clusterLayer as any} />
             <Layer {...clusterCountLayer as any} />
             <Layer {...unclusteredPointLayer as any} />
+            <Layer {...highlightedPointLayer as any} />
           </Source>
         )}
       </Map>

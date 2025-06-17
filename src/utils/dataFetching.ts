@@ -28,15 +28,73 @@ export interface ProtestData {
   [key: string]: string; // Allow for additional properties
 }
 
+// Statistics data interface
+export interface StatisticsData {
+  minorsKilled: number;
+  totalKilled: number;
+  totalArrested: number;
+  lastUpdated: string;
+}
+
+// Google Sheets statistics URL - using gid=573718568 for the statistics sheet
+const STATISTICS_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTT_uQv7JKEk8An8zPxdgcwxRPNTuypy7XAZcavbSAqnKyHlFD1nB5yJ1Zaa9HiFXVchC9tEy4OPQv/pub?gid=573718568";
+
+// Fetch data from a specific range in the statistics sheet
+const fetchStatisticsRange = async (range: string): Promise<string> => {
+  try {
+    const response = await fetch(`${STATISTICS_SHEETS_URL}&range=${range}&single=true&output=csv`);
+    const text = await response.text();
+    return text.replace(/['"]+/g, "").trim();
+  } catch (error) {
+    console.error(`Error fetching statistics range ${range}:`, error);
+    return "";
+  }
+};
+
+// Fetch all statistics data
+export const fetchStatisticsData = async (): Promise<StatisticsData> => {
+  try {
+    const [minorsKilled, totalKilled, totalArrested, lastUpdated] = await Promise.all([
+      fetchStatisticsRange("a2"), // Minors killed
+      fetchStatisticsRange("b2"), // Total killed
+      fetchStatisticsRange("c2"), // Total arrested
+      fetchStatisticsRange("e2")  // Last updated date
+    ]);
+
+    // Helper function to parse numbers that might contain commas
+    const parseNumber = (value: string): number => {
+      // Remove commas and other non-numeric characters except decimal points
+      const cleanValue = value.replace(/[,\s]/g, '');
+      const parsed = parseInt(cleanValue, 10);
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
+    return {
+      minorsKilled: parseNumber(minorsKilled),
+      totalKilled: parseNumber(totalKilled),
+      totalArrested: parseNumber(totalArrested),
+      lastUpdated: lastUpdated || ""
+    };
+  } catch (error) {
+    console.error('Error fetching statistics data:', error);
+    return {
+      minorsKilled: 0,
+      totalKilled: 0,
+      totalArrested: 0,
+      lastUpdated: ""
+    };
+  }
+}
+
 export const fetchGoogleSheetsData = (): Promise<ProtestData[]> => {
   return new Promise((resolve, reject) => {
     Papa.parse(GOOGLE_SHEETS_URL, {
       download: true,
       header: true,
-      complete: (result) => {
+      complete: (result: any) => {
         resolve(result.data as ProtestData[]);
       },
-      error: (error) => {
+      error: (error: any) => {
         reject(error);
       }
     });
@@ -154,33 +212,4 @@ export const filterProtestsByTimeRange = (protests: ProtestData[], timeFilter: T
 // Utility function to count protests for a given time filter
 export const getProtestCountByTimeFilter = (protests: ProtestData[], timeFilter: TimeFilter): number => {
   return filterProtestsByTimeRange(protests, timeFilter).length;
-};
-
-// Utility function to get monthly protest count
-export const getProtestsThisMonth = (protests: ProtestData[]): number => {
-  if (!protests || protests.length === 0) return 0;
-  
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-  
-  console.log('Counting monthly protests from', startOfMonth.toDateString(), 'to', endOfMonth.toDateString());
-  
-  const filteredProtests = protests.filter(protest => {
-    if (!protest.Date || protest.Date.trim() === '') return false;
-    
-    try {
-      const protestDate = new Date(protest.Date);
-      if (isNaN(protestDate.getTime())) return false;
-      
-      return protestDate >= startOfMonth && protestDate <= endOfMonth;
-    } catch (error) {
-      console.warn('Invalid date format:', protest.Date, error);
-      return false;
-    }
-  });
-  
-  console.log('Found', filteredProtests.length, 'protests this month');
-  
-  return filteredProtests.length;
 };

@@ -227,7 +227,7 @@ const CompactVideoGrid: React.FC = () => {
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M16 4C18.2 4 20 5.8 20 8C20 10.2 18.2 12 16 12C13.8 12 12 10.2 12 8C12 5.8 13.8 4 16 4ZM8 12C10.2 12 12 13.8 12 16C12 18.2 10.2 20 8 20C5.8 20 4 18.2 4 16C4 13.8 5.8 12 8 12ZM8 6C9.1 6 10 6.9 10 8C10 9.1 9.1 10 8 10C6.9 10 6 9.1 6 8C6 6.9 6.9 6 8 6Z"/>
                   </svg>
-                  {hoveredVideo.Estimated_Size} people
+                  {hoveredVideo.Estimated_Size}
                 </div>
               )}
             </div>

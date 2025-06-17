@@ -110,7 +110,7 @@ const VideoItem = ({ video }: VideoItemProps) => {
       className="relative flex flex-col gap-4 group morphic-floating"
       onClick={handleVideoClick}
     >
-      {!isLoaded && <div className="w-full h-[400px] morphic-loading rounded-3xl"></div>}
+      {!isLoaded && <div className="w-full h-[500px] morphic-loading rounded-3xl"></div>}
       
       <div className="morphic-video-item">
         {isInView && (
@@ -118,7 +118,7 @@ const VideoItem = ({ video }: VideoItemProps) => {
             ref={videoRef}
             src={videoUrl}
             className={`
-              w-full h-auto min-h-[300px] max-h-[500px] object-contain cursor-pointer rounded-[19px] bg-black transition-all duration-500
+              w-full h-auto min-h-[400px] max-h-[600px] object-cover cursor-pointer rounded-[19px] bg-black transition-all duration-500
               ${!isLoaded ? 'opacity-0' : 'opacity-100'}
             `}
             style={{ transition: 'opacity 0.3s ease, transform 0.3s ease' }}
@@ -131,7 +131,7 @@ const VideoItem = ({ video }: VideoItemProps) => {
         )}
         
         {!isInView && (
-          <div className="w-full h-[400px] bg-gray-800 rounded-3xl flex items-center justify-center">
+          <div className="w-full h-[500px] bg-gray-800 rounded-3xl flex items-center justify-center">
             <div className="text-white/50 text-sm">Loading...</div>
           </div>
         )}

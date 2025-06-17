@@ -5,6 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom CSS variables */
+:root {
+  --text-primary: #6B7280;
+  --text-secondary: rgba(107, 114, 128, 0.8);
+  --text-tertiary: rgba(107, 114, 128, 0.6);
+}
+
 /* Custom blinking animation for highlighted protests */
 @keyframes blink {
   0%, 50% { 
@@ -35,22 +42,38 @@
 
 /* Global styles */
 body {
-  margin-top: 152px;
-  font-family: 'Lato', sans-serif;
-  background: linear-gradient(135deg, #0a1a2e 0%, #16213e 25%, #1a2847 50%, #0f3460 75%, #0d2946 100%);
+  margin-top: 0;
+  font-family: 'lato', sans-serif;
+  background: #E9ECEF;
   min-height: 100vh;
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6, .heading {
+  font-family: 'urw-din', sans-serif;
+}
+
+/* URW DIN font cap height to baseline alignment */
+.font-heading,
+h1, h2, h3, h4, h5, h6,
+[class*="font-heading"] {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Specific adjustments for URW DIN text elements */
+.urw-din-text {
+  font-family: 'urw-din', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 /* Custom component styles */
 @layer components {
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-clamp: 3;
-  }
-  
   .video-grid {
     @apply grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 auto-rows-auto gap-4 p-4;
   }
