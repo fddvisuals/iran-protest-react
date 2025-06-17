@@ -33,6 +33,11 @@ const HomePage: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const mapRef = useRef<MapRef>(null);
   
+  // Protest details modal state
+  const [selectedProtest, setSelectedProtest] = useState<ProtestData | null>(null);
+  const [showProtestModal, setShowProtestModal] = useState(false);
+  const protestMapRef = useRef<MapRef>(null);
+  
   // Fetch statistics data
   useEffect(() => {
     const loadStatistics = async () => {
@@ -72,6 +77,17 @@ const HomePage: React.FC = () => {
       videoRef.current.pause();
     }
   };
+  
+  // Protest details modal handlers
+  const handleProtestDetailsClick = (protest: ProtestData) => {
+    setSelectedProtest(protest);
+    setShowProtestModal(true);
+  };
+
+  const closeProtestModal = () => {
+    setShowProtestModal(false);
+    setSelectedProtest(null);
+  };
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -99,8 +115,8 @@ const HomePage: React.FC = () => {
     });
   };
 
-  const getLocation = (video: ProtestData) => {
-    const parts = [video.City_Village, video.County, video.Province].filter(Boolean);
+  const getLocation = (data: ProtestData) => {
+    const parts = [data.City_Village, data.County, data.Province].filter(Boolean);
     return parts.join(', ');
   };
 
@@ -121,6 +137,12 @@ const HomePage: React.FC = () => {
     if (!selectedVideo || !selectedVideo.Longitude || !selectedVideo.Latitude) return null;
     
     return csvToGeoJSON([selectedVideo]);
+  };
+  
+  const getProtestMapData = () => {
+    if (!selectedProtest || !selectedProtest.Longitude || !selectedProtest.Latitude) return null;
+    
+    return csvToGeoJSON([selectedProtest]);
   };
 
   return (
@@ -266,7 +288,7 @@ const HomePage: React.FC = () => {
         <div className="w-full flex flex-col lg:flex-row gap-6">
             {/* Protest List Section - 40% */}
             <div className="w-full lg:w-2/5 relative z-10">
-              <ProtestList onVideoClick={handleVideoClick} />
+              <ProtestList onVideoClick={handleVideoClick} onProtestDetailsClick={handleProtestDetailsClick} />
             </div>
             
             {/* Map Section - 60% */}
@@ -286,6 +308,106 @@ const HomePage: React.FC = () => {
           <p className="font-medium">Creative direction by <span className="font-bold">Daniel Ackerman</span></p>
         </div>
       </div>
+      
+      {/* Protest Details Modal */}
+      {showProtestModal && selectedProtest && (
+        <div className="fixed inset-0 z-[99999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white/90 backdrop-blur-xl rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-white/40 shadow-2xl relative z-[99999]">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b border-white/30 bg-white/20 backdrop-blur-sm">
+              <h3 className="text-2xl font-bold text-gray-800">Protest Details</h3>
+              <button
+                onClick={closeProtestModal}
+                className="text-gray-600 hover:text-gray-800 text-2xl transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/30"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto bg-white/5 backdrop-blur-sm">
+              {/* Location */}
+              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                  <MapPin className="w-5 h-5 mr-2 text-[#00558c]" />
+                  Location
+                </h4>
+                <p className="text-gray-700 text-lg">{getLocation(selectedProtest)}</p>
+              </div>
+              
+              {/* Date */}
+              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                  <Calendar className="w-5 h-5 mr-2 text-[#00558c]" />
+                  Date
+                </h4>
+                <p className="text-gray-700 text-lg">{formatDate(selectedProtest.Date)}</p>
+              </div>
+              
+              {/* Crowd Size */}
+              {selectedProtest.Estimated_Size && (
+                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                    <Users className="w-5 h-5 mr-2 text-[#00558c]" />
+                    Estimated Crowd Size
+                  </h4>
+                  <p className="text-gray-700 text-lg">{selectedProtest.Estimated_Size}</p>
+                </div>
+              )}
+              
+              {/* Description */}
+              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">Description</h4>
+                <p className="text-gray-700 leading-relaxed">{selectedProtest.Description}</p>
+              </div>
+              
+              {/* Map */}
+              {selectedProtest.Longitude && selectedProtest.Latitude && (
+                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Map Location</h4>
+                  <div className="h-48 rounded-xl overflow-hidden border border-white/40 shadow-lg">
+                    <Map
+                      ref={protestMapRef}
+                      mapboxAccessToken={MAPBOX_TOKEN}
+                      mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
+                      longitude={parseFloat(selectedProtest.Longitude)}
+                      latitude={parseFloat(selectedProtest.Latitude)}
+                      zoom={12}
+                      interactive={true}
+                    >
+                      {getProtestMapData() && (
+                        <Source
+                          id="protest-location"
+                          type="geojson"
+                          data={getProtestMapData()!}
+                        >
+                          <Layer {...pointLayer} />
+                        </Source>
+                      )}
+                      <NavigationControl position="top-right" />
+                    </Map>
+                  </div>
+                </div>
+              )}
+              
+              {/* Source */}
+              {selectedProtest.Link && (
+                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Source</h4>
+                  <a 
+                    href={selectedProtest.Link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#00558c] hover:text-[#004778] transition-colors font-medium underline"
+                  >
+                    {selectedProtest.Source || 'View Source'}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Video Modal */}
       {showVideoModal && selectedVideo && (

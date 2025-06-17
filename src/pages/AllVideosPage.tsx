@@ -303,7 +303,7 @@ const AllVideosPage: React.FC = () => {
                       </div>
                     )}
                     
-                    <div className="flex items-center space-x-1 text-[#00558c]">
+                    <div className="flex items-center space-x-1 text-yellow-600">
                       <Eye className="w-4 h-4" />
                       <span>View Video</span>
                     </div>

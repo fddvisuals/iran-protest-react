@@ -8,7 +8,8 @@ const LOAD_MORE_COUNT = 30;
 
 const ProtestList: React.FC<{
   onVideoClick?: (protest: ProtestData) => void;
-}> = ({ onVideoClick }) => {
+  onProtestDetailsClick?: (protest: ProtestData) => void;
+}> = ({ onVideoClick, onProtestDetailsClick }) => {
   const { viewportFilteredData, loading, setSelectedFeature, highlightedProtest } = useAppContext();
   const listRef = useRef<HTMLDivElement>(null);
   const [displayCount, setDisplayCount] = useState(INITIAL_DISPLAY_COUNT);
@@ -38,6 +39,13 @@ const ProtestList: React.FC<{
   const handleLoadMore = useCallback(() => {
     setDisplayCount(prev => Math.min(prev + LOAD_MORE_COUNT, sortedProtests.length));
   }, [sortedProtests.length]);
+  
+  // Handle view details click
+  const handleViewDetails = useCallback((protest: ProtestData, e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onProtestDetailsClick?.(protest);
+  }, [onProtestDetailsClick]);
   
   // Scroll to highlighted protest
   useEffect(() => {
@@ -129,6 +137,7 @@ const ProtestList: React.FC<{
                   isHighlighted={isHighlighted}
                   onClick={handleProtestClick}
                   onVideoClick={onVideoClick}
+                  onViewDetails={handleViewDetails}
                 />
               );
             })}
@@ -157,7 +166,8 @@ const ProtestItem = React.memo<{
   isHighlighted: boolean;
   onClick: (protest: ProtestData) => void;
   onVideoClick?: (protest: ProtestData) => void;
-}>(({ protest, isHighlighted, onClick, onVideoClick }) => {
+  onViewDetails: (protest: ProtestData, e: React.MouseEvent) => void;
+}>(({ protest, isHighlighted, onClick, onViewDetails }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [showSeeMore, setShowSeeMore] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
@@ -218,7 +228,7 @@ const ProtestItem = React.memo<{
             </div>
           </div>
           
-          {/* Right section: Date, crowd size, and video button */}
+          {/* Right section: Date and crowd size */}
           <div className="flex items-center gap-2 flex-shrink-0">
             <div className={`flex items-center text-xs ${isHighlighted ? "text-yellow-200" : "text-text-primary/80"}`}>
               <div className={`p-1 rounded-lg mr-1 ${isHighlighted ? "bg-yellow-400/20" : "bg-white/10"}`}>
@@ -237,26 +247,6 @@ const ProtestItem = React.memo<{
               </div>
               <span className="font-medium text-xs truncate">{protest.Estimated_Size}</span>
             </div>
-            
-            {/* Video Eye Icon Button */}
-            {onVideoClick && protest.MediaURL && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  onVideoClick(protest);
-                }}
-                className={`p-1.5 rounded-full transition-all duration-300 hover:scale-110 relative z-50 pointer-events-auto ${
-                  isHighlighted 
-                    ? "bg-yellow-400/30 text-yellow-200 hover:bg-yellow-400/40" 
-                    : "bg-gradient-to-r from-[#E7AC51] to-[#D4A044] text-white hover:from-[#D4A044] hover:to-[#C19139] shadow-md"
-                }`}
-                title="View Video"
-                type="button"
-              >
-                <Eye className="w-3 h-3" />
-              </button>
-            )}
           </div>
         </div>
         
@@ -266,27 +256,46 @@ const ProtestItem = React.memo<{
             ref={textRef}
             className={`text-sm leading-relaxed text-left w-full ${
               isExpanded ? '' : 'line-clamp-3'
-            } ${isHighlighted ? "text-yellow-100" : "text-text-primary/90"}`}
+            } ${isHighlighted ? "text-yellow-100" : "text-text-primary/90"} mb-3`}
           >
             {protest.Description}
           </p>
-          {showSeeMore && (
+          
+          {/* Bottom row with See More/Less and View Details buttons */}
+          <div className="flex items-center justify-between">
+            {/* See More/Less button */}
+            <div>
+              {showSeeMore && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    setIsExpanded(!isExpanded);
+                  }}
+                  className={`text-xs font-medium transition-colors relative z-50 pointer-events-auto ${
+                    isHighlighted 
+                      ? "text-yellow-300 hover:text-yellow-100" 
+                      : "text-blue-300 hover:text-blue-100"
+                  }`}
+                  type="button"
+                >
+                  {isExpanded ? 'See less' : 'See more...'}
+                </button>
+              )}
+            </div>
+            
+            {/* View Details button */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setIsExpanded(!isExpanded);
-              }}
-              className={`text-xs mt-1 font-medium transition-colors relative z-50 pointer-events-auto ${
-                isHighlighted 
-                  ? "text-yellow-300 hover:text-yellow-100" 
-                  : "text-blue-300 hover:text-blue-100"
+              onClick={(e) => onViewDetails(protest, e)}
+              className={`flex items-center space-x-1 text-xs cursor-pointer hover:opacity-80 transition-opacity relative z-50 pointer-events-auto ${
+                isHighlighted ? "text-yellow-300" : "text-yellow-600 hover:text-yellow-500"
               }`}
               type="button"
             >
-              {isExpanded ? 'See less' : 'See more...'}
+              <Eye className="w-4 h-4" />
+              <span>View Details</span>
             </button>
-          )}
+          </div>
         </div>
       </div>
     </div>
