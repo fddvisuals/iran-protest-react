@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAppContext } from '../../context/AppContext';
-import { ProtestData, fetchStatisticsData, StatisticsData } from '../../utils/dataFetching';
+import { ProtestData } from '../../utils/dataFetching';
 import { Download } from 'lucide-react';
 import {
   BarChart,
@@ -103,30 +103,10 @@ const ProtestCharts: React.FC = () => {
   const [provinceData, setProvinceData] = useState<ProvinceData[]>([]);
   const [dailyTimeRange, setDailyTimeRange] = useState<'last30' | 'lastMonth' | 'allTime'>('last30');
   const [monthlyTimeRange, setMonthlyTimeRange] = useState<'last12' | 'lastYear' | 'allTime'>('last12');
-  const [statistics, setStatistics] = useState<StatisticsData>({ 
-    minorsKilled: 81, 
-    totalKilled: 648, 
-    totalArrested: 25830, 
-    lastUpdated: '' 
-  });
   
   // Refs for chart containers
   const dailyChartRef = useRef<HTMLDivElement>(null);
   const monthlyChartRef = useRef<HTMLDivElement>(null);
-
-  // Fetch statistics data
-  useEffect(() => {
-    const loadStatistics = async () => {
-      try {
-        const data = await fetchStatisticsData();
-        setStatistics(data);
-      } catch (error) {
-        console.error('Error loading statistics:', error);
-      }
-    };
-    
-    loadStatistics();
-  }, []);
 
   // Download SVG function
   const downloadSVG = (chartRef: React.RefObject<HTMLDivElement>, filename: string) => {
@@ -312,56 +292,6 @@ const ProtestCharts: React.FC = () => {
       </div>
 
       <div className="p-6">
-        {/* Statistics Overview */}
-        <div className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 justify-items-center max-w-4xl mx-auto">
-            {/* Minors Killed */}
-            <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
-                 style={{
-                   borderRadius: '12px',
-                   background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-                 }}>
-              <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">
-                Minors Killed
-              </h4>
-              <p className="text-gray-600 font-black text-[32px] leading-none">
-                {statistics.minorsKilled.toLocaleString()}
-              </p>
-            </div>
-
-            {/* Total Killed */}
-            <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
-                 style={{
-                   borderRadius: '12px',
-                   background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-                 }}>
-              <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">
-                Killed
-              </h4>
-              <p className="text-gray-600 font-black text-[32px] leading-none">
-                {statistics.totalKilled.toLocaleString()}
-              </p>
-            </div>
-
-            {/* Total Arrested */}
-            <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
-                 style={{
-                   borderRadius: '12px',
-                   background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-                 }}>
-              <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">
-                Arrested
-              </h4>
-              <p className="text-gray-600 font-black text-[32px] leading-none">
-                {statistics.totalArrested.toLocaleString()}
-              </p>
-            </div>
-
-            {/* Empty fourth column for spacing */}
-            <div></div>
-          </div>
-        </div>
-
         {/* Daily Protests Chart - Line Chart */}
         <div className="mb-16">
         <div className="flex justify-between items-center mb-6">

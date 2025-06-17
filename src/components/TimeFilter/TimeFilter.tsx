@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAppContext } from '../../context/AppContext';
 import { TimeFilter as TimeFilterType, getProtestCountByTimeFilter } from '../../utils/dataFetching';
-import { formatNumberSafe } from '../../utils/numberFormat';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
 const TimeFilter: React.FC = () => {
@@ -27,7 +26,7 @@ const TimeFilter: React.FC = () => {
             <div className="flex flex-col items-center space-y-2">
               <span className="whitespace-nowrap text-lg font-bold">Last Week</span>
               <span className="text-sm font-bold px-4 py-2 w-[102px] h-8 flex items-center justify-center bg-gradient-to-r from-[#E3E8F0] to-[#CCD5E0] data-[state=active]:bg-white/30 data-[state=active]:text-black text-black rounded-full">
-                {formatNumberSafe(lastWeekCount)}
+                {lastWeekCount.toLocaleString()}
               </span>
             </div>
           </TabsTrigger>
@@ -38,7 +37,7 @@ const TimeFilter: React.FC = () => {
             <div className="flex flex-col items-center space-y-2">
               <span className="whitespace-nowrap text-lg font-bold">Last Month</span>
               <span className="text-sm font-bold px-4 py-2 w-[102px] h-8 flex items-center justify-center bg-gradient-to-r from-[#E3E8F0] to-[#CCD5E0] data-[state=active]:bg-white/30 data-[state=active]:text-black text-black rounded-full">
-                {formatNumberSafe(lastMonthCount)}
+                {lastMonthCount.toLocaleString()}
               </span>
             </div>
           </TabsTrigger>
@@ -49,7 +48,7 @@ const TimeFilter: React.FC = () => {
             <div className="flex flex-col items-center space-y-2">
               <span className="whitespace-nowrap text-lg font-bold">All Time</span>
               <span className="text-sm font-bold px-4 py-2 w-[102px] h-8 flex items-center justify-center bg-gradient-to-r from-[#E3E8F0] to-[#CCD5E0] data-[state=active]:bg-white/30 data-[state=active]:text-black text-black rounded-full">
-                {formatNumberSafe(allTimeCount)}
+                {allTimeCount.toLocaleString()}
               </span>
             </div>
           </TabsTrigger>

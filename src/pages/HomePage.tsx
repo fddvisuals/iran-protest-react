@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { ProtestData, getProtestCountByTimeFilter, getModifiedUrl } from '../utils/dataFetching';
+import { ProtestData, getProtestCountByTimeFilter, getModifiedUrl, fetchStatisticsData, StatisticsData } from '../utils/dataFetching';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import HorizontalVideoGrid from '../components/VideoGrid/HorizontalVideoGrid';
@@ -17,6 +17,14 @@ const MAPBOX_TOKEN = "pk.eyJ1IjoiZmRkdmlzdWFscyIsImEiOiJjbGZyODY1dncwMWNlM3pvdTN
 const HomePage: React.FC = () => {
   const { mapData, loading } = useAppContext();
   
+  // Statistics state
+  const [statistics, setStatistics] = useState<StatisticsData>({ 
+    minorsKilled: 0, 
+    totalKilled: 0, 
+    totalArrested: 0, 
+    lastUpdated: ''
+  });
+  
   // Video popup state
   const [selectedVideo, setSelectedVideo] = useState<ProtestData | null>(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -24,6 +32,20 @@ const HomePage: React.FC = () => {
   const [videoMuted, setVideoMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mapRef = useRef<MapRef>(null);
+  
+  // Fetch statistics data
+  useEffect(() => {
+    const loadStatistics = async () => {
+      try {
+        const data = await fetchStatisticsData();
+        setStatistics(data);
+      } catch (error) {
+        console.error('Error loading statistics:', error);
+      }
+    };
+    
+    loadStatistics();
+  }, []);
   
   // Always show weekly protest count in the top section (not affected by filter selection)
   const weeklyProtestCount = loading ? 0 : getProtestCountByTimeFilter(mapData, 'last-week');
@@ -158,6 +180,80 @@ const HomePage: React.FC = () => {
           <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[16px] leading-[24px] text-text-primary/90 px-4">
             The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests, with video evidence where available.
           </p>
+          
+          {/* Statistics Cards */}
+          <div className="w-full max-w-4xl mx-auto px-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+              {/* Minors Killed */}
+              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+                   style={{
+                     borderRadius: '16px',
+                     background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
+                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
+                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                   }}>
+                {/* Warning indicator */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
+                  Minors Killed
+                </h4>
+                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                  {statistics.minorsKilled.toLocaleString()}
+                </p>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
+              </div>
+
+              {/* Total Killed */}
+              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+                   style={{
+                     borderRadius: '16px',
+                     background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
+                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
+                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                   }}>
+                {/* Warning indicator */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
+                  Total Killed
+                </h4>
+                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                  {statistics.totalKilled.toLocaleString()}
+                </p>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
+              </div>
+
+              {/* Total Arrested */}
+              <div className="relative flex flex-col items-center space-y-3 px-6 py-6 w-full transform transition-all duration-300 hover:scale-105"
+                   style={{
+                     borderRadius: '16px',
+                     background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.90) 0%, rgba(185, 28, 28, 0.85) 50%, rgba(153, 27, 27, 0.90) 100%)',
+                     boxShadow: '0 10px 25px rgba(220, 38, 38, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)',
+                     border: '2px solid rgba(239, 68, 68, 0.6)'
+                   }}>
+                {/* Warning indicator */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-4 h-4 text-red-800" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h4 className="font-sans text-[18px] font-bold text-white text-center drop-shadow-lg">
+                  Total Arrested
+                </h4>
+                <p className="text-white font-black text-[36px] leading-none drop-shadow-lg">
+                  {statistics.totalArrested.toLocaleString()}
+                </p>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
+              </div>
+            </div>
+          </div>
           
           <HorizontalVideoGrid />
         </div>
