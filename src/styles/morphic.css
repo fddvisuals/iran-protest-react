@@ -643,6 +643,56 @@
   }
 }
 
+/* Mobile video playback optimizations */
+@media screen and (max-width: 768px) {
+  /* Force inline video playback on mobile */
+  video {
+    -webkit-playsinline: true;
+    /* Prevent zoom on tap */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Optimize video controls for touch */
+  .morphic-video-item video {
+    /* Ensure videos don't trigger full screen on tap */
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+  
+  /* Make video controls more touch-friendly */
+  .morphic-video-item button {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Improve horizontal scrolling performance */
+  .morphic-scrollbar {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  video {
+    -webkit-playsinline: true !important;
+    object-fit: cover;
+    /* Prevent video from breaking out of container */
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  /* Fix video aspect ratio on iOS */
+  .morphic-video-item video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
 /* Performance optimizations */
 @media (prefers-reduced-motion: reduce) {
   .morphic-container,

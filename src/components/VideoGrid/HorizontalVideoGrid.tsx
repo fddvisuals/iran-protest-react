@@ -4,6 +4,7 @@ import { useAppContext } from '../../context/AppContext';
 import { ProtestData } from '../../utils/dataFetching';
 import { getModifiedUrl } from '../../utils/dataFetching';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { setMobileVideoAttributes, playVideoSafely } from '../../utils/videoUtils';
 
 const HorizontalVideoGrid: React.FC = () => {
   const { filteredVideoData, loading } = useAppContext();
@@ -94,7 +95,7 @@ const HorizontalVideoGrid: React.FC = () => {
           }
         }
         // Play the new video
-        videoElement.play().catch(() => console.log("Playback prevented"));
+        playVideoSafely(videoElement);
         setCurrentlyPlaying(videoId);
       }
     }
@@ -126,6 +127,10 @@ const HorizontalVideoGrid: React.FC = () => {
     const videoId = getVideoId(video);
     if (element) {
       videoRefs.current.set(videoId, element);
+      
+      // Set mobile-friendly attributes
+      setMobileVideoAttributes(element);
+      
       // Set initial muted state
       element.muted = mutedVideos.has(videoId);
       
@@ -249,6 +254,8 @@ const HorizontalVideoGrid: React.FC = () => {
                     muted={isMuted}
                     loop
                     preload="metadata"
+                    playsInline
+                    webkit-playsinline="true"
                   />
                   
                   {/* Video Controls Overlay */}

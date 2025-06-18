@@ -126,6 +126,8 @@ const VideoItem = ({ video }: VideoItemProps) => {
             loop
             muted={isMuted}
             preload="metadata"
+            playsInline
+            webkit-playsinline="true"
             onLoadedData={handleVideoLoaded}
           />
         )}

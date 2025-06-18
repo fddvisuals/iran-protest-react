@@ -145,6 +145,8 @@ const CompactVideoGrid: React.FC = () => {
               muted
               loop
               preload="metadata"
+              playsInline
+              webkit-playsinline="true"
             />
             
             {/* Video overlay info */}
@@ -204,6 +206,8 @@ const CompactVideoGrid: React.FC = () => {
             src={`https://fdd.box.com/shared/static/${getModifiedUrl(hoveredVideo.MediaURL)}.mp4`}
             muted
             loop
+            playsInline
+            webkit-playsinline="true"
           />
           
           {/* Video info overlay */}
