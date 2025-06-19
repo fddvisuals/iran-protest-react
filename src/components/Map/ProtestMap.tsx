@@ -316,7 +316,7 @@ const ProtestMap: React.FC = () => {
       <Map
         ref={mapRef}
         mapboxAccessToken={MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
+        mapStyle="mapbox://styles/fddvisuals/cmc27wmsr002o01qlcu8n7zy3"
         longitude={viewState.longitude}
         latitude={viewState.latitude}
         zoom={viewState.zoom}

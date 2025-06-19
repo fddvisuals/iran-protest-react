@@ -165,7 +165,7 @@ const HomePage: React.FC = () => {
         
         <div className="flex flex-col items-center justify-center max-w-[800px] mx-auto gap-4 sm:gap-8">
           {/* Title and byline outside the box */}
-          <div className="text-center px-2 sm:px-4">
+          <div className="text-center px-4 sm:px-4">
             <h1 className="font-heading font-black leading-[28px] sm:leading-[40px] lg:leading-[50px] m-0 mb-4 sm:mb-8">
               <span className="text-[#00558c] text-[28px] sm:text-[42px] lg:text-[56px] block mb-1">
                 MAPPING PROTESTS
@@ -186,7 +186,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
         
-        <div className="flex flex-col items-center justify-center max-w-[1200px] mx-auto mt-4 sm:mt-8 px-2 sm:px-4 gap-4 sm:gap-8">
+        <div className="flex flex-col items-center justify-center max-w-[1200px] mx-auto mt-4 sm:mt-8 px-4 sm:px-4 gap-4 sm:gap-8">
           <div className="text-center space-y-3 sm:space-y-4">
             <div className="inline-flex items-center space-x-2 sm:space-x-3 px-4 sm:px-8 py-3 sm:py-4 bg-white rounded-xl sm:rounded-2xl shadow-lg">
               <div className="w-2 sm:w-3 h-2 sm:h-3 bg-[#00558c] rounded-full live-counter-dot"></div>
@@ -199,12 +199,12 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           
-          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-2 sm:px-4">
+          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-4 sm:px-4">
             The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests, with video evidence where available.
           </p>
           
           {/* Statistics Cards */}
-          <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 mb-4 sm:mb-8">
+          <div className="w-full max-w-4xl mx-auto px-4 sm:px-4 mb-4 sm:mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 justify-items-center">
               {/* Minors Killed */}
               <div className="relative flex flex-col items-center space-y-2 sm:space-y-3 px-4 sm:px-6 py-4 sm:py-6 w-full"
@@ -281,13 +281,13 @@ const HomePage: React.FC = () => {
       </div>
       
       {/* Video Grid - Full Width Container */}
-      <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-4 mb-4 sm:mb-8">
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-4 mb-4 sm:mb-8">
         <HorizontalVideoGrid />
       </div>
       
       <TimeFilter />
       
-      <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-4">
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-4">
         {/* Map and List Side by Side */}
         <div className="w-full flex flex-col lg:flex-row gap-3 sm:gap-6">
             {/* Protest List Section - 40% */}
@@ -373,7 +373,7 @@ const HomePage: React.FC = () => {
                     <Map
                       ref={protestMapRef}
                       mapboxAccessToken={MAPBOX_TOKEN}
-                      mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
+                      mapStyle="mapbox://styles/mapbox/light-v11"
                       longitude={parseFloat(selectedProtest.Longitude)}
                       latitude={parseFloat(selectedProtest.Latitude)}
                       zoom={12}
@@ -509,7 +509,7 @@ const HomePage: React.FC = () => {
                       <Map
                         ref={mapRef}
                         mapboxAccessToken={MAPBOX_TOKEN}
-                        mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
+                        mapStyle="mapbox://styles/mapbox/light-v11"
                         longitude={parseFloat(selectedVideo.Longitude)}
                         latitude={parseFloat(selectedVideo.Latitude)}
                         zoom={12}

@@ -103,6 +103,7 @@ const ProtestCharts: React.FC = () => {
   const [provinceData, setProvinceData] = useState<ProvinceData[]>([]);
   const [dailyTimeRange, setDailyTimeRange] = useState<'last30' | 'lastMonth' | 'allTime'>('last30');
   const [monthlyTimeRange, setMonthlyTimeRange] = useState<'last12' | 'lastYear' | 'allTime'>('last12');
+  const [pieChartTimeRange, setPieChartTimeRange] = useState<'last30' | 'lastMonth' | 'allTime'>('allTime');
   
   // Refs for chart containers
   const dailyChartRef = useRef<HTMLDivElement>(null);
@@ -146,6 +147,33 @@ const ProtestCharts: React.FC = () => {
     const monthlyCounts: { [key: string]: number } = {};
     const provinceCounts: { [key: string]: number } = {};
 
+    // Filter data based on pie chart time range first for province data
+    const today = new Date();
+    let filteredMapDataForProvince = mapData;
+    
+    switch (pieChartTimeRange) {
+      case 'last30':
+        const thirtyDaysAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30);
+        filteredMapDataForProvince = mapData.filter((protest: ProtestData) => {
+          if (!protest.Date) return false;
+          const protestDate = new Date(protest.Date);
+          return protestDate >= thirtyDaysAgo;
+        });
+        break;
+      case 'lastMonth':
+        const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+        filteredMapDataForProvince = mapData.filter((protest: ProtestData) => {
+          if (!protest.Date) return false;
+          const protestDate = new Date(protest.Date);
+          return protestDate >= lastYear;
+        });
+        break;
+      case 'allTime':
+      default:
+        filteredMapDataForProvince = mapData;
+        break;
+    }
+
     mapData.forEach((protest: ProtestData) => {
       if (!protest.Date || protest.Date.trim() === '') return;
       
@@ -160,13 +188,15 @@ const ProtestCharts: React.FC = () => {
         // Monthly counts
         const monthStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         monthlyCounts[monthStr] = (monthlyCounts[monthStr] || 0) + 1;
-
-        // Province counts
-        if (protest.Province && protest.Province.trim() !== '') {
-          provinceCounts[protest.Province] = (provinceCounts[protest.Province] || 0) + 1;
-        }
       } catch (error) {
         console.warn('Invalid date format:', protest.Date);
+      }
+    });
+
+    // Process province counts separately with filtered data
+    filteredMapDataForProvince.forEach((protest: ProtestData) => {
+      if (protest.Province && protest.Province.trim() !== '') {
+        provinceCounts[protest.Province] = (provinceCounts[protest.Province] || 0) + 1;
       }
     });
 
@@ -189,7 +219,6 @@ const ProtestCharts: React.FC = () => {
 
     // Filter daily data based on selected time range
     let dailyArray: ChartData[] = [];
-    const today = new Date();
     switch (dailyTimeRange) {
       case 'last30':
         dailyArray = allDailyData.slice(-30);
@@ -259,7 +288,7 @@ const ProtestCharts: React.FC = () => {
     setDailyData(dailyArray);
     setMonthlyData(monthlyArray);
     setProvinceData(provinceArray);
-  }, [mapData, dailyTimeRange, monthlyTimeRange]);
+  }, [mapData, dailyTimeRange, monthlyTimeRange, pieChartTimeRange]);
 
   if (loading || dailyData.length === 0) {
     return (
@@ -314,7 +343,7 @@ const ProtestCharts: React.FC = () => {
               >
                 <option value="last30">Last 30 Days</option>
                 <option value="lastMonth">Last Year</option>
-                <option value="allTime">All Time</option>
+                <option value="allTime">Since Sept 2022</option>
               </select>
             </div>
           </div>
@@ -357,7 +386,7 @@ const ProtestCharts: React.FC = () => {
             <p className="text-lg text-gray-600">
               Total protests in {
                 dailyTimeRange === 'last30' ? 'last 30 days' :
-                dailyTimeRange === 'lastMonth' ? 'last year' : 'all time'
+                dailyTimeRange === 'lastMonth' ? 'last year' : 'since Sept 2022'
               }: <span className="font-bold text-[#00558c] text-2xl">{dailyData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}</span>
             </p>
           </div>
@@ -386,7 +415,7 @@ const ProtestCharts: React.FC = () => {
               >
                 <option value="last12">Last 12 Months</option>
                 <option value="lastYear">Last Year</option>
-                <option value="allTime">All Time</option>
+                <option value="allTime">Since Sept 2022</option>
               </select>
             </div>
           </div>
@@ -429,7 +458,7 @@ const ProtestCharts: React.FC = () => {
             <p className="text-lg text-gray-600">
               Total protests in {
                 monthlyTimeRange === 'last12' ? 'last 12 months' :
-                monthlyTimeRange === 'lastYear' ? 'last year' : 'all time'
+                monthlyTimeRange === 'lastYear' ? 'last year' : 'since Sept 2022'
               }: <span className="font-bold text-[#00558c] text-2xl">{monthlyData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}</span>
             </p>
           </div>
@@ -438,11 +467,26 @@ const ProtestCharts: React.FC = () => {
 
       {/* Province Distribution Chart - Blue Shades Only */}
       <div className="mb-16">
-        <h3 className="text-2xl font-heading font-bold text-text-primary mb-6">
-          Distribution by Province
-        </h3>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h3 className="text-2xl font-heading font-bold text-text-primary">
+            Distribution by Province
+          </h3>
+          <div className="flex items-center space-x-3">
+            <div className="w-auto max-w-[200px]">
+              <select
+                value={pieChartTimeRange}
+                onChange={(e) => setPieChartTimeRange(e.target.value as 'last30' | 'lastMonth' | 'allTime')}
+                className="bg-[#00558c] text-white px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-[#004778] w-full"
+              >
+                <option value="last30">Last 30 Days</option>
+                <option value="lastMonth">Last Year</option>
+                <option value="allTime">Since Sept 2022</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div className="bg-white rounded-2xl p-6 shadow-lg">
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={500}>
             <PieChart>
               <Pie
                 data={provinceData}
@@ -450,8 +494,8 @@ const ProtestCharts: React.FC = () => {
                 cy="50%"
                 labelLine={false}
                 label={CustomLabel}
-                outerRadius={120}
-                innerRadius={60}
+                outerRadius={180}
+                innerRadius={90}
                 fill="#8884d8"
                 dataKey="count"
               >
@@ -462,6 +506,14 @@ const ProtestCharts: React.FC = () => {
               <Tooltip content={<ProvinceTooltip />} />
             </PieChart>
           </ResponsiveContainer>
+          <div className="mt-4 text-center">
+            <p className="text-lg text-gray-600">
+              Province distribution in {
+                pieChartTimeRange === 'last30' ? 'last 30 days' :
+                pieChartTimeRange === 'lastMonth' ? 'last year' : 'since Sept 2022'
+              }: <span className="font-bold text-[#00558c] text-2xl">{provinceData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}</span> total protests
+            </p>
+          </div>
         </div>
       </div>
 

@@ -469,7 +469,7 @@ const AllVideosPage: React.FC = () => {
                       <Map
                         ref={mapRef}
                         mapboxAccessToken={MAPBOX_TOKEN}
-                        mapStyle="mapbox://styles/fddvisuals/cmbv5dm4j01cb01s22yro54ii"
+                        mapStyle="mapbox://styles/mapbox/light-v11"
                         longitude={parseFloat(selectedVideo.Longitude)}
                         latitude={parseFloat(selectedVideo.Latitude)}
                         zoom={12}
