@@ -54,7 +54,7 @@ export const csvToGeoJSON = (csvData: ProtestData[]): GeoJSONFeatureCollection =
  */
 export const getBoundingBox = (geojson: GeoJSONFeatureCollection): [number, number, number, number] => {
   if (!geojson.features.length) {
-    return [44.0, 25.0, 63.0, 40.0];
+    return [44.0, 25.0, 63.0, 40.0]; // Default Iran bounds
   }
   
   let minLng = Infinity;
@@ -70,6 +70,21 @@ export const getBoundingBox = (geojson: GeoJSONFeatureCollection): [number, numb
     maxLng = Math.max(maxLng, lng);
     maxLat = Math.max(maxLat, lat);
   });
+  
+  // Handle edge case when all points are at the same location or very close
+  const lngDiff = maxLng - minLng;
+  const latDiff = maxLat - minLat;
+  
+  if (lngDiff < 0.01 && latDiff < 0.01) {
+    // If points are very close together, add some padding
+    const padding = 0.1; // Approximately 11km at the equator
+    return [
+      minLng - padding,
+      minLat - padding,
+      maxLng + padding,
+      maxLat + padding
+    ];
+  }
   
   return [minLng, minLat, maxLng, maxLat];
 };

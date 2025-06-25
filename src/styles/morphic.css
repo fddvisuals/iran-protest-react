@@ -594,7 +594,7 @@
 @media (max-width: 768px) {
   .morphic-container {
     margin: 16px;
-    padding: 20px;
+    padding: 0;
   }
   
   /* Remove horizontal margins for full-width containers on mobile */

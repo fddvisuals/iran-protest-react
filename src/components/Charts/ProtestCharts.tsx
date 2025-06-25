@@ -45,7 +45,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 // Custom label component for donut chart
 const CustomLabel = ({ cx, cy, midAngle, outerRadius, name, percentage }: any) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 30; // Position labels outside the donut
+  const radius = outerRadius + 20; // Reduced from 30 to 20 for better mobile fit
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -57,7 +57,35 @@ const CustomLabel = ({ cx, cy, midAngle, outerRadius, name, percentage }: any) =
       textAnchor={x > cx ? 'start' : 'end'} 
       dominantBaseline="central"
       fontFamily="urw-din, system-ui, sans-serif"
-      fontSize="12"
+      fontSize="11"
+      fontWeight="bold"
+      style={{
+        fontFeatureSettings: '"kern" 1, "liga" 1, "calt" 1',
+        textRendering: 'optimizeLegibility',
+        letterSpacing: '-0.02em'
+      }}
+    >
+      {`${name}: ${percentage}%`}
+    </text>
+  );
+};
+
+// Mobile optimized label component
+const MobileCustomLabel = ({ cx, cy, midAngle, outerRadius, name, percentage }: any) => {
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 15; // Even closer to the donut for mobile
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text 
+      x={x} 
+      y={y} 
+      fill="#374151" 
+      textAnchor={x > cx ? 'start' : 'end'} 
+      dominantBaseline="central"
+      fontFamily="urw-din, system-ui, sans-serif"
+      fontSize="9"
       fontWeight="bold"
       style={{
         fontFeatureSettings: '"kern" 1, "liga" 1, "calt" 1',
@@ -485,27 +513,54 @@ const ProtestCharts: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-6 shadow-lg">
-          <ResponsiveContainer width="100%" height={500}>
-            <PieChart>
-              <Pie
-                data={provinceData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={CustomLabel}
-                outerRadius={180}
-                innerRadius={90}
-                fill="#8884d8"
-                dataKey="count"
-              >
-                {provinceData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip content={<ProvinceTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="bg-white rounded-2xl p-3 sm:p-6 shadow-lg">
+          {/* Mobile Pie Chart */}
+          <div className="block sm:hidden">
+            <ResponsiveContainer width="100%" height={350}>
+              <PieChart>
+                <Pie
+                  data={provinceData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={MobileCustomLabel}
+                  outerRadius={90}
+                  innerRadius={45}
+                  fill="#8884d8"
+                  dataKey="count"
+                >
+                  {provinceData.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip content={<ProvinceTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          
+          {/* Desktop Pie Chart */}
+          <div className="hidden sm:block">
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={provinceData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={CustomLabel}
+                  outerRadius={120}
+                  innerRadius={60}
+                  fill="#8884d8"
+                  dataKey="count"
+                >
+                  {provinceData.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip content={<ProvinceTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
           <div className="mt-4 text-center">
             <p className="text-lg text-gray-600">
               Province distribution in {

@@ -8,7 +8,7 @@ import ProtestMap from '../components/Map/ProtestMap';
 import ProtestList from '../components/ProtestList/ProtestList';
 import TimeFilter from '../components/TimeFilter/TimeFilter';
 import ProtestCharts from '../components/Charts/ProtestCharts';
-import { X, Play, Pause, Volume2, VolumeX, Calendar, MapPin, Users } from 'lucide-react';
+import { X, Play, Pause, Volume2, VolumeX, Calendar, MapPin, Users, List, Map as MapIcon } from 'lucide-react';
 import Map, { Source, Layer, NavigationControl, MapRef } from 'react-map-gl';
 import { csvToGeoJSON } from '../utils/geoJsonUtils';
 
@@ -37,6 +37,9 @@ const HomePage: React.FC = () => {
   const [selectedProtest, setSelectedProtest] = useState<ProtestData | null>(null);
   const [showProtestModal, setShowProtestModal] = useState(false);
   const protestMapRef = useRef<MapRef>(null);
+  
+  // Mobile tabs state
+  const [mobileActiveTab, setMobileActiveTab] = useState<'list' | 'map'>('map');
   
   // Fetch statistics data
   useEffect(() => {
@@ -288,19 +291,64 @@ const HomePage: React.FC = () => {
       <TimeFilter />
       
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-4">
-        {/* Map and List Side by Side */}
-        <div className="w-full flex flex-col lg:flex-row gap-3 sm:gap-6">
+        {/* Mobile Tabs */}
+        <div className="lg:hidden mb-6">
+          <div className="flex bg-white/20 backdrop-blur-md rounded-2xl p-1 border border-white/30 shadow-lg">
+            <button
+              onClick={() => setMobileActiveTab('list')}
+              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                mobileActiveTab === 'list'
+                  ? 'bg-[#00558c] text-white shadow-lg transform scale-[1.02]'
+                  : 'text-gray-700 hover:bg-white/30 hover:text-gray-900'
+              }`}
+            >
+              <List className="w-5 h-5" />
+              <span>List View</span>
+            </button>
+            <button
+              onClick={() => setMobileActiveTab('map')}
+              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
+                mobileActiveTab === 'map'
+                  ? 'bg-[#00558c] text-white shadow-lg transform scale-[1.02]'
+                  : 'text-gray-700 hover:bg-white/30 hover:text-gray-900'
+              }`}
+            >
+              <MapIcon className="w-5 h-5" />
+              <span>Map View</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Content */}
+        <div className="lg:hidden">
+          <div className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-sm border border-white/30 shadow-lg">
+            {mobileActiveTab === 'list' ? (
+              <div className="w-full animate-in slide-in-from-left-2 duration-300">
+                <ProtestList onVideoClick={handleVideoClick} onProtestDetailsClick={handleProtestDetailsClick} />
+              </div>
+            ) : (
+              <div className="w-full h-[70vh] min-h-[500px] animate-in slide-in-from-right-2 duration-300">
+                <ProtestMap />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Desktop Layout - Map and List Side by Side */}
+        <div className="hidden lg:block">
+          <div className="w-full flex flex-row gap-6">
             {/* Protest List Section - 40% */}
-            <div className="w-full lg:w-2/5 relative z-10">
+            <div className="w-2/5 relative z-10">
               <ProtestList onVideoClick={handleVideoClick} onProtestDetailsClick={handleProtestDetailsClick} />
             </div>
             
             {/* Map Section - 60% */}
-            <div className="w-full lg:w-3/5 relative z-0">
+            <div className="w-3/5 relative z-0">
               <ProtestMap />
             </div>
           </div>
         </div>
+      </div>
       
       <ProtestCharts />
       

@@ -138,16 +138,30 @@ const ProtestMap: React.FC = () => {
   useEffect(() => {
     setGeojsonData(memoizedGeojsonData);
     
-    // Only fit bounds on initial load, not when time filter changes
-    if (mapRef.current && memoizedGeojsonData && memoizedGeojsonData.features.length > 0 && isInitialLoad) {
+    // Fit bounds when data changes or on initial load, but not when a specific feature is selected
+    if (mapRef.current && memoizedGeojsonData && memoizedGeojsonData.features.length > 0 && !selectedFeature) {
       const bounds = getBoundingBox(memoizedGeojsonData);
-      mapRef.current.fitBounds(
-        [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
-        { padding: 50, duration: 1000 }
-      );
-      setIsInitialLoad(false);
+      
+      if (isInitialLoad) {
+        // On initial load, fit bounds immediately
+        mapRef.current.fitBounds(
+          [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
+          { padding: 50, duration: 1000 }
+        );
+        setIsInitialLoad(false);
+      } else {
+        // On filter changes, fit bounds with a slight delay to ensure smooth transition
+        setTimeout(() => {
+          if (mapRef.current && !selectedFeature) {
+            mapRef.current.fitBounds(
+              [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
+              { padding: 50, duration: 1500 }
+            );
+          }
+        }, 100);
+      }
     }
-  }, [memoizedGeojsonData, isInitialLoad]);
+  }, [memoizedGeojsonData, isInitialLoad, selectedFeature]);
 
   useEffect(() => {
     if (selectedFeature) {
