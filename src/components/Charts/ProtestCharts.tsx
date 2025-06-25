@@ -351,11 +351,11 @@ const ProtestCharts: React.FC = () => {
       <div className="p-3 sm:p-6">
         {/* Daily Protests Chart - Line Chart */}
         <div className="mb-16">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3 sm:gap-0">
           <h3 className="text-2xl font-heading font-bold text-text-primary">
             Daily Protest Count
           </h3>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 sm:ml-auto">
             <button
               onClick={() => downloadSVG(dailyChartRef, `daily-protests-${dailyTimeRange}.svg`)}
               className="hidden flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
@@ -423,11 +423,11 @@ const ProtestCharts: React.FC = () => {
 
       {/* Monthly Protests Chart - Bar Chart */}
       <div className="mb-16">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3 sm:gap-0">
           <h3 className="text-2xl font-heading font-bold text-text-primary">
             Monthly Protest Count
           </h3>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 sm:ml-auto">
             <button
               onClick={() => downloadSVG(monthlyChartRef, `monthly-protests-${monthlyTimeRange}.svg`)}
               className="hidden flex items-center space-x-2 bg-white text-[#00558c] px-3 py-2 rounded-full text-sm font-semibold border border-[#00558c] transition-all duration-200 hover:bg-[#00558c] hover:text-white"
@@ -495,11 +495,11 @@ const ProtestCharts: React.FC = () => {
 
       {/* Province Distribution Chart - Blue Shades Only */}
       <div className="mb-16">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3 sm:gap-0">
           <h3 className="text-2xl font-heading font-bold text-text-primary">
             Distribution by Province
           </h3>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 sm:ml-auto">
             <div className="w-auto max-w-[200px]">
               <select
                 value={pieChartTimeRange}
@@ -563,9 +563,9 @@ const ProtestCharts: React.FC = () => {
           </div>
           <div className="mt-4 text-center">
             <p className="text-lg text-gray-600">
-              Province distribution in {
-                pieChartTimeRange === 'last30' ? 'last 30 days' :
-                pieChartTimeRange === 'lastMonth' ? 'last year' : 'since Sept 2022'
+              Province distribution {
+                pieChartTimeRange === 'last30' ? 'in last 30 days' :
+                pieChartTimeRange === 'lastMonth' ? 'in last year' : 'since sept 2022'
               }: <span className="font-bold text-[#00558c] text-2xl">{provinceData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}</span> total protests
             </p>
           </div>
@@ -573,40 +573,40 @@ const ProtestCharts: React.FC = () => {
       </div>
 
       {/* Data Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 justify-items-center max-w-4xl mx-auto">
-        <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-6 mt-6 sm:mt-8 justify-items-center max-w-4xl mx-auto">
+        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
              style={{
                borderRadius: '12px',
                background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
              }}>
-          <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">Peak Daily</h4>
-          <p className="text-gray-600 font-black text-[32px] leading-none">{Math.max(...dailyData.map(d => d.count)).toLocaleString()}</p>
+          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Peak Daily</h4>
+              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important" >{Math.max(...dailyData.map(d => d.count)).toLocaleString()}</p>
         </div>
-        <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
+        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
              style={{
                borderRadius: '12px',
                background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
              }}>
-          <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">Average Daily</h4>
-          <p className="text-gray-600 font-black text-[32px] leading-none">
+          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Average Daily</h4>
+              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important">
             {(dailyData.length ? Math.round(dailyData.reduce((sum, item) => sum + item.count, 0) / dailyData.length) : 0).toLocaleString()}
           </p>
         </div>
-        <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
+        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
              style={{
                borderRadius: '12px',
                background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
              }}>
-          <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">Total Recorded</h4>
-          <p className="text-gray-600 font-black text-[32px] leading-none">{mapData.length.toLocaleString()}</p>
+          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Total Recorded</h4>
+              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important">{mapData.length.toLocaleString()}</p>
         </div>
-        <div className="flex flex-col items-center space-y-2 px-4 py-4 border border-[#CDCDCD] shadow-lg w-full"
+        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
              style={{
                borderRadius: '12px',
                background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
              }}>
-          <h4 className="font-sans text-[16px] font-bold text-text-primary text-center">Active Provinces</h4>
-          <p className="text-gray-600 font-black text-[32px] leading-none">{provinceData.length}</p>
+          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Active Provinces</h4>
+              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important" style={{ color: '#00558c !important', textShadow: 'none !important', fill: '#00558c !important', WebkitTextFillColor: '#00558c !important' }}>{provinceData.length}</p>
         </div>
       </div>
       </div>

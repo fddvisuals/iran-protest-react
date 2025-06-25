@@ -16,7 +16,7 @@ export default {
   		},
   		colors: {
         main: '#00558c',
-        gray: '#6b5b5b',
+        customGray: '#6b5b5b',
         fav: '#467aa9',
         tw: '#80eaf7',
         sas: '#bdbdbd',

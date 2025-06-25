@@ -203,7 +203,7 @@ const HomePage: React.FC = () => {
           </div>
           
           <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-4 sm:px-4">
-            The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests, with video evidence where available.
+            The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests since September 2022, with video evidence where available.
           </p>
           
           {/* Statistics Cards */}
@@ -353,11 +353,11 @@ const HomePage: React.FC = () => {
       <ProtestCharts />
       
       {/* Credits Section */}
-      <div className="w-full max-w-[1200px] mx-auto px-4 py-8 mt-16">
-        <div className="w-16 h-0.5 bg-gray-600 mx-auto mb-6"></div>
-        <div className="text-center space-y-2 text-base text-gray-800 italic">
-          <p className="font-medium">Development and Design by <span className="font-bold">Pavak Patel</span></p>
-          <p className="font-medium">Creative direction by <span className="font-bold">Daniel Ackerman</span></p>
+      <div className="w-full max-w-[1200px] mx-auto px-4 py-4 mt-8">
+        <div className="w-12 h-0.5 bg-gray-600 mx-auto mb-4 border-[#00558c]" style={{ color: '#00558c !important', borderWidth: '1.5px' }}></div>
+        <div className="text-center space-y-1 text-sm sm:text-base text-gray-600 italic">
+          <p className="font-medium">Concept and Development by <span className="font-bold">Pavak Patel</span></p>
+          <p className="font-medium">Creative Direction by <span className="font-bold">Daniel Ackerman</span></p>
         </div>
       </div>
       
