@@ -336,7 +336,7 @@ const ProtestMap: React.FC = () => {
       {/* Mobile gesture instruction overlay - positioned higher from bottom */}
       {isMobile && (
         <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20 bg-gray-700/95 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full text-center pointer-events-none shadow-lg">
-          Use two fingers to move the map
+          Use two fingers to zoom • Drag to pan
         </div>
       )}
       
@@ -381,11 +381,12 @@ const ProtestMap: React.FC = () => {
         zoom={viewState.zoom}
         minZoom={3.5} // Prevent zooming out beyond reset view level
         maxZoom={20}  // Allow reasonable maximum zoom
-        // Mobile touch gesture controls - show two-finger requirement message on mobile
-        touchZoomRotate={isMobile ? { around: 'center' } : true}
-        dragPan={isMobile ? false : true} // Disable single-finger panning on mobile
+        // Mobile touch gesture controls - enable two-finger gestures
+        touchZoomRotate={isMobile ? true : true}
+        dragPan={true} // Enable drag pan for all devices
         scrollZoom={isMobile ? false : true} // Disable scroll zoom on mobile
         touchPitch={false}
+        doubleClickZoom={true}
         onMove={(evt: any) => {
           setViewState(prev => ({
             ...prev,
