@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 
-const GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTT_uQv7JKEk8An8zPxdgcwxRPNTuypy7XAZcavbSAqnKyHlFD1nB5yJ1Zaa9HiFXVchC9tEy4OPQv/pub?gid=0&single=true&output=csv";
+const GOOGLE_SHEETS_URL = import.meta.env.VITE_GOOGLE_SHEETS_URL || "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTT_uQv7JKEk8An8zPxdgcwxRPNTuypy7XAZcavbSAqnKyHlFD1nB5yJ1Zaa9HiFXVchC9tEy4OPQv/pub?gid=0&single=true&output=csv";
 
 export const getModifiedUrl = (url: string): string => {
   if (!url) return "";
@@ -37,7 +37,7 @@ export interface StatisticsData {
 }
 
 // Google Sheets statistics URL - using gid=573718568 for the statistics sheet
-const STATISTICS_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTT_uQv7JKEk8An8zPxdgcwxRPNTuypy7XAZcavbSAqnKyHlFD1nB5yJ1Zaa9HiFXVchC9tEy4OPQv/pub?gid=573718568";
+const STATISTICS_SHEETS_URL = import.meta.env.VITE_STATISTICS_SHEETS_URL || "https://docs.google.com/spreadsheets/d/e/2PACX-1vRTT_uQv7JKEk8An8zPxdgcwxRPNTuypy7XAZcavbSAqnKyHlFD1nB5yJ1Zaa9HiFXVchC9tEy4OPQv/pub?gid=573718568";
 
 // Fetch data from a specific range in the statistics sheet
 const fetchStatisticsRange = async (range: string): Promise<string> => {

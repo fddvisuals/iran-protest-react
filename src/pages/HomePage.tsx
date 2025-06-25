@@ -12,7 +12,7 @@ import { X, Play, Pause, Volume2, VolumeX, Calendar, MapPin, Users, List, Map as
 import Map, { Source, Layer, NavigationControl, MapRef } from 'react-map-gl';
 import { csvToGeoJSON } from '../utils/geoJsonUtils';
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoiZmRkdmlzdWFscyIsImEiOiJjbGZyODY1dncwMWNlM3pvdTNxNjF4dG1rIn0.wX4YYvWhm5W-5t8y5pp95w";
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const HomePage: React.FC = () => {
   const { mapData, loading } = useAppContext();

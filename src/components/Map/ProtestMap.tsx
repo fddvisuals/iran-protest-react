@@ -4,7 +4,7 @@ import type { MapLayerMouseEvent } from 'mapbox-gl';
 import { useAppContext } from '../../context/AppContext';
 import { csvToGeoJSON, getBoundingBox, GeoJSONFeatureCollection } from '../../utils/geoJsonUtils';
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoiZmRkdmlzdWFscyIsImEiOiJjbGZyODY1dncwMWNlM3pvdTNxNjF4dG1rIn0.wX4YYvWhm5W-5t8y5pp95w";
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 // Mobile detection hook
 const useIsMobile = () => {
