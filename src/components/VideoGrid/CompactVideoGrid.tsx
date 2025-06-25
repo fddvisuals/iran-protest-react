@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
 import { ProtestData } from '../../utils/dataFetching';
 import { getModifiedUrl } from '../../utils/dataFetching';
+import { isMobileDevice } from '../../utils/videoUtils';
 
 const CompactVideoGrid: React.FC = () => {
   const { filteredVideoData, loading } = useAppContext();
@@ -147,6 +148,19 @@ const CompactVideoGrid: React.FC = () => {
               preload="metadata"
               playsInline
               webkit-playsinline="true"
+              controls={false}
+              disablePictureInPicture
+              x-webkit-airplay="deny"
+              style={{ backgroundColor: 'transparent' }}
+              onLoadedData={(e) => {
+                // Force mobile thumbnail loading
+                if (isMobileDevice()) {
+                  const videoElement = e.currentTarget;
+                  setTimeout(() => {
+                    videoElement.currentTime = 0.1;
+                  }, 100);
+                }
+              }}
             />
             
             {/* Video overlay info */}
@@ -208,6 +222,8 @@ const CompactVideoGrid: React.FC = () => {
             loop
             playsInline
             webkit-playsinline="true"
+            controls={false}
+            style={{ backgroundColor: 'transparent' }}
           />
           
           {/* Video info overlay */}

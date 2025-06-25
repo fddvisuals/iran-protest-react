@@ -92,10 +92,25 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 1;
 }
 
 .morphic-video-item:hover::before {
   opacity: 1;
+}
+
+.morphic-video-item video {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure video control overlays appear above the video */
+.morphic-video-item .absolute {
+  z-index: 3;
+}
+
+.morphic-video-item button {
+  z-index: 4;
 }
 
 .morphic-video-item:hover {
@@ -605,10 +620,6 @@
     margin-bottom: 16px;
   }
   
-  .morphic-video-item {
-    padding: 12px;
-  }
-  
   .morphic-protest-item {
     padding: 12px;
     margin-bottom: 8px;
@@ -710,4 +721,20 @@
 .morphic-protest-item:focus {
   outline: 2px solid rgba(255, 255, 255, 0.5);
   outline-offset: 2px;
+}
+
+/* Ensure videos are visible in all containers */
+video {
+  display: block;
+  position: relative;
+  background: transparent;
+}
+
+/* Fix for potential video rendering issues */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
 }

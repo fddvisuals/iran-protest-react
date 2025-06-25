@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <p className="text-white/70 font-sans text-sm">
-                2025 Foundation for Defense of Democracies — <a href="#" className="hover:text-white transition-colors underline">Privacy Policy</a>
+                2025 Foundation for Defense of Democracies — <a href="https://www.fdd.org/privacy-policy/" className="hover:text-white transition-colors underline">Privacy Policy</a>
               </p>
             </div>
           </div>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
             {/* Buttons */}
             <div className="flex flex-col gap-3">
               <a 
-                href="https://visuals.fdd.org" 
+                href="https://www.fdd.org/category/analysis/visuals/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="bg-transparent border border-white/60 text-white px-6 py-3 rounded-full font-semibold hover:bg-white/10 hover:border-white transition-all duration-200 text-center"
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
                 FDD Visuals
               </a>
               <a 
-                href="https://www.fdd.org/about/press-inquiries/" 
+                href="https://www.fdd.org/media/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="bg-transparent border border-white/60 text-white px-6 py-3 rounded-full font-semibold hover:bg-white/10 hover:border-white transition-all duration-200 text-center"
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
               
               {/* Instagram */}
               <a 
-                href="https://www.instagram.com/fdddc/" 
+                href="https://www.instagram.com/fdd_org/?" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-white/70 hover:text-white transition-colors duration-200 p-2 rounded-full hover:bg-white/10"
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
               
               {/* YouTube */}
               <a 
-                href="https://www.youtube.com/user/FDDdc" 
+                href="https://www.youtube.com/c/FoundationforDefenseofDemocracies-FDD/videos?view_as=subscriber" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-white/70 hover:text-white transition-colors duration-200 p-2 rounded-full hover:bg-white/10"
@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
               
               {/* LinkedIn */}
               <a 
-                href="https://www.linkedin.com/company/foundation-for-defense-of-democracies" 
+                href="https://www.linkedin.com/company/foundation-for-defense-of-democracies/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-white/70 hover:text-white transition-colors duration-200 p-2 rounded-full hover:bg-white/10"

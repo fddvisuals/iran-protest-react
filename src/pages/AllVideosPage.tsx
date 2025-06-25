@@ -4,6 +4,7 @@ import { ArrowLeft, Search, Play, Calendar, MapPin, Users, Eye, X, Volume2, Volu
 import { useAppContext } from '../context/AppContext';
 import { ProtestData } from '../utils/dataFetching';
 import { getModifiedUrl } from '../utils/dataFetching';
+import { setMobileVideoAttributes, loadVideoThumbnail } from '../utils/videoUtils';
 import Header from '../components/Layout/Header';
 import Footer from '../components/Layout/Footer';
 import Map, { Source, Layer, NavigationControl, MapRef } from 'react-map-gl';
@@ -24,6 +25,7 @@ const AllVideosPage: React.FC = () => {
   const [videoMuted, setVideoMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mapRef = useRef<MapRef>(null);
+  const videoRefs = useRef<{ [key: string]: HTMLVideoElement }>({});
   
   const videosPerPage = 20;
   const maxVideos = 500;
@@ -258,59 +260,68 @@ const AllVideosPage: React.FC = () => {
 
           {/* Videos Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-            {visibleVideos.map((video, index) => (
-              <div
-                key={`${video.MediaURL}-${index}`}
-                className="bg-white/60 backdrop-blur-md rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group border border-white/30 hover:border-white/50 hover:bg-white/70"
-                onClick={() => handleVideoClick(video)}
-              >
-                {/* Video Thumbnail */}
-                <div className="bg-gray-50/30 overflow-hidden relative h-80">
-                  <video
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    src={`https://fdd.box.com/shared/static/${getModifiedUrl(video.MediaURL)}.mp4`}
-                    muted
-                    preload="metadata"
-                  />
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
-                      <Play className="w-6 h-6 text-gray-800 ml-1" />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Video Info */}
-                <div className="p-4">
-                  <div className="flex items-center space-x-2 text-sm text-text-primary/70 mb-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>{formatDate(video.Date)}</span>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 text-sm text-text-primary/70 mb-3">
-                    <MapPin className="w-4 h-4" />
-                    <span className="truncate">{getLocation(video)}</span>
-                  </div>
-                  
-                  <p className="text-text-primary text-sm line-clamp-3 leading-relaxed mb-3">
-                    {video.Description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-xs">
-                    {video.Estimated_Size && (
-                      <div className="flex items-center space-x-1 text-text-primary/70">
-                        <Users className="w-4 h-4" />
-                        <span>{video.Estimated_Size}</span>
+            {visibleVideos.map((video, index) => {
+              const videoId = `${video.MediaURL}-${index}`;
+              return (
+                <div
+                  key={videoId}
+                  className="bg-white/60 backdrop-blur-md rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group border border-white/30 hover:border-white/50 hover:bg-white/70"
+                  onClick={() => handleVideoClick(video)}
+                >
+                  {/* Video Thumbnail */}
+                  <div className="bg-gray-50/30 overflow-hidden relative h-80">
+                    <video
+                      ref={(el) => {
+                        if (el) {
+                          videoRefs.current[videoId] = el;
+                          setMobileVideoAttributes(el);
+                          loadVideoThumbnail(el);
+                        }
+                      }}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      src={`https://fdd.box.com/shared/static/${getModifiedUrl(video.MediaURL)}.mp4`}
+                      style={{ backgroundColor: 'transparent' }}
+                    />
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+                        <Play className="w-6 h-6 text-gray-800 ml-1" />
                       </div>
-                    )}
+                    </div>
+                  </div>
+                  
+                  {/* Video Info */}
+                  <div className="p-4">
+                    <div className="flex items-center space-x-2 text-sm text-text-primary/70 mb-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{formatDate(video.Date)}</span>
+                    </div>
                     
-                    <div className="flex items-center space-x-1 text-yellow-600">
-                      <Eye className="w-4 h-4" />
-                      <span>View Video</span>
+                    <div className="flex items-center space-x-2 text-sm text-text-primary/70 mb-3">
+                      <MapPin className="w-4 h-4" />
+                      <span className="truncate">{getLocation(video)}</span>
+                    </div>
+                    
+                    <p className="text-text-primary text-sm line-clamp-3 leading-relaxed mb-3">
+                      {video.Description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between text-xs">
+                      {video.Estimated_Size && (
+                        <div className="flex items-center space-x-1 text-text-primary/70">
+                          <Users className="w-4 h-4" />
+                          <span>{video.Estimated_Size}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center space-x-1 text-yellow-600">
+                        <Eye className="w-4 h-4" />
+                        <span>View Video</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Pagination */}
@@ -402,9 +413,12 @@ const AllVideosPage: React.FC = () => {
                     onPause={() => setVideoPlaying(false)}
                     onLoadedData={() => {
                       if (videoRef.current) {
+                        setMobileVideoAttributes(videoRef.current);
+                        loadVideoThumbnail(videoRef.current);
                         videoRef.current.muted = videoMuted;
                       }
                     }}
+                    style={{ backgroundColor: 'transparent' }}
                   />
                   
                   {/* Video Controls */}
@@ -428,7 +442,7 @@ const AllVideosPage: React.FC = () => {
               {/* Right Side - Information */}
               <div className="lg:w-1/2 p-6 space-y-6 max-h-[70vh] overflow-y-auto bg-white/5 backdrop-blur-sm">
                 {/* Location */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-[#00558c]" />
                     Location
@@ -437,7 +451,7 @@ const AllVideosPage: React.FC = () => {
                 </div>
                 
                 {/* Date */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <Calendar className="w-5 h-5 mr-2 text-[#00558c]" />
                     Date
@@ -447,7 +461,7 @@ const AllVideosPage: React.FC = () => {
                 
                 {/* Crowd Size */}
                 {selectedVideo.Estimated_Size && (
-                  <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                     <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                       <Users className="w-5 h-5 mr-2 text-[#00558c]" />
                       Estimated Crowd Size
@@ -456,14 +470,14 @@ const AllVideosPage: React.FC = () => {
                   </div>
                 )}
                 {/* Description */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Description</h4>
                   <p className="text-gray-700 leading-relaxed">{selectedVideo.Description}</p>
                 </div>
                 
                 {/* Map */}
                 {selectedVideo.Longitude && selectedVideo.Latitude && (
-                  <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                     <h4 className="text-lg font-semibold text-gray-800 mb-3">Map Location</h4>
                     <div className="h-48 rounded-xl overflow-hidden border border-white/40 shadow-lg">
                       <Map
@@ -491,7 +505,7 @@ const AllVideosPage: React.FC = () => {
                 )}
                 
                 {/* Source */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Source</h4>
                   <a 
                     href={selectedVideo.Link} 

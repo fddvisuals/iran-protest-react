@@ -4,7 +4,7 @@ import { useAppContext } from '../../context/AppContext';
 import { ProtestData } from '../../utils/dataFetching';
 import { getModifiedUrl } from '../../utils/dataFetching';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { setMobileVideoAttributes, playVideoSafely } from '../../utils/videoUtils';
+import { setMobileVideoAttributes, playVideoSafely, loadVideoThumbnail, isMobileDevice } from '../../utils/videoUtils';
 
 const HorizontalVideoGrid: React.FC = () => {
   const { filteredVideoData, loading } = useAppContext();
@@ -134,6 +134,13 @@ const HorizontalVideoGrid: React.FC = () => {
       // Set initial muted state
       element.muted = mutedVideos.has(videoId);
       
+      // Force thumbnail loading on mobile devices
+      if (isMobileDevice()) {
+        loadVideoThumbnail(element).catch(() => {
+          console.log('Failed to load video thumbnail for mobile');
+        });
+      }
+      
       // Add event listeners
       const handleEnded = () => {
         setCurrentlyPlaying(null);
@@ -246,26 +253,41 @@ const HorizontalVideoGrid: React.FC = () => {
                   key={`${videoId}-${index}`}
                   className="flex-none w-48 sm:w-64 h-72 sm:h-96 morphic-video-item cursor-pointer group relative transition-all duration-300 transform-gpu"
                   style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}
+                  onClick={(e) => handlePlayPause(video, e)}
                 >
                   <video
                     ref={(el) => handleVideoRef(video, el)}
-                    className="w-full h-full object-cover transition-all duration-300 rounded-[19px]"
+                    className="w-full h-full object-cover transition-all duration-300 rounded-[19px] cursor-pointer"
                     src={`https://fdd.box.com/shared/static/${getModifiedUrl(video.MediaURL)}.mp4`}
                     muted={isMuted}
                     loop
                     preload="metadata"
                     playsInline
                     webkit-playsinline="true"
+                    controls={false}
+                    disablePictureInPicture
+                    x-webkit-airplay="deny"
+                    style={{ backgroundColor: 'transparent' }}
+                    onLoadedData={() => {
+                      // Additional mobile thumbnail loading
+                      if (isMobileDevice()) {
+                        const videoElement = videoRefs.current.get(getVideoId(video));
+                        if (videoElement) {
+                          videoElement.currentTime = 0.1;
+                        }
+                      }
+                    }}
+                    onClick={(e) => handlePlayPause(video, e)}
                   />
                   
                   {/* Video Controls Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40 rounded-[19px]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-[19px] pointer-events-none">
                     {/* Top Controls */}
-                    <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+                    <div className="absolute top-3 left-3 right-3 flex justify-between items-start pointer-events-auto">
                       {/* Play/Pause Button - Top Left */}
                       <button
                         onClick={(e) => handlePlayPause(video, e)}
-                        className="w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-all duration-300 hover:scale-110 z-20"
+                        className="w-8 h-8 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-all duration-300 hover:scale-110 z-20 shadow-lg"
                         aria-label={isPlaying ? "Pause video" : "Play video"}
                       >
                         {isPlaying ? (
@@ -282,7 +304,7 @@ const HorizontalVideoGrid: React.FC = () => {
                       {/* Mute/Unmute Button - Top Right */}
                       <button
                         onClick={(e) => handleMuteToggle(video, e)}
-                        className="w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors z-20"
+                        className="w-8 h-8 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/90 transition-colors z-20 shadow-lg"
                         aria-label={isMuted ? "Unmute video" : "Mute video"}
                       >
                         {isMuted ? (
@@ -298,7 +320,7 @@ const HorizontalVideoGrid: React.FC = () => {
                     </div>
                     
                     {/* Bottom Info */}
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-auto">
                       <div className="flex items-center gap-2 mb-2">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7Z"/>

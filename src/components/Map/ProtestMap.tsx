@@ -294,19 +294,19 @@ const ProtestMap: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-[600px] morphic-container overflow-hidden relative">
+    <div className="w-full h-[600px] morphic-container overflow-hidden relative" style={{ marginBottom: '0px', marginTop: '0px' }}>
       {/* Map Title Overlay */}
       {/* Reset Map Button */}
       <div className="absolute top-4 right-4 z-10">
         <button
           onClick={resetMapView}
-          className="px-3 py-2 text-xs font-heading font-bold text-white transition-colors duration-200 flex items-center space-x-1"
+          className="px-3 py-2 text-xs font-heading font-bold text-white transition-all duration-300 flex items-center space-x-1 rounded-xl hover:scale-105 hover:shadow-lg"
           style={{
-            borderRadius: '4px',
+            borderRadius: '12px',
             border: '1px solid rgba(255, 255, 255, 0.20)',
-            background: '#00558C',
-            boxShadow: '0px 8px 24px 0px rgba(0, 0, 0, 0.10), 0px 1px 0px 1px rgba(255, 255, 255, 0.25) inset',
-            backdropFilter: 'blur(6px)'
+            background: 'rgba(10, 10, 10, 0.15)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
           }}
           title="Reset map view to show all protests"
         >

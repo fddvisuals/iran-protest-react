@@ -52,3 +52,50 @@ export const playVideoSafely = async (videoElement: HTMLVideoElement): Promise<v
     }
   }
 };
+
+/**
+ * Forces video to load and show first frame on mobile devices
+ * @param videoElement - The HTML video element
+ */
+export const loadVideoThumbnail = (videoElement: HTMLVideoElement): Promise<void> => {
+  return new Promise((resolve) => {
+    const handleLoadedData = () => {
+      // Force the video to seek to first frame to show thumbnail
+      videoElement.currentTime = 0.1;
+      videoElement.removeEventListener('loadeddata', handleLoadedData);
+      resolve();
+    };
+
+    const handleSeeked = () => {
+      videoElement.removeEventListener('seeked', handleSeeked);
+      resolve();
+    };
+
+    if (videoElement.readyState >= 2) {
+      // Video is already loaded
+      videoElement.currentTime = 0.1;
+      videoElement.addEventListener('seeked', handleSeeked);
+    } else {
+      videoElement.addEventListener('loadeddata', handleLoadedData);
+      // Force load by setting currentTime and calling load()
+      videoElement.load();
+    }
+  });
+};
+
+/**
+ * Enhanced mobile video attributes for better thumbnail loading
+ */
+export const getMobileVideoAttributes = () => ({
+  playsInline: true,
+  'webkit-playsinline': 'true' as const,
+  muted: true,
+  preload: 'metadata' as const,
+  controls: false,
+  'x-webkit-airplay': 'deny' as const,
+  disablePictureInPicture: true,
+  style: { 
+    backgroundColor: 'transparent',
+    objectFit: 'cover' as const
+  }
+});

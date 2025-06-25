@@ -193,8 +193,8 @@ const HomePage: React.FC = () => {
           <div className="text-center space-y-3 sm:space-y-4">
             <div className="inline-flex items-center space-x-2 sm:space-x-3 px-4 sm:px-8 py-3 sm:py-4 bg-white rounded-xl sm:rounded-2xl shadow-lg">
               <div className="w-2 sm:w-3 h-2 sm:h-3 bg-[#00558c] rounded-full live-counter-dot"></div>
-              <h1 className="font-sans text-[20px] sm:text-[28px] leading-[24px] sm:leading-[32px] font-bold text-text-primary">
-                <span className="text-[#00558c] font-black text-[24px] sm:text-[32px]">
+              <h1 className="font-sans text-[18px] sm:text-[28px] leading-[24px] sm:leading-[32px] font-bold text-text-primary">
+                <span className="text-[#00558c] font-black text-[20px] sm:text-[32px]">
                   {displayCount}
                 </span>
                 {' '}protest{displayCount !== 1 ? 's' : ''} {displayTimeframe}
@@ -203,7 +203,7 @@ const HomePage: React.FC = () => {
           </div>
           
           <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-4 sm:px-4">
-            The Iranian regime continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests since September 2022, with video evidence where available.
+            The regime in Iran continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests since September 2022, with video evidence where available.
           </p>
           
           {/* Statistics Cards */}
@@ -293,7 +293,7 @@ const HomePage: React.FC = () => {
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-4">
         {/* Mobile Tabs */}
         <div className="lg:hidden mb-6">
-          <div className="flex bg-white/20 backdrop-blur-md rounded-2xl p-1 border border-white/30 shadow-lg">
+          <div className="flex bg-gray-100 backdrop-blur-md rounded-2xl p-1 border border-white/30 shadow-lg">
             <button
               onClick={() => setMobileActiveTab('list')}
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
@@ -366,7 +366,7 @@ const HomePage: React.FC = () => {
         <div className="fixed inset-0 z-[99999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white/90 backdrop-blur-xl rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-white/40 shadow-2xl relative z-[99999]">
             {/* Modal Header */}
-            <div className="flex justify-between items-center p-6 border-b border-white/30 bg-white/20 backdrop-blur-sm">
+            <div className="flex justify-between items-center p-6 border-b border-white/30 bg-gray-100 backdrop-blur-sm">
               <h3 className="text-2xl font-bold text-gray-800">Protest Details</h3>
               <button
                 onClick={closeProtestModal}
@@ -379,7 +379,7 @@ const HomePage: React.FC = () => {
             {/* Modal Content */}
             <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto bg-white/5 backdrop-blur-sm">
               {/* Location */}
-              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+              <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                   <MapPin className="w-5 h-5 mr-2 text-[#00558c]" />
                   Location
@@ -388,7 +388,7 @@ const HomePage: React.FC = () => {
               </div>
               
               {/* Date */}
-              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+              <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                   <Calendar className="w-5 h-5 mr-2 text-[#00558c]" />
                   Date
@@ -398,7 +398,7 @@ const HomePage: React.FC = () => {
               
               {/* Crowd Size */}
               {selectedProtest.Estimated_Size && (
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <Users className="w-5 h-5 mr-2 text-[#00558c]" />
                     Estimated Crowd Size
@@ -408,14 +408,14 @@ const HomePage: React.FC = () => {
               )}
               
               {/* Description */}
-              <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+              <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                 <h4 className="text-lg font-semibold text-gray-800 mb-3">Description</h4>
                 <p className="text-gray-700 leading-relaxed">{selectedProtest.Description}</p>
               </div>
               
               {/* Map */}
               {selectedProtest.Longitude && selectedProtest.Latitude && (
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Map Location</h4>
                   <div className="h-48 rounded-xl overflow-hidden border border-white/40 shadow-lg">
                     <Map
@@ -444,7 +444,7 @@ const HomePage: React.FC = () => {
               
               {/* Source */}
               {selectedProtest.Link && (
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Source</h4>
                   <a 
                     href={selectedProtest.Link} 
@@ -466,7 +466,7 @@ const HomePage: React.FC = () => {
         <div className="fixed inset-0 z-[99999] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white/90 backdrop-blur-xl rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden border border-white/40 shadow-2xl relative z-[99999]">
             {/* Modal Header */}
-            <div className="flex justify-between items-center p-6 border-b border-white/30 bg-white/20 backdrop-blur-sm">
+            <div className="flex justify-between items-center p-6 border-b border-white/30 bg-gray-100 backdrop-blur-sm">
               <h3 className="text-2xl font-bold text-gray-800">Video Details</h3>
               <button
                 onClick={closeModal}
@@ -498,13 +498,13 @@ const HomePage: React.FC = () => {
                   <div className="absolute bottom-4 left-4 right-4 flex justify-center gap-4">
                     <button
                       onClick={togglePlay}
-                      className="bg-white/20 backdrop-blur-md text-white p-3 rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg"
+                      className="bg-gray-100 backdrop-blur-md text-white p-3 rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg"
                     >
                       {videoPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
                     </button>
                     <button
                       onClick={toggleMute}
-                      className="bg-white/20 backdrop-blur-md text-white p-3 rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg"
+                      className="bg-gray-100 backdrop-blur-md text-white p-3 rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg"
                     >
                       {videoMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
                     </button>
@@ -515,7 +515,7 @@ const HomePage: React.FC = () => {
               {/* Right Side - Information */}
               <div className="lg:w-1/2 p-6 space-y-6 max-h-[70vh] overflow-y-auto bg-white/5 backdrop-blur-sm">
                 {/* Location */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-[#00558c]" />
                     Location
@@ -524,7 +524,7 @@ const HomePage: React.FC = () => {
                 </div>
                 
                 {/* Date */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                     <Calendar className="w-5 h-5 mr-2 text-[#00558c]" />
                     Date
@@ -534,7 +534,7 @@ const HomePage: React.FC = () => {
                 
                 {/* Crowd Size */}
                 {selectedVideo.Estimated_Size && (
-                  <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                     <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                       <Users className="w-5 h-5 mr-2 text-[#00558c]" />
                       Estimated Crowd Size
@@ -544,14 +544,14 @@ const HomePage: React.FC = () => {
                 )}
                 
                 {/* Description */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Description</h4>
                   <p className="text-gray-700 leading-relaxed">{selectedVideo.Description}</p>
                 </div>
                 
                 {/* Map */}
                 {selectedVideo.Longitude && selectedVideo.Latitude && (
-                  <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                  <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                     <h4 className="text-lg font-semibold text-gray-800 mb-3">Map Location</h4>
                     <div className="h-48 rounded-xl overflow-hidden border border-white/40 shadow-lg">
                       <Map
@@ -579,7 +579,7 @@ const HomePage: React.FC = () => {
                 )}
                 
                 {/* Source */}
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+                <div className="bg-gray-100 backdrop-blur-md rounded-2xl p-4 border border-white/30">
                   <h4 className="text-lg font-semibold text-gray-800 mb-3">Source</h4>
                   <a 
                     href={selectedVideo.Link} 

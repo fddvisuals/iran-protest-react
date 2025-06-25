@@ -121,7 +121,7 @@ const VideoItem = ({ video }: VideoItemProps) => {
               w-full h-auto min-h-[400px] max-h-[600px] object-cover cursor-pointer rounded-[19px] bg-black transition-all duration-500
               ${!isLoaded ? 'opacity-0' : 'opacity-100'}
             `}
-            style={{ transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+            style={{ transition: 'opacity 0.3s ease, transform 0.3s ease', backgroundColor: 'transparent' }}
             controls={false}
             loop
             muted={isMuted}
