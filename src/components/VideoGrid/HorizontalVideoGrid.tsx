@@ -30,15 +30,36 @@ const HorizontalVideoGrid: React.FC = () => {
   const checkScrollPosition = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      const canScrollLeftValue = scrollLeft > 0;
+      const canScrollRightValue = scrollLeft < scrollWidth - clientWidth - 10;
+      
+      console.log('Scroll check:', { 
+        scrollLeft, 
+        scrollWidth, 
+        clientWidth, 
+        canScrollLeftValue, 
+        canScrollRightValue,
+        isMobile: isMobileDevice()
+      });
+      
+      setCanScrollLeft(canScrollLeftValue);
+      setCanScrollRight(canScrollRightValue);
     }
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Multiple timers to ensure arrows appear
+    const timer1 = setTimeout(() => {
       checkScrollPosition();
     }, 100);
+    
+    const timer2 = setTimeout(() => {
+      checkScrollPosition();
+    }, 500);
+    
+    const timer3 = setTimeout(() => {
+      checkScrollPosition();
+    }, 1000);
     
     if (scrollRef.current) {
       const scrollElement = scrollRef.current;
@@ -46,13 +67,19 @@ const HorizontalVideoGrid: React.FC = () => {
       window.addEventListener('resize', checkScrollPosition);
       
       return () => {
-        clearTimeout(timer);
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
         scrollElement.removeEventListener('scroll', checkScrollPosition);
         window.removeEventListener('resize', checkScrollPosition);
       };
     }
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
   }, [visibleVideos]);
 
   const scrollLeft = () => {
@@ -211,7 +238,7 @@ const HorizontalVideoGrid: React.FC = () => {
           </div>
           <Link 
             to="/all-videos"
-            className="morphic-button-primary px-3 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 text-white"
+            className="morphic-button-primary px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 text-white"
           >
             See All Videos
           </Link>
@@ -219,8 +246,8 @@ const HorizontalVideoGrid: React.FC = () => {
       </div>
       
       <div className="relative">
-        {/* Left Arrow */}
-        {canScrollLeft && (
+        {/* Left Arrow - Desktop Only */}
+        {!isMobileDevice() && canScrollLeft && (
           <button
             onClick={scrollLeft}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 flex items-center justify-center text-[#00558c] hover:scale-110 border border-gray-200"
@@ -230,8 +257,8 @@ const HorizontalVideoGrid: React.FC = () => {
           </button>
         )}
         
-        {/* Right Arrow */}
-        {canScrollRight && (
+        {/* Right Arrow - Desktop Only - Show if can scroll or if there are many videos */}
+        {!isMobileDevice() && (canScrollRight || visibleVideos.length > 4) && (
           <button
             onClick={scrollRight}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-12 h-12 bg-white/95 backdrop-blur-sm rounded-full shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 flex items-center justify-center text-[#00558c] hover:scale-110 border border-gray-200"
@@ -241,8 +268,11 @@ const HorizontalVideoGrid: React.FC = () => {
           </button>
         )}
         
-        <div className="px-3 sm:px-6 py-3 sm:py-6" ref={scrollRef}>
-          <div className="flex gap-3 sm:gap-6 overflow-x-auto overflow-y-hidden pb-2 sm:pb-4 morphic-scrollbar scroll-smooth">
+        <div className="px-3 sm:px-6 py-3 sm:py-6">
+          <div 
+            ref={scrollRef}
+            className="flex gap-3 sm:gap-6 overflow-x-auto overflow-y-hidden pb-2 sm:pb-4 morphic-scrollbar scroll-smooth"
+          >
             {visibleVideos.map((video, index) => {
               const videoId = getVideoId(video);
               const isPlaying = currentlyPlaying === videoId;

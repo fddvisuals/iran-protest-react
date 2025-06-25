@@ -558,7 +558,7 @@ const ProtestCharts: React.FC = () => {
           
           {/* Desktop Pie Chart */}
           <div className="hidden sm:block">
-            <ResponsiveContainer width="100%" height={400}>
+            <ResponsiveContainer width="100%" height={500}>
               <PieChart>
                 <Pie
                   data={provinceData}
@@ -566,8 +566,8 @@ const ProtestCharts: React.FC = () => {
                   cy="50%"
                   labelLine={false}
                   label={CustomLabel}
-                  outerRadius={120}
-                  innerRadius={60}
+                  outerRadius={180}
+                  innerRadius={90}
                   fill="#8884d8"
                   dataKey="count"
                 >

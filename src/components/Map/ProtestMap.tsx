@@ -6,6 +6,20 @@ import { csvToGeoJSON, getBoundingBox, GeoJSONFeatureCollection } from '../../ut
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoiZmRkdmlzdWFscyIsImEiOiJjbGZyODY1dncwMWNlM3pvdTNxNjF4dG1rIn0.wX4YYvWhm5W-5t8y5pp95w";
 
+// Mobile detection hook
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+  
+  return isMobile;
+};
+
 const clusterLayer = {
   id: 'clusters',
   type: 'circle',
@@ -111,6 +125,7 @@ const ProtestMap: React.FC = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const mapRef = useRef<MapRef>(null);
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isMobile = useIsMobile();
 
   // Memoize geojson conversion to avoid unnecessary recalculations
   const memoizedGeojsonData = useMemo(() => {
@@ -143,10 +158,14 @@ const ProtestMap: React.FC = () => {
       const bounds = getBoundingBox(memoizedGeojsonData);
       
       if (isInitialLoad) {
-        // On initial load, fit bounds immediately
+        // On initial load, fit bounds immediately with more generous padding for mobile
         mapRef.current.fitBounds(
           [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
-          { padding: 50, duration: 1000 }
+          { 
+            padding: isMobile ? 20 : 50, 
+            duration: isMobile ? 1500 : 1000,
+            maxZoom: isMobile ? 8 : 12 // Prevent over-zooming on mobile
+          }
         );
         setIsInitialLoad(false);
       } else {
@@ -155,7 +174,11 @@ const ProtestMap: React.FC = () => {
           if (mapRef.current && !selectedFeature) {
             mapRef.current.fitBounds(
               [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
-              { padding: 50, duration: 1500 }
+              { 
+                padding: isMobile ? 20 : 50, 
+                duration: 1500,
+                maxZoom: isMobile ? 8 : 12
+              }
             );
           }
         }, 100);
@@ -277,10 +300,25 @@ const ProtestMap: React.FC = () => {
       const bounds = getBoundingBox(geojsonData);
       mapRef.current.fitBounds(
         [[bounds[0], bounds[1]], [bounds[2], bounds[3]]],
-        { padding: 50, duration: 1000 }
+        { 
+          padding: isMobile ? 20 : 50, 
+          duration: 1000,
+          maxZoom: isMobile ? 8 : 12
+        }
       );
     }
-  }, [geojsonData]);
+  }, [geojsonData, isMobile]);
+
+  // Auto-reset map view on mobile when data first loads
+  useEffect(() => {
+    if (isMobile && geojsonData && geojsonData.features.length > 0 && isInitialLoad) {
+      // Small delay to ensure map is fully rendered
+      const timer = setTimeout(() => {
+        resetMapView();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile, geojsonData, isInitialLoad, resetMapView]);
 
   if (!geojsonData) {
     return (
@@ -295,6 +333,13 @@ const ProtestMap: React.FC = () => {
 
   return (
     <div className="w-full h-[600px] morphic-container overflow-hidden relative" style={{ marginBottom: '0px', marginTop: '0px' }}>
+      {/* Mobile gesture instruction overlay - positioned higher from bottom */}
+      {isMobile && (
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20 bg-gray-700/95 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full text-center pointer-events-none shadow-lg">
+          Use two fingers to move the map
+        </div>
+      )}
+      
       {/* Map Title Overlay */}
       {/* Reset Map Button */}
       <div className="absolute top-4 right-4 z-10">
@@ -336,6 +381,11 @@ const ProtestMap: React.FC = () => {
         zoom={viewState.zoom}
         minZoom={3.5} // Prevent zooming out beyond reset view level
         maxZoom={20}  // Allow reasonable maximum zoom
+        // Mobile touch gesture controls - show two-finger requirement message on mobile
+        touchZoomRotate={isMobile ? { around: 'center' } : true}
+        dragPan={isMobile ? false : true} // Disable single-finger panning on mobile
+        scrollZoom={isMobile ? false : true} // Disable scroll zoom on mobile
+        touchPitch={false}
         onMove={(evt: any) => {
           setViewState(prev => ({
             ...prev,

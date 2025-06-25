@@ -59,7 +59,7 @@ const Header: React.FC = () => {
         </div>
         
         {/* Last Updated Section */}
-        <div className="flex items-center morphic-header-info rounded-lg sm:rounded-xl px-2 sm:px-4 py-1.5 sm:py-2.5 border border-white/20 backdrop-blur-sm bg-white/5 flex-shrink-0">
+        <div className="flex items-center morphic-header-info rounded-xl sm:rounded-xl px-2 sm:px-4 py-1.5 sm:py-2.5 border border-white/20 backdrop-blur-sm bg-white/5 flex-shrink-0">
           <div className="flex items-center space-x-1 sm:space-x-2">
             {/* Animated indicator */}
             <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse shadow-sm"></div>

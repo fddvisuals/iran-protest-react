@@ -202,7 +202,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           
-          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] text-text-primary/90 px-4 sm:px-4">
+          <p className="w-full max-w-[800px] mx-auto text-center font-sans text-[14px] sm:text-[18px] md:text-[20px] leading-[20px] sm:leading-[26px] md:leading-[28px] text-text-primary/90 px-4 sm:px-4">
             The regime in Iran continues to face widespread protests across the country. This interactive map shows the locations and details of recent protests since September 2022, with video evidence where available.
           </p>
           
