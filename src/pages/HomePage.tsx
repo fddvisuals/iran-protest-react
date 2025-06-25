@@ -152,9 +152,9 @@ const HomePage: React.FC = () => {
     <>
       <Header />
       
-      <div className="pt-[60px] sm:pt-[75px] lg:pt-[152px]">
+      <div className="pt-[60px] sm:pt-[75px]">
         {/* Full width image with fade effect - starts right after header */}
-        <div className="w-full relative mb-4 sm:mb-8 -mt-[60px] sm:-mt-[75px] lg:-mt-[152px]">
+        <div className="w-full relative mb-4 sm:mb-8">
           <img 
             src={`${import.meta.env.BASE_URL}images/Visual_IranMap2.0_FeatureImage_v02.jpg`}
             alt="Iran Map Visual" 
