@@ -1,0 +1,92 @@
+"filename", "language", "TypeScript JSX", "TypeScript", "Batch", "JSON with Comments", "PostCSS", "JavaScript", "XML", "JSON", "HTML", "Markdown", "comment", "blank", "total"
+"/Users/pavakpatel/Documents - local/iran-protest-react/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 24, 79
+"/Users/pavakpatel/Documents - local/iran-protest-react/copy-assets.cjs", "JavaScript", 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 3, 10, 48
+"/Users/pavakpatel/Documents - local/iran-protest-react/deploy.bat", "Batch", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/pavakpatel/Documents - local/iran-protest-react/index.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 2, 2, 42
+"/Users/pavakpatel/Documents - local/iran-protest-react/package-lock.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 7269, 0, 0, 0, 1, 7270
+"/Users/pavakpatel/Documents - local/iran-protest-react/package.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 1, 82
+"/Users/pavakpatel/Documents - local/iran-protest-react/postcss.config.js", "JavaScript", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 7
+"/Users/pavakpatel/Documents - local/iran-protest-react/public/404.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 5, 43
+"/Users/pavakpatel/Documents - local/iran-protest-react/public/images/Visuals_Logo_Temporary_v01.svg", "XML", 0, 0, 0, 0, 0, 0, 46, 0, 0, 0, 1, 1, 48
+"/Users/pavakpatel/Documents - local/iran-protest-react/public/images/download.svg", "XML", 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/App.tsx", "TypeScript JSX", 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 22
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/Charts/ProtestCharts.tsx", "TypeScript JSX", 567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 41, 637
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/Layout/Footer.tsx", "TypeScript JSX", 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 12, 127
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/Layout/Header.tsx", "TypeScript JSX", 68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 12, 86
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/Map/MapPopup.tsx", "TypeScript JSX", 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 102
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/Map/ProtestMap.tsx", "TypeScript JSX", 376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 39, 443
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ProtestList/ProtestList.tsx", "TypeScript JSX", 240, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 25, 284
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ProtestList/ProtestListModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/TimeFilter/TimeFilter.tsx", "TypeScript JSX", 55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 62
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/VideoGrid/CompactVideoGrid.tsx", "TypeScript JSX", 225, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 26, 263
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/VideoGrid/HorizontalVideoGrid.tsx", "TypeScript JSX", 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 39, 379
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/VideoGrid/VideoDialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/VideoGrid/VideoGrid.tsx", "TypeScript JSX", 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 59
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/VideoGrid/VideoItem.tsx", "TypeScript JSX", 178, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 22, 202
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/accordion.tsx", "TypeScript JSX", 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 56
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/alert-dialog.tsx", "TypeScript JSX", 126, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 140
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/alert.tsx", "TypeScript JSX", 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 60
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/aspect-ratio.tsx", "TypeScript JSX", 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 6
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/avatar.tsx", "TypeScript JSX", 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 51
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/badge.tsx", "TypeScript JSX", 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 37
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/breadcrumb.tsx", "TypeScript JSX", 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 116
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/button.tsx", "TypeScript JSX", 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 58
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/card.tsx", "TypeScript JSX", 68, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 77
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/carousel.tsx", "TypeScript JSX", 231, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 261
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/checkbox.tsx", "TypeScript JSX", 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 29
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/collapsible.tsx", "TypeScript JSX", 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 12
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/command.tsx", "TypeScript JSX", 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 152
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/context-menu.tsx", "TypeScript JSX", 181, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 199
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/dialog.tsx", "TypeScript JSX", 109, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 123
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/drawer.tsx", "TypeScript JSX", 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 119
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/dropdown-menu.tsx", "TypeScript JSX", 182, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 200
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/form.tsx", "TypeScript JSX", 153, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 179
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/hover-card.tsx", "TypeScript JSX", 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 30
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/input-otp.tsx", "TypeScript JSX", 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 70
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/input.tsx", "TypeScript JSX", 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 23
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/label.tsx", "TypeScript JSX", 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 25
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/menubar.tsx", "TypeScript JSX", 237, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 257
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/navigation-menu.tsx", "TypeScript JSX", 117, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 129
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/pagination.tsx", "TypeScript JSX", 107, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 118
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/popover.tsx", "TypeScript JSX", 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 32
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/progress.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 29
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/radio-group.tsx", "TypeScript JSX", 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 43
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/resizable.tsx", "TypeScript JSX", 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 46
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/scroll-area.tsx", "TypeScript JSX", 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 47
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/select.tsx", "TypeScript JSX", 146, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 160
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/separator.tsx", "TypeScript JSX", 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 30
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/sheet.tsx", "TypeScript JSX", 125, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 141
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/sidebar.tsx", "TypeScript JSX", 705, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 54, 771
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/skeleton.tsx", "TypeScript JSX", 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 16
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/slider.tsx", "TypeScript JSX", 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 27
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/sonner.tsx", "TypeScript JSX", 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 32
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/switch.tsx", "TypeScript JSX", 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/table.tsx", "TypeScript JSX", 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 121
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/tabs.tsx", "TypeScript JSX", 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 65
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/textarea.tsx", "TypeScript JSX", 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 23
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/toast.tsx", "TypeScript JSX", 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 128
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/toaster.tsx", "TypeScript JSX", 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/toggle-group.tsx", "TypeScript JSX", 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 60
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/toggle.tsx", "TypeScript JSX", 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 46
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/components/ui/tooltip.tsx", "TypeScript JSX", 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 33
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/context/AppContext.tsx", "TypeScript JSX", 103, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 17, 129
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/hooks/use-mobile.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 20
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/hooks/use-toast.ts", "TypeScript", 0, 159, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31, 190
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/index.css", "PostCSS", 0, 0, 0, 0, 145, 0, 0, 0, 0, 0, 13, 37, 195
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/lib/utils.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/main.tsx", "TypeScript JSX", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 11
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/mapbox.css", "PostCSS", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 3, 5, 28
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/pages/AllVideosPage.tsx", "TypeScript JSX", 451, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 53, 531
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/pages/HomePage.tsx", "TypeScript JSX", 496, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 61, 605
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/pages/TestPage.tsx", "TypeScript JSX", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 15
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/styles/morphic.css", "PostCSS", 0, 0, 0, 0, 591, 0, 0, 0, 0, 0, 65, 85, 741
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/utils/dataFetching.ts", "TypeScript", 0, 170, 0, 0, 0, 0, 0, 0, 0, 0, 14, 32, 216
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/utils/geoJsonUtils.ts", "TypeScript", 0, 65, 0, 0, 0, 0, 0, 0, 0, 0, 12, 14, 91
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/utils/videoUtils.ts", "TypeScript", 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 30, 11, 102
+"/Users/pavakpatel/Documents - local/iran-protest-react/src/vite-env.d.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 12
+"/Users/pavakpatel/Documents - local/iran-protest-react/tailwind.config.js", "JavaScript", 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 1, 2, 62
+"/Users/pavakpatel/Documents - local/iran-protest-react/tsconfig.app.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 3, 4, 33
+"/Users/pavakpatel/Documents - local/iran-protest-react/tsconfig.json", "JSON with Comments", 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 3, 4, 32
+"/Users/pavakpatel/Documents - local/iran-protest-react/tsconfig.node.json", "JSON", 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 1, 11
+"/Users/pavakpatel/Documents - local/iran-protest-react/vite.config.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 21
+"Total", "-", 7280, 500, 0, 25, 756, 100, 49, 7386, 76, 55, 376, 1150, 17753
