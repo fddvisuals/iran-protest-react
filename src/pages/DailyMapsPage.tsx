@@ -3,7 +3,6 @@ import Map, { Source, Layer, MapRef } from 'react-map-gl';
 import { ProtestData, fetchMapData } from '../utils/dataFetching';
 import { csvToGeoJSON, GeoJSONFeatureCollection } from '../utils/geoJsonUtils';
 import { Button } from '../components/ui/button';
-import { Download } from 'lucide-react';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
@@ -90,30 +89,28 @@ const colorSchemes = {
     accent: '#79a5c8',
     title: '#ffffff',
     subtitle: '#78a3c7',
-    badge: '#d1202a',
+    badge: '#2c6e49',
     footer: '#799fc0',
   },
   cumulative: {
-    background: '#1a1a2e',
-    border: '#4a1942',
-    accent: '#c84b6c',
+    background: '#0f2f4a',
+    border: '#00558e',
+    accent: '#79a5c8',
     title: '#ffffff',
-    subtitle: '#e8a0b5',
-    badge: '#16213e',
-    footer: '#b8a9c9',
+    subtitle: '#ffffff',
+    badge: '#2c6e49',
+    footer: '#799fc0',
   }
 };
 
 const DownloadableMap: React.FC<DownloadableMapProps> = ({ 
   protests, 
   dateLabel,
-  mapId,
+  mapId: _mapId,
   protestCount,
   variant = 'default'
 }) => {
   const mapRef = useRef<MapRef>(null);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [mapLoaded, setMapLoaded] = useState(false);
   
   const colors = colorSchemes[variant];
 
@@ -128,8 +125,6 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
 
   // Handle map load and remove background layer for transparency
   const handleMapLoad = useCallback(() => {
-    setMapLoaded(true);
-    
     // Remove background layers to make map transparent
     if (mapRef.current) {
       const map = mapRef.current.getMap();
@@ -143,131 +138,6 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
       }
     }
   }, []);
-
-  const handleDownload = useCallback(async () => {
-    if (!mapRef.current) return;
-    
-    setIsDownloading(true);
-    
-    try {
-      // Wait for any ongoing map operations
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const map = mapRef.current.getMap();
-      const mapCanvas = map.getCanvas();
-      
-      // Create the final export canvas with Figma design dimensions (1500x1500)
-      const exportCanvas = document.createElement('canvas');
-      const ctx = exportCanvas.getContext('2d');
-      
-      if (!ctx) {
-        throw new Error('Could not get canvas context');
-      }
-      
-      // Set canvas size to match Figma design
-      const canvasSize = 1500;
-      exportCanvas.width = canvasSize;
-      exportCanvas.height = canvasSize;
-      
-      // Draw dark background
-      ctx.fillStyle = colors.background;
-      ctx.fillRect(0, 0, canvasSize, canvasSize);
-      
-      // Draw border (22px)
-      ctx.strokeStyle = colors.border;
-      ctx.lineWidth = 44;
-      ctx.strokeRect(22, 22, canvasSize - 44, canvasSize - 44);
-      
-      // Draw accent top bar (half width)
-      ctx.fillStyle = colors.accent;
-      ctx.fillRect(0, 0, 749, 22);
-      
-      // Title: "Mapping Protests in Iran"
-      ctx.fillStyle = colors.title;
-      ctx.font = 'bold 122px "freight-sans-pro", system-ui, sans-serif';
-      ctx.fillText('Mapping Protests in Iran', 65, 150);
-      
-      // Subtitle with date label
-      ctx.fillStyle = colors.subtitle;
-      ctx.font = '600 72px "freight-sans-pro", system-ui, sans-serif';
-      const dateText = `${dateLabel}:`;
-      ctx.fillText(dateText, 65, 270);
-      
-      // Calculate text width for positioning the badge
-      const dateLabelWidth = ctx.measureText(dateText).width;
-      
-      // Red badge with count
-      const badgeX = 65 + dateLabelWidth + 20;
-      const badgeY = 205;
-      const badgeText = protestCount.toString();
-      ctx.font = '600 72px "freight-sans-pro", system-ui, sans-serif';
-      const badgeTextWidth = ctx.measureText(badgeText).width;
-      const badgePadding = 28;
-      const badgeWidth = badgeTextWidth + badgePadding * 2;
-      const badgeHeight = 85;
-      
-      // Draw badge background with rounded corners
-      ctx.fillStyle = colors.badge;
-      ctx.beginPath();
-      const radius = 12;
-      ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, radius);
-      ctx.fill();
-      
-      // Draw badge text
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '600 72px "freight-sans-pro", system-ui, sans-serif';
-      ctx.fillText(badgeText, badgeX + badgePadding, badgeY + 62);
-      
-      // Draw map image in center
-      const mapWidth = 1197;
-      const mapHeight = 995;
-      const mapX = (canvasSize - mapWidth) / 2;
-      const mapY = 325;
-      
-      // Draw the map canvas scaled to fit
-      ctx.drawImage(mapCanvas, mapX, mapY, mapWidth, mapHeight);
-      
-      // Footer text
-      ctx.fillStyle = colors.footer;
-      ctx.font = '400 45px "freight-sans-pro", system-ui, sans-serif';
-      ctx.fillText('Explore the interactive map at fdd.org/iranprotests', 48, 1410);
-      
-      // Load and draw FDD Logo
-      const logoImg = new Image();
-      logoImg.crossOrigin = 'anonymous';
-      logoImg.src = import.meta.env.BASE_URL + 'images/FDD_LogoNoName_Web_Reverse 1.svg';
-      
-      await new Promise<void>((resolve) => {
-        logoImg.onload = () => {
-          // Draw logo at bottom right (193x76 as per Figma)
-          ctx.drawImage(logoImg, canvasSize - 193 - 80, 1358, 193, 76);
-          resolve();
-        };
-        logoImg.onerror = () => {
-          // Fallback to text if logo fails
-          ctx.fillStyle = '#ffffff';
-          ctx.font = 'bold 60px "freight-sans-pro", system-ui, sans-serif';
-          ctx.textAlign = 'right';
-          ctx.fillText('FDD', canvasSize - 80, 1406);
-          ctx.textAlign = 'left';
-          resolve();
-        };
-      });
-      
-      // Create download link
-      const link = document.createElement('a');
-      const dateStr = new Date().toISOString().split('T')[0];
-      link.download = `iran-protests-${mapId}-${dateStr}.png`;
-      link.href = exportCanvas.toDataURL('image/png');
-      link.click();
-      
-    } catch (error) {
-      console.error('Error downloading map:', error);
-      alert('Failed to download map. Please try again.');
-    } finally {
-      setIsDownloading(false);
-    }
-  }, [dateLabel, mapId, protestCount]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -297,48 +167,114 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
         />
         
         {/* Content container */}
-        <div className="relative h-full flex flex-col" style={{ padding: 'clamp(16px, 4vw, 32px)' }}>
-          {/* Title */}
-          <h2 
-            className="text-white font-bold leading-tight"
-            style={{ 
-              fontSize: 'clamp(24px, 5.5vw, 61px)',
-              fontFamily: '"freight-sans-pro", system-ui, sans-serif'
-            }}
-          >
-            Mapping Protests in Iran
-          </h2>
+        <div className="relative h-full" style={{ padding: 'clamp(16px, 4vw, 24px)' }}>
+          {variant === 'cumulative' ? (
+            <div className="flex flex-col" style={{ gap: 'clamp(2px, 0.5vw, 6px)' }}>
+              {/* Line 1: Since December 28, 2025 there */}
+              <p
+                style={{
+                  color: '#79a5c8',
+                  fontSize: 'clamp(24px, 6.2vw, 46px)',
+                  fontFamily: 'freight-sans-pro, system-ui, sans-serif',
+                  fontWeight: 600,
+                  lineHeight: 1.15,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {dateLabel} there
+              </p>
+              {/* Line 2: have been [badge] protests in Iran */}
+              <div className="flex items-center" style={{ gap: 'clamp(5px, 1vw, 10px)' }}>
+                <span
+                  style={{
+                    color: '#78a3c7',
+                    fontSize: 'clamp(24px, 6.2vw, 46px)',
+                    fontFamily: 'freight-sans-pro, system-ui, sans-serif',
+                    fontWeight: 600,
+                    lineHeight: 1.15,
+                  }}
+                >
+                  have been
+                </span>
+                <span
+                  style={{
+                    background: '#2c6e49',
+                    color: '#ffffff',
+                    fontSize: 'clamp(24px, 6.2vw, 46px)',
+                    fontFamily: 'freight-sans-pro, system-ui, sans-serif',
+                    fontWeight: 600,
+                    borderRadius: '8px',
+                    padding: 'clamp(5px, 1vw, 10px) clamp(8px, 0.8vw, 10px)',
+                    lineHeight: 1,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {protestCount}
+                </span>
+                <span
+                  style={{
+                    color: '#78a3c7',
+                    fontSize: 'clamp(24px, 6.2vw, 46px)',
+                    fontFamily: 'freight-sans-pro, system-ui, sans-serif',
+                    fontWeight: 600,
+                    lineHeight: 1.15,
+                  }}
+                >
+                  protests in Iran
+                </span>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Title */}
+              <h2 
+                className="text-white font-bold leading-tight"
+                style={{ 
+                  fontSize: 'clamp(24px, 5.5vw, 61px)',
+                  fontFamily: 'freight-sans-pro, system-ui, sans-serif'
+                }}
+              >
+                Mapping Protests in Iran
+              </h2>
+              
+              {/* Subtitle with badge */}
+              <div className="flex items-center gap-2" style={{ marginTop: 'clamp(4px, 1vw, 8px)' }}>
+                <span 
+                  className="font-semibold"
+                  style={{ 
+                    color: colors.subtitle,
+                    fontSize: 'clamp(14px, 3.2vw, 36px)',
+                    fontFamily: 'freight-sans-pro, system-ui, sans-serif'
+                  }}
+                >
+                  {dateLabel}:
+                </span>
+                <span 
+                  className="text-white font-semibold"
+                  style={{ 
+                    background: colors.badge,
+                    fontSize: 'clamp(12px, 3vw, 32px)',
+                    borderRadius: '8px',
+                    padding: 'clamp(2px, 0.4vw, 5px) clamp(6px, 1.2vw, 12px)',
+                    fontFamily: 'freight-sans-pro, system-ui, sans-serif'
+                  }}
+                >
+                  {protestCount}
+                </span>
+              </div>
+            </>
+          )}
           
-          {/* Subtitle with badge */}
-          <div className="flex items-center gap-2" style={{ marginTop: 'clamp(4px, 1vw, 8px)' }}>
-            <span 
-              className="font-semibold"
-              style={{ 
-                color: colors.subtitle,
-                fontSize: 'clamp(14px, 3.2vw, 36px)',
-                fontFamily: '"freight-sans-pro", system-ui, sans-serif'
-              }}
-            >
-              {dateLabel}:
-            </span>
-            <span 
-              className="text-white font-semibold"
-              style={{ 
-                background: colors.badge,
-                fontSize: 'clamp(12px, 3vw, 32px)',
-                borderRadius: '8px',
-                padding: 'clamp(2px, 0.5vw, 6px) clamp(8px, 1.5vw, 16px)',
-                fontFamily: '"freight-sans-pro", system-ui, sans-serif'
-              }}
-            >
-              {protestCount}
-            </span>
-          </div>
-          
-          {/* Map container */}
+          {/* Map container - positioned to fill middle area */}
           <div 
-            className="flex-1 rounded-lg overflow-hidden"
-            style={{ marginTop: 'clamp(8px, 2vw, 16px)', minHeight: '200px', background: 'transparent' }}
+            className="absolute rounded-lg overflow-hidden"
+            style={{ 
+              top: variant === 'cumulative' ? 'clamp(90px, 18vw, 140px)' : 'clamp(80px, 16vw, 120px)',
+              left: 'clamp(16px, 3vw, 24px)',
+              right: 'clamp(16px, 3vw, 24px)',
+              bottom: 'clamp(50px, 10vw, 70px)',
+              background: 'transparent'
+            }}
           >
             <Map
               ref={mapRef}
@@ -346,8 +282,8 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
               mapStyle="mapbox://styles/fddvisuals/cmc27wmsr002o01qlcu8n7zy3"
               initialViewState={{
                 longitude: 53.5,
-                latitude: 32.5,
-                zoom: 4.0,
+                latitude: 33,
+                zoom: 4.2,
               }}
               style={{ width: '100%', height: '100%' }}
               onLoad={handleMapLoad}
@@ -371,17 +307,21 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
             </Map>
           </div>
           
-          {/* Footer */}
+          {/* Footer - positioned at absolute bottom */}
           <div 
-            className="flex items-center justify-between"
-            style={{ marginTop: 'clamp(8px, 2vw, 16px)' }}
+            className="absolute left-0 right-0 flex items-center justify-between"
+            style={{ 
+              bottom: 'clamp(12px, 3vw, 24px)',
+              left: 'clamp(16px, 3.2vw, 24px)',
+              right: 'clamp(16px, 3.2vw, 24px)',
+            }}
           >
             <span 
               className="font-normal"
               style={{ 
-                color: colors.footer,
-                fontSize: 'clamp(9px, 2vw, 18px)',
-                fontFamily: '"freight-sans-pro", system-ui, sans-serif'
+                color: '#799FC0',
+                fontSize: 'clamp(12px, 3vw, 22px)',
+                fontFamily: 'freight-sans-pro, system-ui, sans-serif'
               }}
             >
               Explore the interactive map at fdd.org/iranprotests
@@ -389,22 +329,11 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
             <img 
               src={import.meta.env.BASE_URL + 'images/FDD_LogoNoName_Web_Reverse 1.svg'}
               alt="FDD"
-              style={{ height: 'clamp(20px, 4vw, 32px)' }}
+              style={{ height: 'clamp(24px, 5vw, 38px)' }}
             />
           </div>
         </div>
       </div>
-      
-      {/* Download button */}
-      <Button
-        onClick={handleDownload}
-        disabled={isDownloading || !mapLoaded}
-        className="bg-[#00558c] hover:bg-[#004778] text-white self-start"
-        size="lg"
-      >
-        <Download className="w-5 h-5 mr-2" />
-        {isDownloading ? 'Generating Image...' : 'Download 1500×1500 Image'}
-      </Button>
       
       {protests.length === 0 && (
         <div className="p-4 bg-gray-700/50 rounded-lg text-center">
@@ -501,13 +430,11 @@ const DailyMapsPage: React.FC = () => {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-white">Daily Promotion Maps</h1>
-          <p className="text-gray-400">Download promotional images for social media</p>
-          <p className="text-sm text-gray-500">Generated on {todayLabel}</p>
         </div>
 
         {/* Map 1: Today's Protests */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#E7AC51]">📅 Today's Protests</h3>
+          <h3 className="text-xl font-semibold text-[#E7AC51]">Today's Protests</h3>
           <DownloadableMap
             protests={todayProtests}
             dateLabel={todayLabel}
@@ -518,7 +445,7 @@ const DailyMapsPage: React.FC = () => {
 
         {/* Map 2: Since December 28, 2025 */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#c84b6c]">📈 Since December 28, 2025</h3>
+          <h3 className="text-xl font-semibold text-[#c84b6c]">Since December 28, 2025</h3>
           <DownloadableMap
             protests={sinceDecemberProtests}
             dateLabel="Since December 28, 2025"
