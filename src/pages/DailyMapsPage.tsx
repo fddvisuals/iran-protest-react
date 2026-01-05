@@ -349,6 +349,32 @@ const DailyMapsPage: React.FC = () => {
   const [allData, setAllData] = useState<ProtestData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+
+  // Simple password - in production, use environment variables or proper auth
+  const CORRECT_PASSWORD = 'iran2026';
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === CORRECT_PASSWORD) {
+      setIsAuthenticated(true);
+      setAuthError('');
+      // Optionally store in sessionStorage so user doesn't need to re-enter on refresh
+      sessionStorage.setItem('dailyMapsAuth', 'true');
+    } else {
+      setAuthError('Incorrect password');
+    }
+  };
+
+  // Check sessionStorage on mount
+  useEffect(() => {
+    const auth = sessionStorage.getItem('dailyMapsAuth');
+    if (auth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -401,6 +427,34 @@ const DailyMapsPage: React.FC = () => {
     day: 'numeric', 
     year: 'numeric' 
   });
+
+  // Password protection screen
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#0c344d] flex items-center justify-center">
+        <div className="bg-[#18334b] p-8 rounded-lg border border-[#00558e] max-w-md w-full mx-4">
+          <h1 className="text-2xl font-bold text-white mb-2 text-center">Daily Promotion Maps</h1>
+          <p className="text-gray-400 text-center mb-6">Enter password to access this page</p>
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full px-4 py-3 bg-[#0c344d] border border-[#00558e] rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#79a5c8]"
+              autoFocus
+            />
+            {authError && (
+              <p className="text-red-400 text-sm text-center">{authError}</p>
+            )}
+            <Button type="submit" className="w-full bg-[#00558c] hover:bg-[#004778]">
+              Access Page
+            </Button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
