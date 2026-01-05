@@ -1,0 +1,145 @@
+Date : 2026-01-05 11:08:55
+Directory : /Users/pavakpatel/Github/iran-protest-react
+Total : 92 files,  16712 codes, 415 comments, 1208 blanks, all 18335 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| TypeScript JSX     |         66 |      7,732 |        262 |        922 |      8,916 |
+| JSON               |          4 |      7,401 |          3 |          7 |      7,411 |
+| PostCSS            |          3 |        756 |         81 |        127 |        964 |
+| TypeScript         |          8 |        500 |         59 |        100 |        659 |
+| JavaScript         |          3 |        100 |          4 |         13 |        117 |
+| HTML               |          2 |         76 |          2 |          7 |         85 |
+| XML                |          3 |         67 |          1 |          3 |         71 |
+| Markdown           |          1 |         55 |          0 |         24 |         79 |
+| JSON with Comments |          1 |         25 |          3 |          4 |         32 |
+| Batch              |          1 |          0 |          0 |          1 |          1 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                         | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                            |         92 |     16,712 |        415 |      1,208 |     18,335 |
+| . (Files)                                                                                    |         12 |      7,637 |         13 |         53 |      7,703 |
+| public                                                                                       |          4 |        105 |          1 |          8 |        114 |
+| public (Files)                                                                               |          1 |         38 |          0 |          5 |         43 |
+| public/images                                                                                |          3 |         67 |          1 |          3 |         71 |
+| src                                                                                          |         76 |      8,970 |        401 |      1,147 |     10,518 |
+| src (Files)                                                                                  |          5 |        202 |         18 |         50 |        270 |
+| src/components                                                                               |         59 |      6,190 |        139 |        726 |      7,055 |
+| src/components/Charts                                                                        |          1 |        567 |         29 |         41 |        637 |
+| src/components/Layout                                                                        |          2 |        173 |         16 |         24 |        213 |
+| src/components/Map                                                                           |          2 |        466 |         28 |         51 |        545 |
+| src/components/ProtestList                                                                   |          2 |        240 |         19 |         26 |        285 |
+| src/components/TimeFilter                                                                    |          1 |         55 |          1 |          6 |         62 |
+| src/components/VideoGrid                                                                     |          5 |        775 |         34 |         95 |        904 |
+| src/components/ui                                                                            |         46 |      3,914 |         12 |        483 |      4,409 |
+| src/context                                                                                  |          1 |        103 |          9 |         17 |        129 |
+| src/hooks                                                                                    |          2 |        174 |          0 |         36 |        210 |
+| src/lib                                                                                      |          1 |          5 |          0 |          2 |          7 |
+| src/pages                                                                                    |          4 |      1,409 |        114 |        174 |      1,697 |
+| src/styles                                                                                   |          1 |        591 |         65 |         85 |        741 |
+| src/utils                                                                                    |          3 |        296 |         56 |         57 |        409 |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                     | language           | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /Users/pavakpatel/Github/iran-protest-react/README.md                                        | Markdown           |         55 |          0 |         24 |         79 |
+| /Users/pavakpatel/Github/iran-protest-react/copy-assets.cjs                                  | JavaScript         |         35 |          3 |         10 |         48 |
+| /Users/pavakpatel/Github/iran-protest-react/deploy.bat                                       | Batch              |          0 |          0 |          1 |          1 |
+| /Users/pavakpatel/Github/iran-protest-react/index.html                                       | HTML               |         38 |          2 |          2 |         42 |
+| /Users/pavakpatel/Github/iran-protest-react/package-lock.json                                | JSON               |      7,284 |          0 |          1 |      7,285 |
+| /Users/pavakpatel/Github/iran-protest-react/package.json                                     | JSON               |         81 |          0 |          1 |         82 |
+| /Users/pavakpatel/Github/iran-protest-react/postcss.config.js                                | JavaScript         |          6 |          0 |          1 |          7 |
+| /Users/pavakpatel/Github/iran-protest-react/public/404.html                                  | HTML               |         38 |          0 |          5 |         43 |
+| /Users/pavakpatel/Github/iran-protest-react/public/images/FDD_LogoNoName_Web_Reverse 1.svg   | XML                |         18 |          0 |          1 |         19 |
+| /Users/pavakpatel/Github/iran-protest-react/public/images/Visuals_Logo_Temporary_v01.svg     | XML                |         46 |          1 |          1 |         48 |
+| /Users/pavakpatel/Github/iran-protest-react/public/images/download.svg                       | XML                |          3 |          0 |          1 |          4 |
+| /Users/pavakpatel/Github/iran-protest-react/src/App.tsx                                      | TypeScript JSX     |         21 |          0 |          3 |         24 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/Charts/ProtestCharts.tsx          | TypeScript JSX     |        567 |         29 |         41 |        637 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/Layout/Footer.tsx                 | TypeScript JSX     |        105 |         10 |         12 |        127 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/Layout/Header.tsx                 | TypeScript JSX     |         68 |          6 |         12 |         86 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/Map/MapPopup.tsx                  | TypeScript JSX     |         90 |          0 |         12 |        102 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/Map/ProtestMap.tsx                | TypeScript JSX     |        376 |         28 |         39 |        443 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ProtestList/ProtestList.tsx       | TypeScript JSX     |        240 |         19 |         25 |        284 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ProtestList/ProtestListModal.tsx  | TypeScript JSX     |          0 |          0 |          1 |          1 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/TimeFilter/TimeFilter.tsx         | TypeScript JSX     |         55 |          1 |          6 |         62 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/VideoGrid/CompactVideoGrid.tsx    | TypeScript JSX     |        225 |         12 |         26 |        263 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/VideoGrid/HorizontalVideoGrid.tsx | TypeScript JSX     |        320 |         20 |         39 |        379 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/VideoGrid/VideoDialog.tsx         | TypeScript JSX     |          0 |          0 |          1 |          1 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/VideoGrid/VideoGrid.tsx           | TypeScript JSX     |         52 |          0 |          7 |         59 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/VideoGrid/VideoItem.tsx           | TypeScript JSX     |        178 |          2 |         22 |        202 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/accordion.tsx                  | TypeScript JSX     |         49 |          0 |          7 |         56 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/alert-dialog.tsx               | TypeScript JSX     |        126 |          0 |         14 |        140 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/alert.tsx                      | TypeScript JSX     |         53 |          0 |          7 |         60 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/aspect-ratio.tsx               | TypeScript JSX     |          3 |          0 |          3 |          6 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/avatar.tsx                     | TypeScript JSX     |         44 |          0 |          7 |         51 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/badge.tsx                      | TypeScript JSX     |         31 |          0 |          6 |         37 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/breadcrumb.tsx                 | TypeScript JSX     |        105 |          0 |         11 |        116 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/button.tsx                     | TypeScript JSX     |         52 |          0 |          6 |         58 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/card.tsx                       | TypeScript JSX     |         68 |          0 |          9 |         77 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/carousel.tsx                   | TypeScript JSX     |        231 |          0 |         30 |        261 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/checkbox.tsx                   | TypeScript JSX     |         25 |          0 |          4 |         29 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/collapsible.tsx                | TypeScript JSX     |          6 |          0 |          6 |         12 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/command.tsx                    | TypeScript JSX     |        135 |          0 |         17 |        152 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/context-menu.tsx               | TypeScript JSX     |        181 |          0 |         18 |        199 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/dialog.tsx                     | TypeScript JSX     |        109 |          0 |         14 |        123 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/drawer.tsx                     | TypeScript JSX     |        105 |          0 |         14 |        119 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/dropdown-menu.tsx              | TypeScript JSX     |        182 |          0 |         18 |        200 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/form.tsx                       | TypeScript JSX     |        153 |          0 |         26 |        179 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/hover-card.tsx                 | TypeScript JSX     |         23 |          0 |          7 |         30 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/input-otp.tsx                  | TypeScript JSX     |         62 |          0 |          8 |         70 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/input.tsx                      | TypeScript JSX     |         19 |          0 |          4 |         23 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/label.tsx                      | TypeScript JSX     |         20 |          0 |          5 |         25 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/menubar.tsx                    | TypeScript JSX     |        237 |          0 |         20 |        257 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/navigation-menu.tsx            | TypeScript JSX     |        117 |          0 |         12 |        129 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/pagination.tsx                 | TypeScript JSX     |        107 |          0 |         11 |        118 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/popover.tsx                    | TypeScript JSX     |         25 |          0 |          7 |         32 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/progress.tsx                   | TypeScript JSX     |         24 |          0 |          5 |         29 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/radio-group.tsx                | TypeScript JSX     |         38 |          0 |          5 |         43 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/resizable.tsx                  | TypeScript JSX     |         39 |          0 |          7 |         46 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/scroll-area.tsx                | TypeScript JSX     |         42 |          0 |          5 |         47 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/select.tsx                     | TypeScript JSX     |        146 |          0 |         14 |        160 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/separator.tsx                  | TypeScript JSX     |         26 |          0 |          4 |         30 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/sheet.tsx                      | TypeScript JSX     |        125 |          0 |         16 |        141 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/sidebar.tsx                    | TypeScript JSX     |        705 |         12 |         54 |        771 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/skeleton.tsx                   | TypeScript JSX     |         13 |          0 |          3 |         16 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/slider.tsx                     | TypeScript JSX     |         23 |          0 |          4 |         27 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/sonner.tsx                     | TypeScript JSX     |         26 |          0 |          6 |         32 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/switch.tsx                     | TypeScript JSX     |         24 |          0 |          4 |         28 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/table.tsx                      | TypeScript JSX     |        110 |          0 |         11 |        121 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/tabs.tsx                       | TypeScript JSX     |         53 |          0 |         12 |         65 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/textarea.tsx                   | TypeScript JSX     |         19 |          0 |          4 |         23 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/toast.tsx                      | TypeScript JSX     |        115 |          0 |         13 |        128 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/toaster.tsx                    | TypeScript JSX     |          3 |          0 |          1 |          4 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/toggle-group.tsx               | TypeScript JSX     |         51 |          0 |          9 |         60 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/toggle.tsx                     | TypeScript JSX     |         39 |          0 |          7 |         46 |
+| /Users/pavakpatel/Github/iran-protest-react/src/components/ui/tooltip.tsx                    | TypeScript JSX     |         25 |          0 |          8 |         33 |
+| /Users/pavakpatel/Github/iran-protest-react/src/context/AppContext.tsx                       | TypeScript JSX     |        103 |          9 |         17 |        129 |
+| /Users/pavakpatel/Github/iran-protest-react/src/hooks/use-mobile.ts                          | TypeScript         |         15 |          0 |          5 |         20 |
+| /Users/pavakpatel/Github/iran-protest-react/src/hooks/use-toast.ts                           | TypeScript         |        159 |          0 |         31 |        190 |
+| /Users/pavakpatel/Github/iran-protest-react/src/index.css                                    | PostCSS            |        145 |         13 |         37 |        195 |
+| /Users/pavakpatel/Github/iran-protest-react/src/lib/utils.ts                                 | TypeScript         |          5 |          0 |          2 |          7 |
+| /Users/pavakpatel/Github/iran-protest-react/src/main.tsx                                     | TypeScript JSX     |          9 |          0 |          2 |         11 |
+| /Users/pavakpatel/Github/iran-protest-react/src/mapbox.css                                   | PostCSS            |         20 |          3 |          5 |         28 |
+| /Users/pavakpatel/Github/iran-protest-react/src/pages/AllVideosPage.tsx                      | TypeScript JSX     |        451 |         27 |         53 |        531 |
+| /Users/pavakpatel/Github/iran-protest-react/src/pages/DailyMapsPage.tsx                      | TypeScript JSX     |        450 |         39 |         57 |        546 |
+| /Users/pavakpatel/Github/iran-protest-react/src/pages/HomePage.tsx                           | TypeScript JSX     |        496 |         48 |         61 |        605 |
+| /Users/pavakpatel/Github/iran-protest-react/src/pages/TestPage.tsx                           | TypeScript JSX     |         12 |          0 |          3 |         15 |
+| /Users/pavakpatel/Github/iran-protest-react/src/styles/morphic.css                           | PostCSS            |        591 |         65 |         85 |        741 |
+| /Users/pavakpatel/Github/iran-protest-react/src/utils/dataFetching.ts                        | TypeScript         |        170 |         14 |         32 |        216 |
+| /Users/pavakpatel/Github/iran-protest-react/src/utils/geoJsonUtils.ts                        | TypeScript         |         65 |         12 |         14 |         91 |
+| /Users/pavakpatel/Github/iran-protest-react/src/utils/videoUtils.ts                          | TypeScript         |         61 |         30 |         11 |        102 |
+| /Users/pavakpatel/Github/iran-protest-react/src/vite-env.d.ts                                | TypeScript         |          7 |          2 |          3 |         12 |
+| /Users/pavakpatel/Github/iran-protest-react/tailwind.config.js                               | JavaScript         |         59 |          1 |          2 |         62 |
+| /Users/pavakpatel/Github/iran-protest-react/tsconfig.app.json                                | JSON               |         26 |          3 |          4 |         33 |
+| /Users/pavakpatel/Github/iran-protest-react/tsconfig.json                                    | JSON with Comments |         25 |          3 |          4 |         32 |
+| /Users/pavakpatel/Github/iran-protest-react/tsconfig.node.json                               | JSON               |         10 |          0 |          1 |         11 |
+| /Users/pavakpatel/Github/iran-protest-react/vite.config.ts                                   | TypeScript         |         18 |          1 |          2 |         21 |
+| Total                                                                                        |                    |     16,712 |        415 |      1,208 |     18,335 |
++----------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
