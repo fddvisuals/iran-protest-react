@@ -170,7 +170,7 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
         <div className="relative h-full" style={{ padding: 'clamp(16px, 4vw, 24px)' }}>
           {variant === 'cumulative' ? (
             <div className="flex flex-col" style={{ gap: 'clamp(2px, 0.5vw, 6px)' }}>
-              {/* Line 1: Since December 28, 2025 there */}
+              {/* Line 1: Since December 28, 2025, there */}
               <p
                 style={{
                   color: '#79a5c8',
@@ -181,7 +181,7 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
                   whiteSpace: 'nowrap',
                 }}
               >
-                {dateLabel} there
+                {dateLabel}, there
               </p>
               {/* Line 2: have been [badge] protests in Iran */}
               <div className="flex items-center" style={{ gap: 'clamp(5px, 1vw, 10px)' }}>
