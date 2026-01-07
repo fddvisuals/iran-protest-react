@@ -229,6 +229,9 @@ const HomePage: React.FC = () => {
                 <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.minorsKilled.toLocaleString()}
                 </p>
+                <p className="text-white/90 text-[10px] sm:text-[12px] font-medium leading-none text-center drop-shadow-sm">
+                  Since Sept 2022
+                </p>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl pointer-events-none"></div>
               </div>
 
@@ -252,6 +255,9 @@ const HomePage: React.FC = () => {
                 <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.totalKilled.toLocaleString()}
                 </p>
+                <p className="text-white/90 text-[10px] sm:text-[12px] font-medium leading-none text-center drop-shadow-sm">
+                  Since Sept 2022
+                </p>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl pointer-events-none"></div>
               </div>
 
@@ -274,6 +280,9 @@ const HomePage: React.FC = () => {
                 </h4>
                 <p className="text-white font-black text-[28px] sm:text-[36px] leading-none drop-shadow-lg">
                   {statistics.totalArrested.toLocaleString()}
+                </p>
+                <p className="text-white/90 text-[10px] sm:text-[12px] font-medium leading-none text-center drop-shadow-sm">
+                  Since Sept 2022
                 </p>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl pointer-events-none"></div>
               </div>
