@@ -17,6 +17,10 @@ interface AppContextType {
   error: string | null;
   timeFilter: TimeFilter;
   setTimeFilter: (filter: TimeFilter) => void;
+  customStartDate: Date | null;
+  setCustomStartDate: (date: Date | null) => void;
+  customEndDate: Date | null;
+  setCustomEndDate: (date: Date | null) => void;
   // Additional properties expected by components
   viewportFilteredData: ProtestData[];
   filteredMapData: ProtestData[];
@@ -46,6 +50,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('all-time');
+  const [customStartDate, setCustomStartDate] = useState<Date | null>(new Date('2025-12-28'));
+  const [customEndDate, setCustomEndDate] = useState<Date | null>(new Date());
   
   // Additional state for component interactions
   const [viewportFilteredData, setViewportFilteredData] = useState<ProtestData[]>([]);
@@ -79,12 +85,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   // Derived data based on timeFilter
   const filteredMapData = useMemo(() => {
-    return filterProtestsByTimeRange(mapData, timeFilter);
-  }, [mapData, timeFilter]);
+    return filterProtestsByTimeRange(mapData, timeFilter, customStartDate, customEndDate);
+  }, [mapData, timeFilter, customStartDate, customEndDate]);
   
   const filteredVideoData = useMemo(() => {
-    return filterProtestsByTimeRange(videoData, timeFilter);
-  }, [videoData, timeFilter]);
+    return filterProtestsByTimeRange(videoData, timeFilter, customStartDate, customEndDate);
+  }, [videoData, timeFilter, customStartDate, customEndDate]);
 
   // Initialize viewportFilteredData with filteredMapData when filteredMapData changes
   // This ensures the protest list shows data immediately on initial load
@@ -102,6 +108,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     error,
     timeFilter,
     setTimeFilter,
+    customStartDate,
+    setCustomStartDate,
+    customEndDate,
+    setCustomEndDate,
     viewportFilteredData,
     filteredMapData,
     filteredVideoData,

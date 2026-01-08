@@ -233,7 +233,11 @@ const ProtestCharts: React.FC = () => {
       .map(([date, count]) => ({ 
         date, 
         count,
-        formattedDate: new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+        formattedDate: new Date(date).toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric',
+          year: dailyTimeRange === 'last30' ? undefined : 'numeric'
+        })
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
 
@@ -587,44 +591,6 @@ const ProtestCharts: React.FC = () => {
               }: <span className="font-bold text-[#00558c] text-2xl">{provinceData.reduce((sum, item) => sum + item.count, 0).toLocaleString()}</span> total protests
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* Data Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-6 mt-6 sm:mt-8 justify-items-center max-w-4xl mx-auto">
-        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
-             style={{
-               borderRadius: '12px',
-               background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-             }}>
-          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Peak Daily</h4>
-              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important" >{Math.max(...dailyData.map(d => d.count)).toLocaleString()}</p>
-        </div>
-        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
-             style={{
-               borderRadius: '12px',
-               background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-             }}>
-          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Average Daily</h4>
-              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important">
-            {(dailyData.length ? Math.round(dailyData.reduce((sum, item) => sum + item.count, 0) / dailyData.length) : 0).toLocaleString()}
-          </p>
-        </div>
-        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
-             style={{
-               borderRadius: '12px',
-               background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-             }}>
-          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Total Recorded</h4>
-              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important">{mapData.length.toLocaleString()}</p>
-        </div>
-        <div className="flex flex-col items-center space-y-1 sm:space-y-2 px-1.5 sm:px-2 md:px-4 py-2 sm:py-3 md:py-4 border border-[#CDCDCD] shadow-lg w-full"
-             style={{
-               borderRadius: '12px',
-               background: 'linear-gradient(157deg, rgba(183, 183, 183, 0.40) 0%, rgba(226, 232, 240, 0.40) 25%, rgba(203, 213, 225, 0.40) 50%, rgba(148, 163, 184, 0.40) 75%, rgba(100, 116, 139, 0.40) 100%)'
-             }}>
-          <h4 className="font-sans text-[10px] sm:text-[12px] md:text-[16px] font-bold text-text-primary text-center">Active Provinces</h4>
-              <p className="font-black text-[16px] sm:text-[20px] md:text-[32px] leading-none !text-[#00558c] !important" style={{ color: '#00558c !important', textShadow: 'none !important', fill: '#00558c !important', WebkitTextFillColor: '#00558c !important' }}>{provinceData.length}</p>
         </div>
       </div>
       </div>

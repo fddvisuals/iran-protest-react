@@ -8,7 +8,7 @@ export const getModifiedUrl = (url: string): string => {
   return match && match[1] ? match[1] : "";
 };
 
-export type TimeFilter = 'last-week' | 'last-month' | 'all-time';
+export type TimeFilter = 'last-week' | 'last-month' | 'custom-date' | 'all-time';
 
 export interface ProtestData {
   Date: string;
@@ -172,27 +172,37 @@ export const getProtestsThisWeek = (protests: ProtestData[]): number => {
 };
 
 // Utility function to filter protests by time range
-export const filterProtestsByTimeRange = (protests: ProtestData[], timeFilter: TimeFilter): ProtestData[] => {
+export const filterProtestsByTimeRange = (protests: ProtestData[], timeFilter: TimeFilter, customStartDate?: Date | null, customEndDate?: Date | null): ProtestData[] => {
   if (!protests || protests.length === 0) return [];
   
   const now = new Date();
   let startDate: Date;
+  let endDate: Date;
   
   switch (timeFilter) {
     case 'last-week':
       // Last 7 days including today
       startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6, 0, 0, 0, 0);
+      endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
       break;
     case 'last-month':
       // Last 30 days including today
       startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 29, 0, 0, 0, 0);
+      endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+      break;
+    case 'custom-date':
+      // Use custom dates if provided
+      startDate = customStartDate || new Date('2025-12-28T00:00:00');
+      endDate = customEndDate || new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
       break;
     case 'all-time':
     default:
       return protests;
   }
   
-  const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+  if (!endDate) {
+    endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+  }
   
   return protests.filter(protest => {
     if (!protest.Date || protest.Date.trim() === '') return false;
@@ -210,6 +220,6 @@ export const filterProtestsByTimeRange = (protests: ProtestData[], timeFilter: T
 };
 
 // Utility function to count protests for a given time filter
-export const getProtestCountByTimeFilter = (protests: ProtestData[], timeFilter: TimeFilter): number => {
-  return filterProtestsByTimeRange(protests, timeFilter).length;
+export const getProtestCountByTimeFilter = (protests: ProtestData[], timeFilter: TimeFilter, customStartDate?: Date | null, customEndDate?: Date | null): number => {
+  return filterProtestsByTimeRange(protests, timeFilter, customStartDate, customEndDate).length;
 };
