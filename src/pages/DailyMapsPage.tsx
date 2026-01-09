@@ -456,7 +456,6 @@ const DailyMapsPage: React.FC = () => {
 
   // Filter protests for the selected date (time-lapse)
   const timelapseProtests = useMemo(() => {
-    const selectedDateStr = selectedDate.toISOString().split('T')[0];
     
     return allData.filter(protest => {
       if (!protest.Date) return false;
