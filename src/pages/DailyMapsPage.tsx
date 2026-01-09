@@ -78,7 +78,7 @@ interface DownloadableMapProps {
   dateLabel: string;
   mapId: string;
   protestCount: number;
-  variant?: 'default' | 'cumulative';
+  variant?: 'default' | 'cumulative' | 'timelapse';
 }
 
 // Color schemes for different variants
@@ -98,6 +98,15 @@ const colorSchemes = {
     accent: '#79a5c8',
     title: '#ffffff',
     subtitle: '#ffffff',
+    badge: '#2c6e49',
+    footer: '#799fc0',
+  },
+  timelapse: {
+    background: '#0c344d',
+    border: '#00558e',
+    accent: '#79a5c8',
+    title: '#ffffff',
+    subtitle: '#78a3c7',
     badge: '#2c6e49',
     footer: '#799fc0',
   }
@@ -168,7 +177,25 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
         
         {/* Content container */}
         <div className="relative h-full" style={{ padding: 'clamp(16px, 4vw, 24px)' }}>
-          {variant === 'cumulative' ? (
+          {variant === 'timelapse' ? (
+            /* Timelapse variant - only number */
+            <div className="flex items-center justify-center" style={{ paddingTop: 'clamp(16px, 3vw, 24px)' }}>
+              <span
+                style={{
+                  background: '#2c6e49',
+                  color: '#ffffff',
+                  fontSize: 'clamp(32px, 8vw, 60px)',
+                  fontFamily: 'freight-sans-pro, system-ui, sans-serif',
+                  fontWeight: 600,
+                  borderRadius: '12px',
+                  padding: 'clamp(8px, 1.5vw, 16px) clamp(12px, 2vw, 20px)',
+                  lineHeight: 1,
+                }}
+              >
+                {protestCount}
+              </span>
+            </div>
+          ) : variant === 'cumulative' ? (
             <div className="flex flex-col" style={{ gap: 'clamp(2px, 0.5vw, 6px)' }}>
               {/* Line 1: Since December 28, 2025, there */}
               <p
@@ -269,10 +296,10 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
           <div 
             className="absolute rounded-lg overflow-hidden"
             style={{ 
-              top: variant === 'cumulative' ? 'clamp(90px, 18vw, 140px)' : 'clamp(80px, 16vw, 120px)',
+              top: variant === 'timelapse' ? 'clamp(90px, 16vw, 120px)' : variant === 'cumulative' ? 'clamp(90px, 18vw, 140px)' : 'clamp(80px, 16vw, 120px)',
               left: 'clamp(16px, 3vw, 24px)',
               right: 'clamp(16px, 3vw, 24px)',
-              bottom: 'clamp(50px, 10vw, 70px)',
+              bottom: variant === 'timelapse' ? 'clamp(16px, 3vw, 24px)' : 'clamp(50px, 10vw, 70px)',
               background: 'transparent'
             }}
           >
@@ -307,31 +334,33 @@ const DownloadableMap: React.FC<DownloadableMapProps> = ({
             </Map>
           </div>
           
-          {/* Footer - positioned at absolute bottom */}
-          <div 
-            className="absolute left-0 right-0 flex items-center justify-between"
-            style={{ 
-              bottom: 'clamp(12px, 3vw, 24px)',
-              left: 'clamp(16px, 3.2vw, 24px)',
-              right: 'clamp(16px, 3.2vw, 24px)',
-            }}
-          >
-            <span 
-              className="font-normal"
+          {/* Footer - positioned at absolute bottom (hidden for timelapse) */}
+          {variant !== 'timelapse' && (
+            <div 
+              className="absolute left-0 right-0 flex items-center justify-between"
               style={{ 
-                color: '#799FC0',
-                fontSize: 'clamp(12px, 3vw, 22px)',
-                fontFamily: 'freight-sans-pro, system-ui, sans-serif'
+                bottom: 'clamp(12px, 3vw, 24px)',
+                left: 'clamp(16px, 3.2vw, 24px)',
+                right: 'clamp(16px, 3.2vw, 24px)',
               }}
             >
-              Explore the interactive map at fdd.org/iranprotests
-            </span>
-            <img 
-              src={import.meta.env.BASE_URL + 'images/FDD_LogoNoName_Web_Reverse 1.svg'}
-              alt="FDD"
-              style={{ height: 'clamp(24px, 5vw, 38px)' }}
-            />
-          </div>
+              <span 
+                className="font-normal"
+                style={{ 
+                  color: '#799FC0',
+                  fontSize: 'clamp(12px, 3vw, 22px)',
+                  fontFamily: 'freight-sans-pro, system-ui, sans-serif'
+                }}
+              >
+                Explore the interactive map at fdd.org/iranprotests
+              </span>
+              <img 
+                src={import.meta.env.BASE_URL + 'images/FDD_LogoNoName_Web_Reverse 1.svg'}
+                alt="FDD"
+                style={{ height: 'clamp(24px, 5vw, 38px)' }}
+              />
+            </div>
+          )}
         </div>
       </div>
       
@@ -352,6 +381,10 @@ const DailyMapsPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
+  
+  // Time-lapse slider state
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Simple password - in production, use environment variables or proper auth
   const CORRECT_PASSWORD = 'iran2026';
@@ -421,6 +454,88 @@ const DailyMapsPage: React.FC = () => {
     });
   }, [allData]);
 
+  // Filter protests for the selected date (time-lapse)
+  const timelapseProtests = useMemo(() => {
+    const selectedDateStr = selectedDate.toISOString().split('T')[0];
+    
+    return allData.filter(protest => {
+      if (!protest.Date) return false;
+      try {
+        const protestDate = new Date(protest.Date);
+        // Include all protests from SINCE_DATE up to and including selected date
+        return protestDate >= SINCE_DATE && protestDate <= selectedDate;
+      } catch {
+        return false;
+      }
+    });
+  }, [allData, selectedDate]);
+
+  // Auto-play functionality for time-lapse
+  useEffect(() => {
+    if (!isPlaying) return;
+    
+    const interval = setInterval(() => {
+      setSelectedDate(prevDate => {
+        const nextDate = new Date(prevDate);
+        nextDate.setDate(nextDate.getDate() + 1);
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (nextDate > today) {
+          setIsPlaying(false);
+          return prevDate;
+        }
+        
+        return nextDate;
+      });
+    }, 1000); // Change date every second
+    
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  // Calculate total days for slider
+  const getTotalDays = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diffTime = Math.abs(today.getTime() - SINCE_DATE.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const getDayIndex = (date: Date) => {
+    const diffTime = Math.abs(date.getTime() - SINCE_DATE.getTime());
+    return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const getDateFromIndex = (index: number) => {
+    const date = new Date(SINCE_DATE);
+    date.setDate(date.getDate() + index);
+    return date;
+  };
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const index = parseInt(e.target.value);
+    setSelectedDate(getDateFromIndex(index));
+    setIsPlaying(false);
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleReset = () => {
+    setSelectedDate(SINCE_DATE);
+    setIsPlaying(false);
+  };
+
+  const formatSelectedDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { 
+      month: 'long', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+  };
+
   const today = new Date();
   const todayLabel = today.toLocaleDateString('en-US', { 
     month: 'long', 
@@ -484,6 +599,70 @@ const DailyMapsPage: React.FC = () => {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-white">Daily Promotion Maps</h1>
+        </div>
+
+        {/* Time-lapse Slider Section */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold text-[#79a5c8]">Time-lapse View (Internal Use)</h3>
+          <div className="bg-[#18334b] p-6 rounded-lg border border-[#00558e]">
+            <div className="space-y-6">
+              {/* Date Display */}
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white mb-2">
+                  {formatSelectedDate(selectedDate)}
+                </div>
+                <div className="text-sm text-gray-400">
+                  Cumulative protests since Dec 28, 2025: {timelapseProtests.length}
+                </div>
+              </div>
+
+              {/* Slider */}
+              <div className="relative">
+                <input
+                  type="range"
+                  min="0"
+                  max={getTotalDays()}
+                  value={getDayIndex(selectedDate)}
+                  onChange={handleSliderChange}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-[#E7AC51]"
+                  style={{
+                    background: `linear-gradient(to right, #E7AC51 0%, #E7AC51 ${(getDayIndex(selectedDate) / getTotalDays()) * 100}%, #374151 ${(getDayIndex(selectedDate) / getTotalDays()) * 100}%, #374151 100%)`
+                  }}
+                />
+                <div className="flex justify-between text-xs text-gray-400 mt-2">
+                  <span>Dec 28, 2025</span>
+                  <span>Today</span>
+                </div>
+              </div>
+
+              {/* Controls */}
+              <div className="flex gap-3 justify-center">
+                <Button
+                  onClick={handleReset}
+                  className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2"
+                >
+                  Reset
+                </Button>
+                <Button
+                  onClick={handlePlayPause}
+                  className="bg-[#E7AC51] hover:bg-[#D4A044] text-white px-6 py-2"
+                >
+                  {isPlaying ? 'Pause' : 'Play'}
+                </Button>
+              </div>
+
+              {/* Map for selected date */}
+              <div className="mt-6">
+                <DownloadableMap
+                  protests={timelapseProtests}
+                  dateLabel={`Since Dec 28 - ${formatSelectedDate(selectedDate)}`}
+                  mapId="timelapse"
+                  protestCount={timelapseProtests.length}
+                  variant="timelapse"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Map 1: Today's Protests */}
