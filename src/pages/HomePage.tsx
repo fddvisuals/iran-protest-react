@@ -186,6 +186,24 @@ const HomePage: React.FC = () => {
                 Mark Dubowitz
               </span>
             </p>
+
+            <div className="mt-3 sm:mt-4 w-full max-w-[800px] mx-auto px-4 sm:px-6 py-4 bg-white rounded-xl sm:rounded-2xl shadow-lg border border-red-600/30 ring-1 ring-red-600/10">
+              <div className="flex items-start gap-3">
+                <img
+                  src={`${import.meta.env.BASE_URL}images/diamond-exclamation-sharp-solid-full.svg`}
+                  alt="Important note"
+                  className="w-5 h-5 sm:w-6 sm:h-6 mt-[2px] flex-shrink-0"
+                />
+                <div className="text-left">
+                  <div className="font-sans font-bold text-[12px] sm:text-[13px] md:text-[14px] text-text-primary">
+                    Editor's note
+                  </div>
+                  <p className="mt-1 font-sans text-[12px] sm:text-[14px] md:text-[15px] leading-[18px] sm:leading-[22px] md:leading-[24px] text-text-primary/90">
+                    Iranian protesters are being killed under a total information blackout. The death toll has reached into the thousands as the regime uses live ammunition and deploys terrorist proxies against unarmed civilians. While a small number of users have relied on satellite-based connections to transmit videos and to tell the story of events on the ground, the regime has increasingly moved to jam those signals. Combined with targeted electricity cuts and landline disruptions, the regime has severely constrained the flow of information into and out of the country. So far, Iranians have refused to be intimidated and are putting their lives on the line day and night.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
